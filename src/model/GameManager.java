@@ -45,7 +45,7 @@ public class GameManager{
     }
     public void setView(View view){
         gameView = view;
-        System.out.println("Hello");
+
     }
     public View getView(){
         return gameView;
