@@ -25,7 +25,7 @@ public class GameApp{
         // load in all the panels beforehand except map, that can be loaded later after we get the game settings
         // and then load all of them
         view = new View();
-        
+        frame = new JFrame();
         gm = new GameManager(view);
        
         //
