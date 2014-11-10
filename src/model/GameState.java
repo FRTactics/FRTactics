@@ -14,7 +14,7 @@ import java.awt.Graphics;
  */
 public abstract class GameState {
     protected static GameManager gm;
-    
+    private static GameState instance;
     protected static MainMenuState mmState;
     protected static OptionsMenuState omState;
     protected static P1LoadoutState p1State;
@@ -33,11 +33,11 @@ public abstract class GameState {
     }
     public static GameState start(GameManager manager){
         gm = manager;
-        mmState = new MainMenuState();
-        p1State = new P1LoadoutState();
-        p2State = new P2LoadoutState();
-        smState = new SettingsMenuState();
-        igState = new InGameState();
+        mmState = MainMenuState.getInstance();
+        p1State = P1LoadoutState.getInstance();
+        p2State = P2LoadoutState.getInstance();
+        smState = SettingsMenuState.getInstance();
+        igState = InGameState.getInstance();
         mmState.enter();
         return mmState;
     }
