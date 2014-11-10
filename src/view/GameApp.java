@@ -20,14 +20,15 @@ public class GameApp{
     private View view;
     private JFrame frame;
     public static GameManager gm;
-    
+    MainMenu menu;
     public GameApp(){
         // load in all the panels beforehand except map, that can be loaded later after we get the game settings
         // and then load all of them
+        menu = new MainMenu();
         view = new View();
         frame = new JFrame();
         gm = new GameManager(view);
-       
+        view.add(menu);
         //
         frame.setTitle("FRTactics");
         frame.setExtendedState(Frame.MAXIMIZED_BOTH);
