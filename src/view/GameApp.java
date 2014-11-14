@@ -6,6 +6,7 @@
 
 package view;
 
+import controllers.MainMenuController;
 import view.View;
 import java.awt.BorderLayout;
 import java.awt.Frame;
@@ -19,17 +20,22 @@ import model.GameManager;
 public class GameApp{
     private View view;
     private JFrame frame;
-    public static GameManager gm;
-    MainMenu menu;
+    private static GameManager gm;
+    private MainMenu mainMenu;
+    
+    private MainMenuController mmController;
     public GameApp(){
         // load in all the panels beforehand except map, that can be loaded later after we get the game settings
         // and then load all of them
-        menu = new MainMenu();
+        mainMenu = new MainMenu();
+        mmController = new MainMenuController(gm, mainMenu);
         view = new View();
         frame = new JFrame();
         gm = new GameManager(view);
-        view.add(menu);
-        //
+        gm.setView(view);
+        
+        view.add(mainMenu, GameManager.MAIN_MENU);
+        
         frame.setTitle("FRTactics");
         frame.setExtendedState(Frame.MAXIMIZED_BOTH);
         frame.setLayout(new BorderLayout());

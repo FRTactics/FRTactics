@@ -1,9 +1,11 @@
 package view;
+import controllers.MainMenuController;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.io.File;
 import java.io.IOException;
 import javax.swing.BoxLayout;
 import javax.swing.JPanel;
@@ -23,37 +25,49 @@ public class MainMenu extends javax.swing.JPanel {
     /**
      * Creates new form MainMenu
      */
-    GameButton button;
+    GameButton newGameButton;
+    GameButton optionsButton;
+    GameButton quitButton;
     JPanel buttonPanel;
+    MainMenuController controller;
     public MainMenu() {
-        //initComponents();
-        button = new GameButton();
+        initComponents();
+        this.controller = controller;
+        newGameButton = new GameButton(new File(".//NewGame.png"));
+        optionsButton = new GameButton(new File(".//Options.png"));
+        quitButton = new GameButton(new File(".//Quit.png"));
         buttonPanel = new JPanel();
         buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.Y_AXIS));
         
        // buttonPanel.setOpaque(false);
         buttonPanel.setBackground(Color.red);
-        buttonPanel.add(button);
+        buttonPanel.add(newGameButton);
+        buttonPanel.add(optionsButton);
+        buttonPanel.add(quitButton);
         buttonPanel.setVisible(true);
-        button.addMouseListener(new MouseAdapter(){
-            @Override
-            public void mouseEntered(MouseEvent e) {
-                button.animateLeft();  
-                System.out.print("FUCK");
-            }
-
-            @Override
-            public void mouseExited(MouseEvent e) {
-                button.animateRight();
-            }
-            
-        });
-        //this.setBackground(Color.red);
         this.setLayout(new BorderLayout());
         this.add(buttonPanel, BorderLayout.EAST);
         
     }
-
+    // 333 x 124
+    public void addNewGameButtonController(MouseAdapter adapter){
+        newGameButton.addMouseListener(adapter);
+    }
+    public void addOptionsButtonController(MouseAdapter adapter){
+        optionsButton.addMouseListener(adapter);
+    }
+    public void addQuitButtonController(MouseAdapter adapter){
+        quitButton.addMouseListener(adapter);
+    }
+    public GameButton getNewGameButton(){
+        return newGameButton;
+    }
+    public GameButton getOptionsButton(){
+        return optionsButton;
+    }
+    public GameButton getQuitButton(){
+        return quitButton;
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always

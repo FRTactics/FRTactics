@@ -14,7 +14,7 @@ import model.GameManager;
  * @author Charlie
  */
 public class GameSettingsController extends EventHandler{
-    public GameSettingsController(GameManager gm, JPanel view){
-        super(gm, view);
+    public GameSettingsController(GameManager gm){
+        super(gm);
     }
 }

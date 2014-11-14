@@ -14,8 +14,8 @@ import model.GameManager;
  * @author Charlie
  */
 public class GameController extends EventHandler{
-    public GameController(GameManager gm, JPanel view){
-        super(gm, view);
+    public GameController(GameManager gm){
+        super(gm);
     }
     
 }

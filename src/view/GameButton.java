@@ -19,13 +19,15 @@ import javax.imageio.ImageIO;
  */
 public class GameButton extends javax.swing.JPanel {
 
-    Image t;
+    Image image;
     int xPos;
     int maxPos;
-    public GameButton() {
+    public GameButton(File imageFile)
+    {
         //initComponents();
+        
         try{
-            addImage();
+            addImage(imageFile);
         }
         catch(IOException e){
             System.err.println(e.getLocalizedMessage());
@@ -40,15 +42,15 @@ public class GameButton extends javax.swing.JPanel {
         xPos = maxPos;
         this.setVisible(true);
     }
-    public void addImage() throws IOException{
-           t = ImageIO.read(new File(".//NewGame.png"));
+    public void addImage(File f) throws IOException{
+           image = ImageIO.read(f);
        
     }
     
     @Override
     public void paintComponent(Graphics g){
         super.paintComponent(g);
-        g.drawImage(t,xPos,0,null);
+        g.drawImage(image,xPos,0,null);
         
     }
     

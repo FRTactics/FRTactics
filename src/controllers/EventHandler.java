@@ -15,10 +15,8 @@ import model.GameManager;
  */
 public abstract class EventHandler{
     public GameManager gm;
-    protected JPanel view;
-    public EventHandler(GameManager gm, JPanel view){
+    public EventHandler(GameManager gm){
         this.gm = gm;
-        this.view = view;
     }
     public void handleEvent(int eventID){
         gm.processEvent(eventID);

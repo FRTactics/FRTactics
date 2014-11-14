@@ -14,7 +14,7 @@ import model.GameManager;
  * @author Charlie
  */
 public class OptionsController extends EventHandler{
-    public OptionsController(GameManager gm, JPanel view){
-        super(gm, view);
+    public OptionsController(GameManager gm){
+        super(gm);
     }
 }

@@ -16,6 +16,9 @@ import view.View;
 public class GameManager{
     protected static GameState gState;
     protected View gameView;
+    
+    public static final String MAIN_MENU = "Main Menu Screen";
+    public static final String P1_LOADOUT_MENU = "P1 Loadout Menu Screen";
     // menu events
     public static final int NEW_GAME_SELECTED = 10;
     public static final int EXIT_SELECTED = 20;

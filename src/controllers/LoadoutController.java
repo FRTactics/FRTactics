@@ -14,7 +14,7 @@ import model.GameManager;
  * @author Charlie
  */
 public class LoadoutController extends EventHandler{ // since both P1 and P2 Loadout 
-    public LoadoutController(GameManager gm, JPanel view){
-        super(gm, view);
+    public LoadoutController(GameManager gm){
+        super(gm);
     }
 }

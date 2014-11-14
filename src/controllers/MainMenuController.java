@@ -8,39 +8,81 @@ package controllers;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import javax.swing.JPanel;
 import model.GameManager;
+import view.GameButton;
+import view.MainMenu;
 
 /**
  *
  * @author Charlie
  */
 public class MainMenuController extends EventHandler{
-    public MainMenuController(GameManager gm, JPanel view){ // create and add listeners, JPanel is a temp. fill in for MainMenuView (not created yet
-        super(gm, view);                        
-        
+    private MainMenu menu;
+    public MainMenuController(GameManager gm, MainMenu m){ // create and add listeners, JPanel is a temp. fill in for MainMenuView (not created yet
+        super(gm);        
+        menu = m;
+        menu.addNewGameButtonController(new StartButtonListener(menu.getNewGameButton()));
+        menu.addOptionsButtonController(new OptionButtonListener(menu.getOptionsButton()));
+        menu.addQuitButtonController(new ExitButtonListener(menu.getQuitButton()));
         // add listeners to view (views should have methods that allow listeners to be added to specific components
     }
-    public class StartButtonListener implements ActionListener{
-
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            gm.processEvent(GameManager.NEW_GAME_SELECTED);
+    public class StartButtonListener extends MouseAdapter{
+        private GameButton button;
+        public StartButtonListener(GameButton b){
+            button = b;
         }
+        @Override
+        public void mousePressed(MouseEvent e) {
+            handleEvent(GameManager.NEW_GAME_SELECTED);
+        }
+        public void mouseEntered(MouseEvent e) {
+            button.animateLeft();  
+            System.out.print("FUCK");
+        }
+        @Override
+        public void mouseExited(MouseEvent e) {
+            button.animateRight();
+       }
     }
-    public class ExitButtonListener implements ActionListener{
-
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            gm.processEvent(GameManager.EXIT_SELECTED);
+    public class ExitButtonListener extends MouseAdapter{
+        private GameButton button;
+        public ExitButtonListener(GameButton b){
+            button = b;
         }
+        @Override
+        public void mousePressed(MouseEvent e) {
+            handleEvent(GameManager.OPTIONS_SELECTED);
+        }
+        @Override
+        public void mouseEntered(MouseEvent e) {
+            button.animateLeft();  
+            System.out.print("FUCK");
+        }
+        @Override
+        public void mouseExited(MouseEvent e) {
+            button.animateRight();
+       }
     }
-    public class OptionButtonListener implements ActionListener{
-
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            gm.processEvent(GameManager.OPTIONS_SELECTED);
+    public class OptionButtonListener extends MouseAdapter{
+        private GameButton button;
+        public OptionButtonListener(GameButton b){
+            button = b;
         }
-        
+        @Override
+        public void mousePressed(MouseEvent e) {
+            handleEvent(GameManager.OPTIONS_SELECTED);
+        }
+        @Override
+        public void mouseEntered(MouseEvent e) {
+            button.animateLeft();  
+            System.out.print("FUCK");
+        }
+        @Override
+        public void mouseExited(MouseEvent e) {
+            button.animateRight();
+       }
     }
 }
