@@ -15,7 +15,16 @@ import static model.GameState.gm;
  * @author Charlie
  */
 public class InGameState extends GameState{
-
+    private static InGameState instance;
+    private InGameState(){
+        
+    }
+    public static synchronized InGameState getInstance(){
+        if(instance == null){
+            instance = new InGameState();
+        }
+        return instance;
+    }
     @Override
     public GameState processEvent(int eventID) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.

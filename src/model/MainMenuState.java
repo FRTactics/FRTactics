@@ -14,11 +14,18 @@ import java.awt.Graphics;
  * @author Charlie
  */
 public class MainMenuState extends GameState{
-    
-    public MainMenuState(){
+    private static MainMenuState instance;
+
+
+    private MainMenuState(){
         // initialize state's associated panel and add to the viewPanel's layout
     }
-    
+    public static synchronized MainMenuState getInstance(){
+        if(instance == null){
+            instance = new MainMenuState();
+        }
+        return instance;
+    }
     @Override
     public GameState processEvent(int eventID) {
         if(eventID == GameManager.NEW_GAME_SELECTED){

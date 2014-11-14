@@ -15,7 +15,17 @@ import static model.GameState.gm;
  * @author Charlie
  */
 public class SettingsMenuState extends GameState{
+    private static SettingsMenuState instance;
 
+    private SettingsMenuState(){
+        
+    }
+    public static synchronized SettingsMenuState getInstance(){
+        if(instance == null){
+            instance = new SettingsMenuState();
+        }
+        return instance;
+    }
     @Override
     public GameState processEvent(int eventID) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.

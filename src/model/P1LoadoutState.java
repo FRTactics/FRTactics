@@ -15,9 +15,15 @@ import java.awt.Graphics;
  * @author Charlie
  */
 public class P1LoadoutState extends GameState{
-
-    public P1LoadoutState(){
+    private static P1LoadoutState instance;
+    private P1LoadoutState(){
         
+    }
+    public static synchronized P1LoadoutState getInstance(){
+        if(instance == null){
+            instance = new P1LoadoutState();
+        }
+        return instance;
     }
     @Override
     public GameState processEvent(int eventID) {

@@ -14,8 +14,15 @@ import static model.GameState.gm;
  * @author Charlie
  */
 public class OptionsMenuState extends GameState{
-    public OptionsMenuState(){
+    private static OptionsMenuState instance;
+    private OptionsMenuState(){
         
+    }
+    public static synchronized OptionsMenuState getInstance(){
+        if(instance == null){
+            instance = new OptionsMenuState();
+        }
+        return instance;
     }
     @Override
     public GameState processEvent(int eventID) {
