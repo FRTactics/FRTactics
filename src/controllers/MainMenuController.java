@@ -54,12 +54,11 @@ public class MainMenuController extends EventHandler{
         }
         @Override
         public void mousePressed(MouseEvent e) {
-            handleEvent(GameManager.OPTIONS_SELECTED);
+            handleEvent(GameManager.EXIT_SELECTED);
         }
         @Override
         public void mouseEntered(MouseEvent e) {
-            button.animateLeft();  
-            System.out.print("FUCK");
+            button.animateLeft();
         }
         @Override
         public void mouseExited(MouseEvent e) {

@@ -31,8 +31,8 @@ public class GameApp{
         mmController = new MainMenuController(gm, mainMenu);
         view = new View();
         frame = new JFrame();
-        gm = new GameManager(view);
-        gm.setView(view);
+        gm = GameManager.getInstance();
+        gm.initialize(view);
         
         view.add(mainMenu, GameManager.MAIN_MENU);
         

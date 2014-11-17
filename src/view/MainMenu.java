@@ -40,7 +40,7 @@ public class MainMenu extends javax.swing.JPanel {
         buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.Y_AXIS));
         
        // buttonPanel.setOpaque(false);
-        buttonPanel.setBackground(Color.red);
+        //buttonPanel.setBackground(Color.red);
         buttonPanel.add(newGameButton);
         buttonPanel.add(optionsButton);
         buttonPanel.add(quitButton);

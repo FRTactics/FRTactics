@@ -32,11 +32,11 @@ public class GameButton extends javax.swing.JPanel {
         catch(IOException e){
             System.err.println(e.getLocalizedMessage());
         }
-        //this.setOpaque(false);
+        this.setOpaque(false);
         this.setPreferredSize(new Dimension(400,100));
         this.setMinimumSize(new Dimension(400,100));
         
-        //this.setBackground(Color.PINK);
+      
         this.setDoubleBuffered(true);
         maxPos = (int) (this.getPreferredSize().width*.4);
         xPos = maxPos;

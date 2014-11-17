@@ -13,10 +13,11 @@ import view.View;
  *
  * @author Charlie
  */
-public class GameManager{
+public class GameManager
+{
     protected static GameState gState;
     protected View gameView;
-    
+    private static GameManager instance;
     public static final String MAIN_MENU = "Main Menu Screen";
     public static final String P1_LOADOUT_MENU = "P1 Loadout Menu Screen";
     // menu events
@@ -42,59 +43,81 @@ public class GameManager{
     protected static boolean isP1TeamDefeated = false;
     protected static boolean isP2TeamDefeated = false;
     
-    public GameManager(View view){
+    public void initialize(View view)
+    {
         setView(view);
         gState = GameState.start(this);
     }
-    public void setView(View view){
-        gameView = view;
-
+    public static GameManager getInstance()
+    {
+        if(instance == null)
+        {
+            instance = new GameManager(); 
+        }
+        return instance;
     }
-    public View getView(){
+    private void setView(View view)
+    {
+        gameView = view;
+    }
+    public View getView()
+    {
         return gameView;
     }
-    public static GameState getGameState(){
+    public static GameState getGameState()
+    {
         return gState;
     }
-    public void processEvent(int eventID){
+    public void processEvent(int eventID)
+    {
         gState.processEvent(eventID);
     }
-    public void endGame(){
+    public void endGame()
+    {
         getView().getParent().setVisible(false);
         JFrame frame = (JFrame)getView().getParent();
         frame.dispose();
         System.exit(0);
     }
-    public static void setPlayerTurn(int player){
-        if(player == 1){
+    public static void setPlayerTurn(int player)
+    {
+        if(player == 1)
+        {
             isP1Turn = true;
             isP2Turn = false;
         }
-        else if(player == 2){
+        else if(player == 2)
+        {
             isP1Turn = false;
             isP2Turn = true;
         }
     }
   
-    public static String getPlayerTurn(){
+    public static String getPlayerTurn()
+    {
         String temp = "";
-        if(isP1Turn){
+        if(isP1Turn)
+        {
             temp += "Player 1 Turn";
         }
-        else{
+        else
+        {
             temp += "Player 2 Turn";
         }
         return temp;
     }
     
-    public static void switchTurns(){
-        if(isP1Turn){
+    public static void switchTurns()
+    {
+        if(isP1Turn)
+        {
             setPlayerTurn(1);
         }
-        else{
+        else
+        {
             setPlayerTurn(2);
         }
     }
-    
+   
     
 }
