@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-package controllers;
+package controllers.screenControllers;
 
 import javax.swing.JPanel;
 import model.GameManager;
@@ -13,12 +13,9 @@ import model.GameManager;
  *
  * @author Charlie
  */
-public abstract class EventHandler{
-    public GameManager gm;
-    public EventHandler(GameManager gm){
-        this.gm = gm;
+public class GameController extends EventHandler{
+    public GameController(){
+        
     }
-    public void handleEvent(int eventID){
-        gm.processEvent(eventID);
-    }
+    
 }

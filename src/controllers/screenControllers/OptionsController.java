@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-package controllers;
+package controllers.screenControllers;
 
 import javax.swing.JPanel;
 import model.GameManager;
@@ -13,8 +13,8 @@ import model.GameManager;
  *
  * @author Charlie
  */
-public class GameSettingsController extends EventHandler{
-    public GameSettingsController(GameManager gm){
-        super(gm);
+public class OptionsController extends EventHandler{
+    public OptionsController(){
+       
     }
 }

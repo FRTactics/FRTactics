@@ -4,35 +4,34 @@
  * and open the template in the editor.
  */
 
-package model;
+package model.gameStates;
 
 import java.awt.CardLayout;
-import static model.GameState.gm;
-
-/**
+import model.GameManager;
+/*
  *
  * @author Charlie
  */
-public class OptionsMenuState extends GameState{
+public class OptionsMenuState extends GameState{        // state that handles all of the events for the Options Menu
     private static OptionsMenuState instance;
     private OptionsMenuState(){
         
     }
-    public static synchronized OptionsMenuState getInstance(){
-        if(instance == null){
+    public static synchronized OptionsMenuState getInstance(){      // retrieve the instance of the Options Menu State
+        if(instance == null){                                       // if one does not exist, create one
             instance = new OptionsMenuState();
         }
-        return instance;
+        return instance;            
     }
     @Override
-    public GameState processEvent(int eventID) {
+    public GameState processEvent(int eventID) {        // process all events that are thrown while in this state
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    protected void enter() {
+    protected void enter() {                        // upon entry of this state, move the associated screen to the front
        CardLayout layout = (CardLayout)gm.getView().getLayout();
-       layout.show(gm.getView(), GameState.OPTIONS_MENU);   
+       layout.show(gm.getView(), GameManager.OPTIONS_MENU);   
     }
 
     @Override

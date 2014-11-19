@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-package controllers;
+package controllers.screenControllers;
 
 import javax.swing.JPanel;
 import model.GameManager;
@@ -14,7 +14,7 @@ import model.GameManager;
  * @author Charlie
  */
 public class LoadoutController extends EventHandler{ // since both P1 and P2 Loadout 
-    public LoadoutController(GameManager gm){
-        super(gm);
+    public LoadoutController(){
+        
     }
 }

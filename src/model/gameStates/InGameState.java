@@ -4,19 +4,19 @@
  * and open the template in the editor.
  */
 
-package model;
+package model.gameStates;
 
 import java.awt.CardLayout;
-import java.awt.Graphics;
-import static model.GameState.gm;
+import model.GameManager;
+
 
 /**
  *
  * @author Charlie
  */
-public class InGameState extends GameState{
-    private static InGameState instance;
-    private InGameState(){
+public class InGameState extends GameState{        // name subject to change
+    private static InGameState instance;        
+    private InGameState(){      
         
     }
     public static synchronized InGameState getInstance(){
@@ -33,7 +33,7 @@ public class InGameState extends GameState{
     @Override
     protected void enter() {
         CardLayout layout = (CardLayout)gm.getView().getLayout();
-        layout.show(gm.getView(), GameState.INGAME);
+        layout.show(gm.getView(), GameManager.INGAME);
     }
 
     @Override

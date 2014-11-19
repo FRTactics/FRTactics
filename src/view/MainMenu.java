@@ -1,96 +1,79 @@
 package view;
-import controllers.MainMenuController;
+
+import controllers.screenControllers.MainMenuController;
 import java.awt.BorderLayout;
-import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.Image;
 import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.io.File;
-import java.io.IOException;
+import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JPanel;
+import model.ImageContainer;
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
-/**
- *
- * @author cmb6094
- */
-public class MainMenu extends javax.swing.JPanel {
-
-    /**
-     * Creates new form MainMenu
-     */
-    GameButton newGameButton;
-    GameButton optionsButton;
-    GameButton quitButton;
-    JPanel buttonPanel;
-    MainMenuController controller;
-    public MainMenu() {
-        initComponents();
-        this.controller = controller;
-        newGameButton = new GameButton(new File(".//NewGame.png"));
-        optionsButton = new GameButton(new File(".//Options.png"));
-        quitButton = new GameButton(new File(".//Quit.png"));
-        buttonPanel = new JPanel();
-        buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.Y_AXIS));
-        
-       // buttonPanel.setOpaque(false);
-        //buttonPanel.setBackground(Color.red);
-        buttonPanel.add(newGameButton);
-        buttonPanel.add(optionsButton);
-        buttonPanel.add(quitButton);
-        buttonPanel.setVisible(true);
-        this.setLayout(new BorderLayout());
-        this.add(buttonPanel, BorderLayout.EAST);
+public class MainMenu extends JPanel 
+{
+    // buttons
+    private final GameButton newGameButton;
+    private final GameButton optionsButton;
+    private final GameButton quitButton;
+    // containers
+    private final JPanel buttonPanel;
+    private final Image background;
+    public MainMenu()
+    {
+        // instantiate all of the buttons with the appropriate images
+        newGameButton = new GameButton(ImageContainer.NEW_GAME_SWORD);
+        optionsButton = new GameButton(ImageContainer.OPTIONS_SWORD);
+        quitButton = new GameButton(ImageContainer.QUIT_SWORD);
+        buttonPanel = new JPanel();        // create button panel, which holds all of the buttons
+        buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.Y_AXIS));    // used box layout because it's awesome
+        buttonPanel.setOpaque(false);
+        // add the rest of the buttons to the button container
+        buttonPanel.add(Box.createVerticalGlue());      // create buffer to make button placement look better
+        buttonPanel.add(newGameButton);                 
+        buttonPanel.add(Box.createVerticalGlue());      // create buffer to make button placement look better
+        buttonPanel.add(optionsButton);                 
+        buttonPanel.add(Box.createVerticalGlue());      // create buffer to make button placement look better
+        buttonPanel.add(quitButton);                 
+        buttonPanel.add(Box.createVerticalGlue());      // create buffer to make button placement look better
+        background = ImageContainer.getInstance().retrieveBackgroundImage(ImageContainer.MAIN_MENU);    // set the background of the screen
+        this.setLayout(new BorderLayout());         // used border layout for the entire screen
+        this.add(buttonPanel, BorderLayout.EAST);   // button panel is placed on the right side of the screen
         
     }
-    // 333 x 124
-    public void addNewGameButtonController(MouseAdapter adapter){
+    @Override
+    public void paintComponent(Graphics g)              // paints the background onto the screen
+    {
+        super.paintComponent(g);
+        g.drawImage(background, 0, 0, this.getWidth(), this.getHeight(), this);
+    }
+    
+    // methods that associate the buttons with the controllers
+    public void addNewGameButtonController(MouseAdapter adapter)    // method used to add listener to the new game button
+    {
         newGameButton.addMouseListener(adapter);
     }
-    public void addOptionsButtonController(MouseAdapter adapter){
+    public void addOptionsButtonController(MouseAdapter adapter)    // method used to add listener to the options button
+    {
         optionsButton.addMouseListener(adapter);
     }
-    public void addQuitButtonController(MouseAdapter adapter){
+    public void addQuitButtonController(MouseAdapter adapter)       // method used to add listener to the quit button
+    {
         quitButton.addMouseListener(adapter);
     }
-    public GameButton getNewGameButton(){
+    
+    // getter methods
+    public GameButton getNewGameButton()                            // getter method for the new game button 
+    {
         return newGameButton;
     }
-    public GameButton getOptionsButton(){
+    public GameButton getOptionsButton()                            // getter method for the options button
+    {
         return optionsButton;
     }
-    public GameButton getQuitButton(){
+    public GameButton getQuitButton()                               // getter method for the quit button
+    {
         return quitButton;
     }
-    /**
-     * This method is called from within the constructor to initialize the form.
-     * WARNING: Do NOT modify this code. The content of this method is always
-     * regenerated by the Form Editor.
-     */
-    @SuppressWarnings("unchecked")
-    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-    private void initComponents() {
-
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        this.setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
-        );
-    }// </editor-fold>//GEN-END:initComponents
-
-
-    // Variables declaration - do not modify//GEN-BEGIN:variables
-    // End of variables declaration//GEN-END:variables
-
 }
+

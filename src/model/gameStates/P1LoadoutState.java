@@ -4,49 +4,46 @@
  * and open the template in the editor.
  */
 
-package model;
+package model.gameStates;
 
-import static model.GameState.gm;
 import java.awt.CardLayout;
-import java.awt.Graphics;
+import model.GameManager;
 
 /**
  *
  * @author Charlie
  */
-public class P2LoadoutState extends GameState{
-    private static P2LoadoutState instance;
-
- 
-    private P2LoadoutState(){
+public class P1LoadoutState extends GameState{
+    private static P1LoadoutState instance;
+    private P1LoadoutState(){
         
     }
-    public static synchronized P2LoadoutState getInstance(){
-        if(instance == null){
-            instance = new P2LoadoutState();
+    public static synchronized P1LoadoutState getInstance(){    // retrieve instance of this class
+        if(instance == null){                                   // if one does not exist, create one
+            instance = new P1LoadoutState();
         }
         return instance;
     }
     @Override
-    public GameState processEvent(int eventID) {
+    public GameState processEvent(int eventID) {            // process all events associated with this state
         if(eventID == GameManager.ADD_UNIT_SELECTED){
-            // do add unit stuff
+            // do add unit stuff            // retrieve selected entry from table view and add to P1's loadout
             return this;
         }
         else if(eventID == GameManager.REMOVE_UNIT_SELECTED){
-            // do remove unit stuff
+            // do remove unit stuff         // retrieve selected entry from p1's loadout table view
             return this;
         }
         else if(eventID == GameManager.CONTINUE_SELECTED){
-            return nextState(GameState.smState);
+            return nextState(GameState.p2State);
         }
         return this;
     }
 
     @Override
-    protected void enter() {
+    protected void enter() {            // upon entry, move associated screen to the front of the view
         CardLayout layout = (CardLayout)gm.getView().getLayout();
-        layout.show(gm.getView(), GameState.P2_LOADOUT_MENU);
+        layout.show(gm.getView(), GameManager.P1_LOADOUT_MENU);
     }
 
     @Override
@@ -60,8 +57,6 @@ public class P2LoadoutState extends GameState{
     }
 
 
- 
 
- 
     
 }

@@ -6,6 +6,8 @@
 
 package model;
 
+import model.gameStates.GameState;
+import javax.swing.JComponent;
 import javax.swing.JFrame;
 import view.View;
 
@@ -15,11 +17,16 @@ import view.View;
  */
 public class GameManager
 {
-    protected static GameState gState;
-    protected View gameView;
-    private static GameManager instance;
-    public static final String MAIN_MENU = "Main Menu Screen";
-    public static final String P1_LOADOUT_MENU = "P1 Loadout Menu Screen";
+    protected static GameState gState;              // abstract game state
+    protected View gameView;                        // game view, needed for switching screens
+    private static GameManager instance;            // instance used to implement singleton design
+    // Strings that are associated with each of the screens
+    public final static String MAIN_MENU = "Main Menu";
+    public final static String P1_LOADOUT_MENU = "P1 Loadout Menu";
+    public final static String P2_LOADOUT_MENU = "P2 Loadout Menu";
+    public final static String OPTIONS_MENU = "Option Menu";
+    public final static String SETTINGS_MENU = "Settings Menu";
+    public final static String INGAME = "InGame";
     // menu events
     public static final int NEW_GAME_SELECTED = 10;
     public static final int EXIT_SELECTED = 20;
@@ -43,43 +50,41 @@ public class GameManager
     protected static boolean isP1TeamDefeated = false;
     protected static boolean isP2TeamDefeated = false;
     
-    public void initialize(View view)
-    {
+    public void initialize(View view)       // initialize view and state,
+    {                                       // needs to be called right after GM is created
         setView(view);
-        gState = GameState.start(this);
+        gState = GameState.start(this);     // start up state machine
     }
-    public static GameManager getInstance()
+    public static GameManager getInstance()     // get the instance of the GM
     {
-        if(instance == null)
+        if(instance == null)                    // if there is no instance of the Game Manager, create one
         {
             instance = new GameManager(); 
         }
-        return instance;
+        return instance;                       
     }
-    private void setView(View view)
+    private void setView(View view)             // sets the view for later usage
     {
         gameView = view;
     }
-    public View getView()
+    public View getView()       // retrieves the view
     {
         return gameView;
     }
-    public static GameState getGameState()
+    public static GameState getGameState()  // returns the game state
     {
         return gState;
     }
-    public void processEvent(int eventID)
+    public void processEvent(int eventID)   // process the event
     {
         gState.processEvent(eventID);
     }
-    public void endGame()
+    public void endGame()                       // ends the program and closes the JFrame
     {
         getView().getParent().setVisible(false);
-        JFrame frame = (JFrame)getView().getParent();
-        frame.dispose();
         System.exit(0);
     }
-    public static void setPlayerTurn(int player)
+    public static void setPlayerTurn(int player)            // not sure if this will stay or be added to the Combat Manager when we make it
     {
         if(player == 1)
         {
@@ -93,7 +98,7 @@ public class GameManager
         }
     }
   
-    public static String getPlayerTurn()
+    public static String getPlayerTurn()            //same as above, may be moved
     {
         String temp = "";
         if(isP1Turn)
@@ -107,7 +112,7 @@ public class GameManager
         return temp;
     }
     
-    public static void switchTurns()
+    public static void switchTurns()            // same as above
     {
         if(isP1Turn)
         {
