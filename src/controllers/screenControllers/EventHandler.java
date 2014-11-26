@@ -14,7 +14,7 @@ import model.GameManager;
  * @author Charlie
  */
 public abstract class EventHandler{     // abstract Event handler class that is used as a contract for controller classes
-    public GameManager gm;              
+    private GameManager gm;              
     public EventHandler(){
         this.gm = GameManager.getInstance();    // retrieve instance of Game Manager
     }

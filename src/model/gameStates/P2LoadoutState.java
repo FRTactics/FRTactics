@@ -27,34 +27,28 @@ public class P2LoadoutState extends GameState{
     }
     @Override
     public GameState processEvent(int eventID) {
-        if(eventID == GameManager.ADD_UNIT_SELECTED){
-            // do add unit stuff
-            return this;
-        }
-        else if(eventID == GameManager.REMOVE_UNIT_SELECTED){
-            // do remove unit stuff
-            return this;
+        if(eventID == GameManager.BACK_SELECTED){
+            return nextState(GameState.p1State);
         }
         else if(eventID == GameManager.CONTINUE_SELECTED){
-            return nextState(GameState.smState);
+            //return nextState(GameState.smState);
         }
         return this;
     }
 
     @Override
-    protected void enter() {    // upon entry of this class, 
+    protected void enter() {    // upon entry of this class
         CardLayout layout = (CardLayout)gm.getView().getLayout();
         layout.show(gm.getView(), GameManager.P2_LOADOUT_MENU);
     }
 
     @Override
     protected void exit() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
     }
 
     @Override
     protected void doActivity() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
 

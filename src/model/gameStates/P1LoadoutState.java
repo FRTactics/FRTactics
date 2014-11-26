@@ -8,6 +8,8 @@ package model.gameStates;
 
 import java.awt.CardLayout;
 import model.GameManager;
+import view.CustomLabel;
+import view.LoadoutMenu;
 
 /**
  *
@@ -26,15 +28,10 @@ public class P1LoadoutState extends GameState{
     }
     @Override
     public GameState processEvent(int eventID) {            // process all events associated with this state
-        if(eventID == GameManager.ADD_UNIT_SELECTED){
-            // do add unit stuff            // retrieve selected entry from table view and add to P1's loadout
-            return this;
+        if(eventID == GameManager.BACK_SELECTED){  // move back a state (to Main menu)
+            return nextState(GameState.mmState);
         }
-        else if(eventID == GameManager.REMOVE_UNIT_SELECTED){
-            // do remove unit stuff         // retrieve selected entry from p1's loadout table view
-            return this;
-        }
-        else if(eventID == GameManager.CONTINUE_SELECTED){
+        else if(eventID == GameManager.CONTINUE_SELECTED){  // move to the next state
             return nextState(GameState.p2State);
         }
         return this;
@@ -48,12 +45,18 @@ public class P1LoadoutState extends GameState{
 
     @Override
     protected void exit() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        setLoadout();
     }
 
     @Override
     protected void doActivity() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+    private void setLoadout(){          // modify this later to convert the strings into actual units and place them in an array
+        LoadoutMenu temp = ((LoadoutMenu)gm.getView().getFrontView());
+        System.out.println("Test");
+        for(int i = 0; i < temp.getLoadout().size(); i++){
+            System.out.println(temp.getLoadout().get(i));
+        }
     }
 
 

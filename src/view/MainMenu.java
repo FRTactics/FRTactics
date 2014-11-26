@@ -22,9 +22,9 @@ public class MainMenu extends JPanel
     public MainMenu()
     {
         // instantiate all of the buttons with the appropriate images
-        newGameButton = new GameButton(ImageContainer.NEW_GAME_SWORD);
-        optionsButton = new GameButton(ImageContainer.OPTIONS_SWORD);
-        quitButton = new GameButton(ImageContainer.QUIT_SWORD);
+        newGameButton = new GameButton(ImageContainer.getInstance().retrieveMenuImage(ImageContainer.MenuImage.NEW_GAME_SWORD));
+        optionsButton = new GameButton(ImageContainer.getInstance().retrieveMenuImage(ImageContainer.MenuImage.OPTIONS_SWORD));
+        quitButton = new GameButton(ImageContainer.getInstance().retrieveMenuImage(ImageContainer.MenuImage.QUIT_SWORD));
         buttonPanel = new JPanel();        // create button panel, which holds all of the buttons
         buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.Y_AXIS));    // used box layout because it's awesome
         buttonPanel.setOpaque(false);
@@ -36,7 +36,7 @@ public class MainMenu extends JPanel
         buttonPanel.add(Box.createVerticalGlue());      // create buffer to make button placement look better
         buttonPanel.add(quitButton);                 
         buttonPanel.add(Box.createVerticalGlue());      // create buffer to make button placement look better
-        background = ImageContainer.getInstance().retrieveBackgroundImage(ImageContainer.MAIN_MENU);    // set the background of the screen
+        background = ImageContainer.getInstance().retrieveMenuImage(ImageContainer.MenuImage.MAIN_MENU_BACKGROUND);    // set the background of the screen
         this.setLayout(new BorderLayout());         // used border layout for the entire screen
         this.add(buttonPanel, BorderLayout.EAST);   // button panel is placed on the right side of the screen
         

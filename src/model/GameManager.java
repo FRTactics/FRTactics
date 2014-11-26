@@ -77,7 +77,7 @@ public class GameManager
     }
     public void processEvent(int eventID)   // process the event
     {
-        gState.processEvent(eventID);
+        gState = gState.processEvent(eventID);
     }
     public void endGame()                       // ends the program and closes the JFrame
     {
