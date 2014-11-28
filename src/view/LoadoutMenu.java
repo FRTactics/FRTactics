@@ -49,7 +49,7 @@ public class LoadoutMenu extends JPanel {             // still a work in progres
     private JPanel leftPanel;
     private JPanel centerPanel;     // will hold a jpanel containing all of the images (gridlayout)
     private JScrollPane centerScroll;
-    private JTabbedPane centerTabs;
+    //private JTabbedPane centerTabs;
     private JScrollPane loadoutScroll;
     private JPanel topBuffer;    // just a buffer placed on the top screen to make it pretty
     private JPanel statsPanel; // panel to hold all of the stats for each unit
@@ -113,13 +113,6 @@ public class LoadoutMenu extends JPanel {             // still a work in progres
     private JLabel healthRegenValueLabel;
     private JLabel armorValueLabel;
     
-    
-    // Labels for the choice menu
-    private CustomLabel warriorLabel;
-    private CustomLabel archerLabel;
-    private CustomLabel healerLabel;
-    private CustomLabel rogueLabel;
-    private CustomLabel wizardLabel;
     
     private final Image background;
     private MenuButton continueButton;

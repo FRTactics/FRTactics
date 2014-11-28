@@ -115,6 +115,12 @@ public class GameManager
             }
         }
     }
+    public ArrayList<DefaultClass> getP1Loadout(){
+        return p1Loadout;
+    }
+    public ArrayList<DefaultClass> getP2Loadout(){
+        return p2Loadout;
+    }
     public void setLoadoutJList(String menu, JList list){   // takes in which either P1_LOADOUT_MENU or P2_LOADOUT_MENU
         switch(menu){
             case GameManager.P1_LOADOUT_MENU:

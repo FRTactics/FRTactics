@@ -31,7 +31,7 @@ import view.View;
  */
 public class GameApp{
     private View view;  // container that holds all of the screens
-    private JFrame frame;   
+    public static JFrame frame;   
     private static GameManager gm;  // static instance of the game manager
     // screens
     private MainMenu mainMenu;
@@ -94,15 +94,15 @@ public class GameApp{
         frame.setVisible(true);                 // allow the frame to be visible
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);       
     }
-    public static String getLookAndFeelClassName(String nameSnippet) {
+    private static String getLookAndFeelClassName(String nameSnippet) {
         LookAndFeelInfo[] plafs = UIManager.getInstalledLookAndFeels();
         for (LookAndFeelInfo info : plafs) {
             if (info.getName().contains(nameSnippet)) {
                 return info.getClassName();
             }
         }
-    return null;
-}
+        return null;
+    }
     public static void main(String[] args){         // main method, all it needs to do is create an instance of the GameApp
         GameApp game = new GameApp();
     }

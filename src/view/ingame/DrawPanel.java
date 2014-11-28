@@ -7,6 +7,7 @@ import java.awt.Dimension;
 import java.awt.Polygon;
 import javax.swing.JPanel;
 import javax.swing.SpringLayout;
+import view.GameApp;
 
 public class DrawPanel extends JPanel 
 {
@@ -18,9 +19,9 @@ public class DrawPanel extends JPanel
     public DrawPanel(int arraySize)
     {
         this.setBackground(Color.BLACK);
-        this.setMinimumSize(new Dimension(800,600));
-        this.setPreferredSize(new Dimension(800,600));
-        this.setMaximumSize(new Dimension(2000,1600));
+        this.setMinimumSize(GameApp.frame.getPreferredSize());
+        this.setPreferredSize(GameApp.frame.getPreferredSize());
+        this.setMaximumSize(new Dimension(GameApp.frame.getPreferredSize().width + 2000, GameApp.frame.getPreferredSize().height + 2000));
         this.setVisible(true);
         this.setLayout(layout);
         grid = new Tile[arraySize][arraySize];

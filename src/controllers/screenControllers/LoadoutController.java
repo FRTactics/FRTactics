@@ -65,10 +65,10 @@ public class LoadoutController extends EventHandler{ // since both P1 and P2 Loa
         }
         @Override
         public void mousePressed(MouseEvent e){
-
             if(!((LoadoutListModel)loadoutMenu.getLoadoutJList().getModel()).getSelections().isEmpty()){
                 handleEvent(GameManager.CONTINUE_SELECTED);     
             }
+
         }
     }
     public class BackButtonListener extends MouseAdapter{

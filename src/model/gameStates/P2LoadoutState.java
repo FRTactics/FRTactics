@@ -8,6 +8,9 @@ package model.gameStates;
 
 import java.awt.CardLayout;
 import model.GameManager;
+import static model.gameStates.GameState.gm;
+import view.LoadoutMenu;
+import view.ingame.GameWindow;
 
 /**
  * @author Charlie
@@ -31,7 +34,7 @@ public class P2LoadoutState extends GameState{
             return nextState(GameState.p1State);
         }
         else if(eventID == GameManager.CONTINUE_SELECTED){
-            //return nextState(GameState.smState);
+            return nextState(GameState.igState);
         }
         return this;
     }
@@ -44,15 +47,22 @@ public class P2LoadoutState extends GameState{
 
     @Override
     protected void exit() {
-        
+        setLoadout();
+        initGame();
     }
 
     @Override
     protected void doActivity() {
     }
-
-
- 
+    private void setLoadout(){          // modify this later to convert the strings into actual units and place them in an array
+        LoadoutMenu temp = ((LoadoutMenu)gm.getView().getFrontView());
+        gm.populateLoadout(temp.getLoadout(), gm.getP2Loadout()); 
+    }
+    private void initGame(){
+        
+        gm.getView().add(new GameWindow(), GameManager.INGAME);
+        
+    }
 
  
     

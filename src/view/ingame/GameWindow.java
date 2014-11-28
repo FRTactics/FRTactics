@@ -9,6 +9,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
 import model.GameManager;
+import view.GameApp;
 
 public class GameWindow extends JPanel
 {
@@ -37,11 +38,11 @@ public class GameWindow extends JPanel
         //Create the glass pane and add it to the frame
         GlassPane glass = new GlassPane();
         glass.setSize(getWidth(),getHeight());
-        getRootPane().setGlassPane(glass);        
+        GameApp.frame.getRootPane().setGlassPane(glass);        
         //create the pause menu
-        PauseDialog dialog = new PauseDialog((Window)(GameManager.getInstance().getView().getParent()),glass);
+        PauseDialog dialog = new PauseDialog(GameApp.frame, glass);
         //Create the instance for statspopup
-        StatsPopup.createInstance((Window)(GameManager.getInstance().getView().getParent()));
+        StatsPopup.createInstance(GameApp.frame);
         //add the listeners
         addKeyListener(new ScrollPaneController(pane.getViewport(),dp,this,dialog));
         pane.getVerticalScrollBar().addAdjustmentListener(event -> repaint());
