@@ -34,6 +34,9 @@ public class LoadoutListModel implements ListModel{     // a custom list model t
     public void removeElementAt(int index){
         selections.remove(index);
     }
+    public void clear(){
+        selections.clear();
+    }
     public ArrayList<String> getSelections(){
         return selections;
     }

@@ -122,9 +122,9 @@ public class ImageContainer
                 case MENU_REMOVE:
                     return loadoutMenuRemove == null ? loadoutMenuRemove = ImageIO.read(new File(".//resources//menu//RemoveUnit.png")) : loadoutMenuRemove;
                 case MENU_CONTINUE:
-                    return loadoutMenuContinue == null ? loadoutMenuContinue = ImageIO.read(new File(".//resources//menu//Back.png")) : loadoutMenuContinue;
+                    return loadoutMenuContinue == null ? loadoutMenuContinue = ImageIO.read(new File(".//resources//menu//Continue.png")) : loadoutMenuContinue;
                 case MENU_BACK:
-                    return loadoutMenuBack == null ? loadoutMenuBack = ImageIO.read(new File(".//resources//menu//Continue.png")) : loadoutMenuBack;
+                    return loadoutMenuBack == null ? loadoutMenuBack = ImageIO.read(new File(".//resources//menu//Back.png")) : loadoutMenuBack;
                 case MAIN_MENU_BACKGROUND:
                     return mainMenuBackground == null ? mainMenuBackground = ImageIO.read(new File(".//resources//menu//backgrounds//mainMenuBackground.png")) : mainMenuBackground;
                 case P1_LOADOUT_BACKGROUND:

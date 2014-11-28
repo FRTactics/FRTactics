@@ -30,6 +30,7 @@ import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
+import model.GameManager;
 import model.ImageContainer;
 import model.classSystem.*;
 /**
@@ -39,7 +40,7 @@ import model.classSystem.*;
 public class LoadoutMenu extends JPanel {             // still a work in progress, looks like a piece of shit now - Charlie
     
     private ArrayList<CustomLabel> choiceList = new ArrayList();
-    
+    private String identifier;      //String used to indentify which loadout this is P1 or P2
     private JPanel loadoutPanel;
     private JList loadoutList;
     private JPanel choicePanel;
@@ -127,7 +128,8 @@ public class LoadoutMenu extends JPanel {             // still a work in progres
     private DropTarget dropTarget;
     private final Font font;
     
-    public LoadoutMenu(Image image) {
+    public LoadoutMenu(String identifier, Image image) {
+        this.identifier = identifier;
         // initialize everything first
         font = new Font("Comic Sans MS" , Font.PLAIN, 20);
         imageMap = createImageMap();
@@ -176,6 +178,7 @@ public class LoadoutMenu extends JPanel {             // still a work in progres
         loadoutList.setDragEnabled(false);
         loadoutList.setBackground(Color.DARK_GRAY);
         loadoutList.setOpaque(false);
+        GameManager.getInstance().setLoadoutJList(identifier, loadoutList);
         loadoutScroll = new JScrollPane(loadoutList);
         loadoutScroll.setWheelScrollingEnabled(true);
         loadoutScroll.setPreferredSize(new Dimension(400,500));

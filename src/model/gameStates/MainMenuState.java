@@ -40,7 +40,6 @@ public class MainMenuState extends GameState{       // state that handles all ev
             return nextState(GameState.omState);
         }
         else{                   // for any other event that is thrown, just return the current state
-            System.out.println("Still in Main Menu");
             return this;
         }
     }
@@ -52,7 +51,6 @@ public class MainMenuState extends GameState{       // state that handles all ev
        // then move the associated screen to the front
        CardLayout layout = (CardLayout)gm.getView().getLayout();
        layout.show(gm.getView(), GameManager.MAIN_MENU);
-       System.out.println("In MainMenu");
     }
 
     @Override                   

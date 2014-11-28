@@ -10,7 +10,9 @@ import java.util.ArrayList;
 import model.gameStates.GameState;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
+import javax.swing.JList;
 import model.classSystem.*;
+import view.LoadoutListModel;
 import view.View;
 
 /**
@@ -33,6 +35,9 @@ public class GameManager
     // ArrayLists for the player loadouts
     private ArrayList<DefaultClass> p1Loadout;
     private ArrayList<DefaultClass> p2Loadout;
+    // the Jlists are in here so that we can clear them
+    private JList p1LoadoutJList;
+    private JList p2LoadoutJList;
     // menu events
     public static final int NEW_GAME_SELECTED = 10;
     public static final int EXIT_SELECTED = 20;
@@ -116,9 +121,26 @@ public class GameManager
             }
         }
     }
+    public void setLoadoutJList(String menu, JList list){   // takes in which either P1_LOADOUT_MENU or P2_LOADOUT_MENU
+        switch(menu){
+            case GameManager.P1_LOADOUT_MENU:
+                p1LoadoutJList = list;
+                break;
+            case GameManager.P2_LOADOUT_MENU:
+                p2LoadoutJList = list;
+                break;
+            default:
+                break;
+        }
+    }
+    
     public void clearLoadouts(){    // clear the loadouts
         p1Loadout.clear();
         p2Loadout.clear();
+        LoadoutListModel model1 = (LoadoutListModel)p1LoadoutJList.getModel();
+        model1.clear();
+        LoadoutListModel model2 = (LoadoutListModel)p2LoadoutJList.getModel();
+        model2.clear();
     }
     public static void setPlayerTurn(int player)            // not sure if this will stay or be added to the Combat Manager when we make it
     {

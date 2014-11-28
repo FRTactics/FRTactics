@@ -71,8 +71,8 @@ public class GameApp{
         view = new View();
         // instantiate all of the screens
         mainMenu = new MainMenu();
-        p1LoadoutMenu = new LoadoutMenu(ImageContainer.getInstance().retrieveMenuImage(ImageContainer.MenuImage.P1_LOADOUT_BACKGROUND));
-        p2LoadoutMenu = new LoadoutMenu(ImageContainer.getInstance().retrieveMenuImage(ImageContainer.MenuImage.P2_LOADOUT_BACKGROUND));
+        p1LoadoutMenu = new LoadoutMenu(GameManager.P1_LOADOUT_MENU, ImageContainer.getInstance().retrieveMenuImage(ImageContainer.MenuImage.P1_LOADOUT_BACKGROUND));
+        p2LoadoutMenu = new LoadoutMenu(GameManager.P2_LOADOUT_MENU, ImageContainer.getInstance().retrieveMenuImage(ImageContainer.MenuImage.P2_LOADOUT_BACKGROUND));
         // instantiate all of the controllers using the appropriate screens
         mmController = new MainMenuController(mainMenu);
         p1LoadoutController = new LoadoutController(p1LoadoutMenu);
