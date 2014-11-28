@@ -8,7 +8,7 @@ import java.awt.Point;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.Timer;
-import javax.swing.JFrame;
+import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JViewport;
 
@@ -16,15 +16,15 @@ public class ScrollPaneController extends KeyAdapter
 {
     private final JViewport port;
     private final DrawPanel dp;
-    private final JFrame frame;
+    private final JPanel panel;
     private final PauseDialog dialog;
     private final JScrollPane pane = MainWindow.pane;
     
-    public ScrollPaneController(JViewport port, DrawPanel dp, JFrame frame, PauseDialog dialog)
+    public ScrollPaneController(JViewport port, DrawPanel dp, JPanel panel, PauseDialog dialog)
     {
         this.port = port;
         this.dp = dp;
-        this.frame = frame;
+        this.panel = panel;
         this.dialog = dialog;
     }
     
@@ -61,7 +61,7 @@ public class ScrollPaneController extends KeyAdapter
                 {
                     dp.updateSpringLayout();
                     port.setViewPosition(new Point(oldVP.x + DrawPanel.zoomModifier.width/2, oldVP.y + DrawPanel.zoomModifier.height/2 ));
-                    frame.repaint();
+                    panel.repaint();
                 }
                 break;
             case KeyEvent.VK_SUBTRACT:
@@ -70,7 +70,7 @@ public class ScrollPaneController extends KeyAdapter
                 {                       
                     dp.updateSpringLayout();
                     port.setViewPosition(new Point(oldVP.x - DrawPanel.zoomModifier.width/2, oldVP.y - DrawPanel.zoomModifier.height/2 ));
-                    frame.repaint();
+                    panel.repaint();
                 }
                 break;
         }
