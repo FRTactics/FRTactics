@@ -15,7 +15,9 @@ public class GameWindow extends JPanel
 {
     public static Dimension windowSize;
     public static JScrollPane pane = new JScrollPane();
-    
+    public GameWindow(){
+        createAndShowGUI();
+    }
     public void createAndShowGUI()
     {
         //Get the size of the windwow
