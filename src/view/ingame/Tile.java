@@ -140,10 +140,10 @@ public class Tile extends JPanel
    {
         Graphics2D g2d = (Graphics2D)g;
         
-        int hexaWidth = (MainWindow.windowSize.width /gridSize)-2;
-        int hexaHeight = MainWindow.windowSize.height/gridSize;
+        int hexaWidth = (GameWindow.windowSize.width /gridSize)-2;
+        int hexaHeight = GameWindow.windowSize.height/gridSize;
         
-        hexaHeight = (int) ((MainWindow.windowSize.height + ((hexaHeight * .25))* gridSize)/gridSize);//Should account for the extra spaceing caused by indented tiles
+        hexaHeight = (int) ((GameWindow.windowSize.height + ((hexaHeight * .25))* gridSize)/gridSize);//Should account for the extra spaceing caused by indented tiles
         switch(landType)
         {
             case WATER_TILE:

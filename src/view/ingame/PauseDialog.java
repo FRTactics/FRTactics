@@ -23,9 +23,9 @@ public class PauseDialog extends JDialog
     {
         super(frame);
         this.getRootPane().setWindowDecorationStyle(JRootPane.NONE);       
-        this.setSize(new Dimension(MainWindow.windowSize.width/3,MainWindow.windowSize.height/2));
-        int locationX = MainWindow.windowSize.width/2 - this.getWidth()/2;
-        int locationY = MainWindow.windowSize.height/2 - this.getHeight()/2;
+        this.setSize(new Dimension(GameWindow.windowSize.width/3,GameWindow.windowSize.height/2));
+        int locationX = GameWindow.windowSize.width/2 - this.getWidth()/2;
+        int locationY = GameWindow.windowSize.height/2 - this.getHeight()/2;
         this.setLocation(new Point(locationX,locationY));
         this.setContentPane(new PauseMenu(this));
         this.getRootPane().setOpaque(false);

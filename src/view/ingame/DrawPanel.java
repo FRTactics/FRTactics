@@ -37,11 +37,11 @@ public class DrawPanel extends JPanel
     public void updateSpringLayout()
     {
         boolean firstHexagonInRow = false;
-        int hexaWidth = (MainWindow.windowSize.width )/grid.length;
-        int hexaHeight = (MainWindow.windowSize.height)/grid.length;
+        int hexaWidth = (GameWindow.windowSize.width )/grid.length;
+        int hexaHeight = (GameWindow.windowSize.height)/grid.length;
         
-        hexaWidth = ((MainWindow.windowSize.width - hexaWidth) /grid.length);//To create padding around the edges
-        hexaHeight = (int) ((MainWindow.windowSize.height + ((hexaHeight * .25))* grid.length)/grid.length);//Should account for the extra spaceing caused by indented tiles
+        hexaWidth = ((GameWindow.windowSize.width - hexaWidth) /grid.length);//To create padding around the edges
+        hexaHeight = (int) ((GameWindow.windowSize.height + ((hexaHeight * .25))* grid.length)/grid.length);//Should account for the extra spaceing caused by indented tiles
         hexaHeight = (int) (hexaHeight - (hexaHeight * .25)); // To make the tiles fit into each other
         
         for(int i = 0; i < arraySize; ++i)
@@ -110,18 +110,18 @@ public class DrawPanel extends JPanel
                 return false;
         }
         
-        MainWindow.windowSize = this.getPreferredSize();
+        GameWindow.windowSize = this.getPreferredSize();
         
         for(int i = 0; i < grid.length; ++i)
         {
             for(int j =0; j < grid.length; ++j)
             {
                 Polygon polygon = new Polygon();
-                int hexaWidth = MainWindow.windowSize.width /grid.length;
-                int hexaHeight = MainWindow.windowSize.height/grid.length;
+                int hexaWidth = GameWindow.windowSize.width /grid.length;
+                int hexaHeight = GameWindow.windowSize.height/grid.length;
 
-                hexaWidth = (MainWindow.windowSize.width - hexaWidth/2) /grid.length;
-                hexaHeight = (int) ((MainWindow.windowSize.height + ((hexaHeight * .25))* grid.length)/grid.length);
+                hexaWidth = (GameWindow.windowSize.width - hexaWidth/2) /grid.length;
+                hexaHeight = (int) ((GameWindow.windowSize.height + ((hexaHeight * .25))* grid.length)/grid.length);
                 
                 polygon.npoints = 6;
                 polygon.xpoints = new int []{0,(int)(.5*hexaWidth),(int)(hexaWidth),(int)(hexaWidth),(int)(.5*hexaWidth),0};
@@ -136,11 +136,11 @@ public class DrawPanel extends JPanel
     public void placeHexagons()
     {
         boolean firstHexagonInRow = false;
-        int hexaWidth = (MainWindow.windowSize.width )/grid.length;//Creates base width for the tile
-        int hexaHeight = (MainWindow.windowSize.height)/grid.length;//Creates base height for the tile
+        int hexaWidth = (GameWindow.windowSize.width )/grid.length;//Creates base width for the tile
+        int hexaHeight = (GameWindow.windowSize.height)/grid.length;//Creates base height for the tile
         
-        hexaWidth = (MainWindow.windowSize.width - hexaWidth) /grid.length;//To create padding around the edges
-        hexaHeight = (int) ((MainWindow.windowSize.height + ((hexaHeight * .25))* grid.length)/grid.length);//Adds extra height to the tile due to spacing caused by indented tiles
+        hexaWidth = (GameWindow.windowSize.width - hexaWidth) /grid.length;//To create padding around the edges
+        hexaHeight = (int) ((GameWindow.windowSize.height + ((hexaHeight * .25))* grid.length)/grid.length);//Adds extra height to the tile due to spacing caused by indented tiles
         
         hexaHeight = (int) (hexaHeight - (hexaHeight * .25)-1); // Adjust the height varibale by a 1/4 to indent the tile
         

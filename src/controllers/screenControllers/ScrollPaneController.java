@@ -1,7 +1,7 @@
 package controllers.screenControllers;
 
 import view.ingame.DrawPanel;
-import view.ingame.MainWindow;
+import view.ingame.GameWindow;
 import view.ingame.PauseDialog;
 import view.ingame.Tile;
 import java.awt.Point;
@@ -18,7 +18,7 @@ public class ScrollPaneController extends KeyAdapter
     private final DrawPanel dp;
     private final JPanel panel;
     private final PauseDialog dialog;
-    private final JScrollPane pane = MainWindow.pane;
+    private final JScrollPane pane = GameWindow.pane;
     
     public ScrollPaneController(JViewport port, DrawPanel dp, JPanel panel, PauseDialog dialog)
     {

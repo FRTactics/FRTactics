@@ -1,7 +1,7 @@
 package model;
 
 
-import view.ingame.MainWindow;
+import view.ingame.GameWindow;
 import view.ingame.Tile;
 import java.awt.Dimension;
 import java.awt.Polygon;
@@ -223,11 +223,11 @@ public class Generator
     private void createPolygon(int x, int y)
     {
         Polygon polygon = new Polygon();
-        int hexaWidth = MainWindow.windowSize.width /grid.length;
-        int hexaHeight = MainWindow.windowSize.height/grid.length;
+        int hexaWidth = GameWindow.windowSize.width /grid.length;
+        int hexaHeight = GameWindow.windowSize.height/grid.length;
         
-        hexaWidth = (MainWindow.windowSize.width - hexaWidth/2) /grid.length;//creates extra spacing on the sides to account for indented tiles
-        hexaHeight = (int) ((MainWindow.windowSize.height + ((hexaHeight * .25))* grid.length)/grid.length);//Should account for the extra spaceing caused by indented tiles
+        hexaWidth = (GameWindow.windowSize.width - hexaWidth/2) /grid.length;//creates extra spacing on the sides to account for indented tiles
+        hexaHeight = (int) ((GameWindow.windowSize.height + ((hexaHeight * .25))* grid.length)/grid.length);//Should account for the extra spaceing caused by indented tiles
         
         polygon.npoints = 6;
         polygon.xpoints = new int []{0,(int)(.5*hexaWidth),(int)(hexaWidth),(int)(hexaWidth),(int)(.5*hexaWidth),0};

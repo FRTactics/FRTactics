@@ -10,7 +10,7 @@ import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
 import model.GameManager;
 
-public class MainWindow extends JPanel
+public class GameWindow extends JPanel
 {
     public static Dimension windowSize;
     public static JScrollPane pane = new JScrollPane();

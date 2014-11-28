@@ -8,17 +8,11 @@ package model;
 
 import java.util.ArrayList;
 import model.gameStates.GameState;
-import javax.swing.JComponent;
-import javax.swing.JFrame;
 import javax.swing.JList;
 import model.classSystem.*;
 import view.LoadoutListModel;
 import view.View;
 
-/**
- *
- * @author Charlie
- */
 public class GameManager
 {
     
@@ -63,8 +57,8 @@ public class GameManager
     
     public void initialize(View view)       // initialize view and state,
     {                                       // needs to be called right after GM is created
-        p1Loadout = new ArrayList<DefaultClass>();
-        p2Loadout = new ArrayList<DefaultClass>();
+        p1Loadout = new ArrayList<>();
+        p2Loadout = new ArrayList<>();
         setView(view);
         gState = GameState.start(this);     // start up state machine
     }
