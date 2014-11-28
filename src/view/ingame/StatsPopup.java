@@ -6,9 +6,9 @@ import model.ImageContainer;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
-import java.awt.Frame;
 import java.awt.Graphics;
 import java.awt.Image;
+import java.awt.Window;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import javax.swing.JDialog;
@@ -22,7 +22,7 @@ public class StatsPopup extends JDialog
    private DefaultClass character;
    private static StatsPopup instance;
    
-   private StatsPopup(Frame parent)
+   private StatsPopup(Window parent)
    {
        super(parent);
        getRootPane().setWindowDecorationStyle(JRootPane.NONE);       
@@ -43,7 +43,7 @@ public class StatsPopup extends JDialog
        backgroundImage = ImageContainer.getInstance().retrieveMenuImage(ImageContainer.MenuImage.POPUP_BACKGROUND);
    }
    
-   public static void createInstance(Frame parent)
+   public static void createInstance(Window parent)
    {
        if(instance == null)
            instance = new StatsPopup(parent);
