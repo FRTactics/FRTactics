@@ -8,22 +8,17 @@ package view;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.dnd.DropTarget;
 import java.awt.dnd.DropTargetListener;
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import java.util.HashMap;
-import javafx.scene.control.SelectionMode;
-import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.DefaultListCellRenderer;
@@ -35,8 +30,6 @@ import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
-import javax.swing.LayoutStyle;
-import javax.swing.ListSelectionModel;
 import model.ImageContainer;
 import model.classSystem.*;
 /**
@@ -128,17 +121,19 @@ public class LoadoutMenu extends JPanel {             // still a work in progres
     private CustomLabel wizardLabel;
     
     private final Image background;
-    private GameButton continueButton;
-    private GameButton backButton;
-    private JButton removeButton;
+    private MenuButton continueButton;
+    private MenuButton backButton;
+    private MenuButton removeButton;
     private DropTarget dropTarget;
+    private final Font font;
     
     public LoadoutMenu(Image image) {
         // initialize everything first
+        font = new Font("Comic Sans MS" , Font.PLAIN, 20);
         imageMap = createImageMap();
         background = image;
         topBuffer = new JPanel();
-        topBuffer.setPreferredSize(new Dimension(500,200));
+        topBuffer.setPreferredSize(new Dimension(500,220));
         initButtonPanel();
         initLoadoutPanel();
         initChoicePanel();
@@ -159,22 +154,22 @@ public class LoadoutMenu extends JPanel {             // still a work in progres
         loadoutList.setDragEnabled(false);
     }
     // initializes the Button JPanel, located on the right side of the screen
-    public void initButtonPanel(){
+    private void initButtonPanel(){
         buttonPanel = new JPanel();
         buttonPanel.setPreferredSize(new Dimension(400,100));
-        continueButton = new GameButton(ImageContainer.getInstance().retrieveMenuImage(ImageContainer.MenuImage.NEW_GAME_SWORD));
-        backButton = new GameButton(ImageContainer.getInstance().retrieveMenuImage(ImageContainer.MenuImage.QUIT_SWORD));
+        continueButton = new MenuButton(ImageContainer.getInstance().retrieveMenuImage(ImageContainer.MenuImage.MENU_CONTINUE));
+        backButton = new MenuButton(ImageContainer.getInstance().retrieveMenuImage(ImageContainer.MenuImage.MENU_BACK));
         buttonPanel.add(continueButton);
         buttonPanel.add(backButton);
     }
     // initializes the loadout panel, located on the left side of the screen
-    public void initLoadoutPanel(){ 
+    private void initLoadoutPanel(){ 
         loadoutPanel = new JPanel();
         leftPanel = new JPanel();
         leftPanel.setLayout(new BoxLayout(leftPanel, BoxLayout.X_AXIS));
         loadoutPanel.setLayout(new BoxLayout(loadoutPanel, BoxLayout.Y_AXIS));
         //loadoutPanel.setLayout(new BoxLayout(loadoutPanel, BoxLayout.Y_AXIS));
-        removeButton = new JButton("Remove Unit");
+        removeButton = new MenuButton(ImageContainer.getInstance().retrieveMenuImage(ImageContainer.MenuImage.MENU_REMOVE));
         loadoutPanel.setPreferredSize(new Dimension(400,600));
         LoadoutListModel model = new LoadoutListModel();
         loadoutList = new JList(model);
@@ -188,14 +183,15 @@ public class LoadoutMenu extends JPanel {             // still a work in progres
         loadoutPanel.add(Box.createVerticalGlue());
         loadoutPanel.add(removeButton);
         loadoutPanel.add(Box.createRigidArea(new Dimension(100,100)));
+        leftPanel.add(Box.createRigidArea(new Dimension(60,100)));
         leftPanel.add(loadoutPanel);
-        leftPanel.add(Box.createRigidArea(new Dimension(100,100)));
+        leftPanel.add(Box.createRigidArea(new Dimension(60,100)));
         loadoutList.setDragEnabled(true);
         loadoutList.setPreferredSize(new Dimension(350,loadoutPanel.getPreferredSize().height));
         loadoutList.setOpaque(true);
     }
     // initializes the center panel, which contains a panel that holds all of the player choices
-    public void initChoicePanel(){
+    private void initChoicePanel(){
         centerPanel = new JPanel();
         
         centerPanel.setLayout(new BoxLayout(centerPanel, BoxLayout.Y_AXIS));
@@ -219,48 +215,67 @@ public class LoadoutMenu extends JPanel {             // still a work in progres
         
     }
     // initialize the status panel with all of the labels needed
-    public void initStatsPanel(){
+    private void initStatsPanel(){
         statsPanel = new JPanel();
         // permanent labels
         
-        statsLabel= new JLabel("Stats");
-        classLabel = new JLabel("Class:"); 
-        meleeAttackRangeLabel = new JLabel("Attack Range:");
-        movementRangeLabel = new JLabel("Movement Range:");
-        mpLabel = new JLabel("MP:");
-        hpLabel = new JLabel("HP:");
-        strengthLabel = new JLabel("Strength:");
-        agilityLabel = new JLabel("Agility:");
-        meleeDamageLabel = new JLabel("Melee Damage:");
-        rangedDamageLabel = new JLabel("Ranged Damage:");
-        spellDamageLabel = new JLabel("SpellDamage:");
-        rangedAttackRangeLabel = new JLabel("Ranged Attack Range:");
-        movementRangeLabel = new JLabel("Movement Range:");
-        dexterityLabel = new JLabel("Dexterity:");
-        vitalityLabel = new JLabel("Vitality:");
-        intelligenceLabel = new JLabel("Intelligence:");
-        dodgeChanceLabel = new JLabel("Dodge Chance:");
-        healthRegenLabel = new JLabel("Health Regen:");
-        armorLabel = new JLabel("Armor:");
+        statsLabel= new JLabel(new ImageIcon(ImageContainer.getInstance().retrieveStatusLabelImages(ImageContainer.StatusLabelImage.STATS).getScaledInstance(100, 50, 0)));
+        classLabel = new JLabel(new ImageIcon(ImageContainer.getInstance().retrieveStatusLabelImages(ImageContainer.StatusLabelImage.CLASS).getScaledInstance(80, 40, 0)));
+        meleeAttackRangeLabel = new JLabel(new ImageIcon(ImageContainer.getInstance().retrieveStatusLabelImages(ImageContainer.StatusLabelImage.ATTACK_RANGE).getScaledInstance(120, 40, 0)));
+        movementRangeLabel = new JLabel(new ImageIcon(ImageContainer.getInstance().retrieveStatusLabelImages(ImageContainer.StatusLabelImage.MOVEMENT_RANGE).getScaledInstance(120, 40, 0)));
+        mpLabel = new JLabel(new ImageIcon(ImageContainer.getInstance().retrieveStatusLabelImages(ImageContainer.StatusLabelImage.MP).getScaledInstance(80, 40, 0)));
+        hpLabel = new JLabel(new ImageIcon(ImageContainer.getInstance().retrieveStatusLabelImages(ImageContainer.StatusLabelImage.HP).getScaledInstance(80, 40, 0)));
+        strengthLabel = new JLabel(new ImageIcon(ImageContainer.getInstance().retrieveStatusLabelImages(ImageContainer.StatusLabelImage.STRENGTH).getScaledInstance(80, 40, 0)));
+        agilityLabel = new JLabel(new ImageIcon(ImageContainer.getInstance().retrieveStatusLabelImages(ImageContainer.StatusLabelImage.AGILITY).getScaledInstance(80, 40, 0)));
+        meleeDamageLabel = new JLabel(new ImageIcon(ImageContainer.getInstance().retrieveStatusLabelImages(ImageContainer.StatusLabelImage.MELEE_DAMAGE).getScaledInstance(120, 40, 0)));
+        rangedDamageLabel = new JLabel(new ImageIcon(ImageContainer.getInstance().retrieveStatusLabelImages(ImageContainer.StatusLabelImage.RANGED_DAMAGE).getScaledInstance(120, 40, 0)));
+        spellDamageLabel = new JLabel(new ImageIcon(ImageContainer.getInstance().retrieveStatusLabelImages(ImageContainer.StatusLabelImage.SPELL_DAMAGE).getScaledInstance(120, 40, 0)));
+        rangedAttackRangeLabel = new JLabel(new ImageIcon(ImageContainer.getInstance().retrieveStatusLabelImages(ImageContainer.StatusLabelImage.RANGED_ATTACK_RANGE).getScaledInstance(80, 40, 0)));
+        movementRangeLabel = new JLabel(new ImageIcon(ImageContainer.getInstance().retrieveStatusLabelImages(ImageContainer.StatusLabelImage.MOVEMENT_RANGE).getScaledInstance(120, 40, 0)));
+        dexterityLabel = new JLabel(new ImageIcon(ImageContainer.getInstance().retrieveStatusLabelImages(ImageContainer.StatusLabelImage.DEXTERITY).getScaledInstance(120, 40, 0)));
+        vitalityLabel = new JLabel(new ImageIcon(ImageContainer.getInstance().retrieveStatusLabelImages(ImageContainer.StatusLabelImage.VITALITY).getScaledInstance(120, 40, 0)));
+        intelligenceLabel = new JLabel(new ImageIcon(ImageContainer.getInstance().retrieveStatusLabelImages(ImageContainer.StatusLabelImage.INTELLIGENCE).getScaledInstance(120, 40, 0)));
+        dodgeChanceLabel = new JLabel(new ImageIcon(ImageContainer.getInstance().retrieveStatusLabelImages(ImageContainer.StatusLabelImage.DODGE_CHANCE).getScaledInstance(120, 40, 0)));
+        healthRegenLabel = new JLabel(new ImageIcon(ImageContainer.getInstance().retrieveStatusLabelImages(ImageContainer.StatusLabelImage.HEALTH_REGEN).getScaledInstance(120, 40, 0)));
+        armorLabel = new JLabel(new ImageIcon(ImageContainer.getInstance().retrieveStatusLabelImages(ImageContainer.StatusLabelImage.ARMOR).getScaledInstance(80, 40, 0)));
+        
         // labels that can be changed
         classNameLabel = new JLabel("-------"); 
+        classNameLabel.setFont(font);
         movementRangeValueLabel = new JLabel("--");
+        movementRangeValueLabel.setFont(font);
         mpValueLabel = new JLabel("--");
+        mpValueLabel.setFont(font);
         hpValueLabel = new JLabel("--");
+        hpValueLabel.setFont(font);
         strengthValueLabel = new JLabel("--");
+        strengthValueLabel.setFont(font);
         agilityValueLabel = new JLabel("--");
+        agilityValueLabel.setFont(font);
         meleeDamageValueLabel = new JLabel("--");
+        meleeDamageValueLabel.setFont(font);
         rangedDamageValueLabel = new JLabel("--");
+        rangedDamageValueLabel.setFont(font);
         spellDamageValueLabel = new JLabel("--");
+        spellDamageValueLabel.setFont(font);
         meleeAttackRangeValueLabel = new JLabel("--");
+        meleeAttackRangeValueLabel.setFont(font);
         rangedAttackRangeValueLabel = new JLabel("--");
+        rangedAttackRangeValueLabel.setFont(font);
         movementRangeValueLabel = new JLabel("--");
+        movementRangeValueLabel.setFont(font);
         dexterityValueLabel = new JLabel("--");
+        dexterityValueLabel.setFont(font);
         vitalityValueLabel = new JLabel("--");
+        vitalityValueLabel.setFont(font);
         intelligenceValueLabel = new JLabel("--");
+        intelligenceValueLabel.setFont(font);
         dodgeChanceValueLabel = new JLabel("--");
+        dodgeChanceValueLabel.setFont(font);
         healthRegenValueLabel = new JLabel("--");
+        healthRegenValueLabel.setFont(font);
         armorValueLabel = new JLabel("--");
+        armorValueLabel.setFont(font);
         // fuck this
         statsLabel.setForeground(Color.WHITE);
         classLabel.setForeground(Color.WHITE);
@@ -315,53 +330,53 @@ public class LoadoutMenu extends JPanel {             // still a work in progres
         statsLayout.setAutoCreateContainerGaps(true);
         statsLayout.setHorizontalGroup(
             statsLayout.createSequentialGroup()
-                .addGroup(statsLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                .addGroup(statsLayout.createParallelGroup(GroupLayout.Alignment.CENTER)
                         .addComponent(statsLabel)
                         .addComponent(classLabel)
                         .addComponent(hpLabel)
                         .addComponent(mpLabel)
                         .addComponent(strengthLabel)
                         .addComponent(agilityLabel))
-                .addGroup(statsLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                .addGroup(statsLayout.createParallelGroup(GroupLayout.Alignment.CENTER)
                         .addComponent(column2TempLabel)
                         .addComponent(classNameLabel)
                         .addComponent(hpValueLabel)
                         .addComponent(mpValueLabel)
                         .addComponent(strengthValueLabel)
                         .addComponent(agilityValueLabel))
-                .addGroup(statsLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                .addGroup(statsLayout.createParallelGroup(GroupLayout.Alignment.CENTER)
                         .addComponent(column3TempLabel)
                         .addComponent(meleeDamageLabel)
                         .addComponent(rangedDamageLabel)
                         .addComponent(spellDamageLabel)
                         .addComponent(meleeAttackRangeLabel)
                         .addComponent(rangedAttackRangeLabel))
-                .addGroup(statsLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                .addGroup(statsLayout.createParallelGroup(GroupLayout.Alignment.CENTER)
                         .addComponent(column4TempLabel)
                         .addComponent(meleeDamageValueLabel)
                         .addComponent(rangedDamageValueLabel)
                         .addComponent(spellDamageValueLabel)
                         .addComponent(meleeAttackRangeValueLabel)
                         .addComponent(rangedAttackRangeValueLabel))
-                .addGroup(statsLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                .addGroup(statsLayout.createParallelGroup(GroupLayout.Alignment.CENTER)
                         .addComponent(column5TempLabel)
                         .addComponent(movementRangeLabel)
                         .addComponent(dexterityLabel)
                         .addComponent(vitalityLabel)
                         .addComponent(intelligenceLabel)
                         .addComponent(dodgeChanceLabel))
-                .addGroup(statsLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                .addGroup(statsLayout.createParallelGroup(GroupLayout.Alignment.CENTER)
                         .addComponent(column6TempLabel)
                         .addComponent(movementRangeValueLabel)
                         .addComponent(dexterityValueLabel)
                         .addComponent(vitalityValueLabel)
                         .addComponent(intelligenceValueLabel)
                         .addComponent(dodgeChanceValueLabel))
-                .addGroup(statsLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                .addGroup(statsLayout.createParallelGroup(GroupLayout.Alignment.CENTER)
                         .addComponent(column7TempLabel)
                         .addComponent(healthRegenLabel)
                         .addComponent(armorLabel))
-                .addGroup(statsLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                .addGroup(statsLayout.createParallelGroup(GroupLayout.Alignment.CENTER)
                         .addComponent(column8TempLabel)
                         .addComponent(healthRegenValueLabel)
                         .addComponent(armorValueLabel))
@@ -370,7 +385,7 @@ public class LoadoutMenu extends JPanel {             // still a work in progres
         
         statsLayout.setVerticalGroup(
             statsLayout.createSequentialGroup()
-                .addGroup(statsLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                .addGroup(statsLayout.createParallelGroup(GroupLayout.Alignment.CENTER)
                         .addComponent(statsLabel)
                         .addComponent(column2TempLabel)
                         .addComponent(column3TempLabel)
@@ -379,7 +394,7 @@ public class LoadoutMenu extends JPanel {             // still a work in progres
                         .addComponent(column6TempLabel)
                         .addComponent(column7TempLabel)
                         .addComponent(column8TempLabel))
-                .addGroup(statsLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)    
+                .addGroup(statsLayout.createParallelGroup(GroupLayout.Alignment.CENTER)    
                         .addComponent(classLabel)
                         .addComponent(classNameLabel)
                         .addComponent(meleeDamageLabel)
@@ -388,7 +403,7 @@ public class LoadoutMenu extends JPanel {             // still a work in progres
                         .addComponent(movementRangeValueLabel)
                         .addComponent(healthRegenLabel)
                         .addComponent(healthRegenValueLabel))
-                .addGroup(statsLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)   
+                .addGroup(statsLayout.createParallelGroup(GroupLayout.Alignment.CENTER)   
                         .addComponent(hpLabel)
                         .addComponent(hpValueLabel)
                         .addComponent(rangedDamageLabel)
@@ -397,21 +412,21 @@ public class LoadoutMenu extends JPanel {             // still a work in progres
                         .addComponent(dexterityValueLabel)
                         .addComponent(armorLabel)
                         .addComponent(armorValueLabel))
-                .addGroup(statsLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)   
+                .addGroup(statsLayout.createParallelGroup(GroupLayout.Alignment.CENTER)   
                         .addComponent(mpLabel)
                         .addComponent(mpValueLabel)
                         .addComponent(spellDamageLabel)
                         .addComponent(spellDamageValueLabel)
                         .addComponent(vitalityLabel)
                         .addComponent(vitalityValueLabel))
-                .addGroup(statsLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)   
+                .addGroup(statsLayout.createParallelGroup(GroupLayout.Alignment.CENTER)   
                         .addComponent(strengthLabel)
                         .addComponent(strengthValueLabel)
                         .addComponent(meleeAttackRangeLabel)
                         .addComponent(meleeAttackRangeValueLabel)
                         .addComponent(intelligenceLabel)
                         .addComponent(intelligenceValueLabel))
-                .addGroup(statsLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)   
+                .addGroup(statsLayout.createParallelGroup(GroupLayout.Alignment.CENTER)   
                         .addComponent(agilityLabel)
                         .addComponent(agilityValueLabel)
                         .addComponent(rangedAttackRangeLabel)
@@ -420,13 +435,15 @@ public class LoadoutMenu extends JPanel {             // still a work in progres
                         .addComponent(dodgeChanceValueLabel))
         );
     }
-    public void populateChoiceList(){
+    private void populateChoiceList(){
         choiceList.add(new CustomLabel("Archer", JLabel.CENTER, ImageContainer.getInstance().retrieveCharacterImage(ImageContainer.CharacterImage.ARCHER), new ArcherClass()));
         choiceList.add(new CustomLabel("Warrior", JLabel.CENTER, ImageContainer.getInstance().retrieveCharacterImage(ImageContainer.CharacterImage.WARRIOR), new WarriorClass()));
         choiceList.add(new CustomLabel("Rogue", JLabel.CENTER, ImageContainer.getInstance().retrieveCharacterImage(ImageContainer.CharacterImage.ROGUE), new RogueClass()));
         choiceList.add(new CustomLabel("Wizard", JLabel.CENTER, ImageContainer.getInstance().retrieveCharacterImage(ImageContainer.CharacterImage.WIZARD), new WizardClass()));
         choiceList.add(new CustomLabel("Healer", JLabel.CENTER, ImageContainer.getInstance().retrieveCharacterImage(ImageContainer.CharacterImage.HEALER), new HealerClass()));
-        
+        for(int i = 0; i < choiceList.size(); i++){
+            choiceList.get(i).setFont(font);
+        }
     }
     @Override
     public void paintComponent(Graphics g){
@@ -462,8 +479,8 @@ public class LoadoutMenu extends JPanel {             // still a work in progres
        backButton.addMouseListener(adapter);
       
    }
-   public void addRemoveButtonController(ActionListener listener){
-       removeButton.addActionListener(listener);
+   public void addRemoveButtonController(MouseAdapter adapter){
+       removeButton.addMouseListener(adapter);
    }
    public void addLabelListener(CustomLabel label, MouseAdapter adapter){
        label.addMouseListener(adapter);
@@ -484,8 +501,10 @@ public class LoadoutMenu extends JPanel {             // still a work in progres
    public void addLoadoutListDropHandler(DropTargetListener handler){
        dropTarget = new DropTarget(loadoutList, handler);
    }
-   // get methods for the choice Labels
    
+   public Font getLabelFont(){
+       return font;
+   }
    
    // getter methods for the stats labels
    public JLabel getClassNameLabel(){

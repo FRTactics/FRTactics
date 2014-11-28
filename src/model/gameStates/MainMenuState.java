@@ -46,7 +46,10 @@ public class MainMenuState extends GameState{       // state that handles all ev
     }
 
     @Override
-    protected void enter() {            // upon entry of the state, move the associated screen to the front
+    protected void enter() {            
+       // upon entry, clear out the loadouts
+       gm.clearLoadouts();
+       // then move the associated screen to the front
        CardLayout layout = (CardLayout)gm.getView().getLayout();
        layout.show(gm.getView(), GameManager.MAIN_MENU);
        System.out.println("In MainMenu");

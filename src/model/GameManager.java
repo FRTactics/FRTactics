@@ -6,9 +6,11 @@
 
 package model;
 
+import java.util.ArrayList;
 import model.gameStates.GameState;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
+import model.classSystem.*;
 import view.View;
 
 /**
@@ -17,6 +19,7 @@ import view.View;
  */
 public class GameManager
 {
+    
     protected static GameState gState;              // abstract game state
     protected View gameView;                        // game view, needed for switching screens
     private static GameManager instance;            // instance used to implement singleton design
@@ -27,6 +30,9 @@ public class GameManager
     public final static String OPTIONS_MENU = "Option Menu";
     public final static String SETTINGS_MENU = "Settings Menu";
     public final static String INGAME = "InGame";
+    // ArrayLists for the player loadouts
+    private ArrayList<DefaultClass> p1Loadout;
+    private ArrayList<DefaultClass> p2Loadout;
     // menu events
     public static final int NEW_GAME_SELECTED = 10;
     public static final int EXIT_SELECTED = 20;
@@ -52,6 +58,8 @@ public class GameManager
     
     public void initialize(View view)       // initialize view and state,
     {                                       // needs to be called right after GM is created
+        p1Loadout = new ArrayList<DefaultClass>();
+        p2Loadout = new ArrayList<DefaultClass>();
         setView(view);
         gState = GameState.start(this);     // start up state machine
     }
@@ -83,6 +91,34 @@ public class GameManager
     {
         getView().getParent().setVisible(false);
         System.exit(0);
+    }
+    public void populateLoadout(ArrayList<String> source, ArrayList <DefaultClass> target){
+        target.clear();         // clear the target before hand
+        for(int i = 0; i < source.size(); i++){
+            switch(source.get(i)){
+                case "Warrior":
+                    target.add(new WarriorClass());
+                    break;
+                case "Archer":
+                    target.add(new ArcherClass());
+                    break;
+                case "Rogue":
+                    target.add(new RogueClass());
+                    break;
+                case "Healer":
+                    target.add(new HealerClass());
+                    break;
+                case "Wizard":
+                    target.add(new WizardClass());
+                    break;
+                default:
+                    break;
+            }
+        }
+    }
+    public void clearLoadouts(){    // clear the loadouts
+        p1Loadout.clear();
+        p2Loadout.clear();
     }
     public static void setPlayerTurn(int player)            // not sure if this will stay or be added to the Combat Manager when we make it
     {

@@ -13,18 +13,18 @@ import model.ImageContainer;
 public class MainMenu extends JPanel 
 {
     // buttons
-    private final GameButton newGameButton;
-    private final GameButton optionsButton;
-    private final GameButton quitButton;
+    private final MainMenuSwordButton newGameButton;
+    private final MainMenuSwordButton optionsButton;
+    private final MainMenuSwordButton quitButton;
     // containers
     private final JPanel buttonPanel;
     private final Image background;
     public MainMenu()
     {
         // instantiate all of the buttons with the appropriate images
-        newGameButton = new GameButton(ImageContainer.getInstance().retrieveMenuImage(ImageContainer.MenuImage.NEW_GAME_SWORD));
-        optionsButton = new GameButton(ImageContainer.getInstance().retrieveMenuImage(ImageContainer.MenuImage.OPTIONS_SWORD));
-        quitButton = new GameButton(ImageContainer.getInstance().retrieveMenuImage(ImageContainer.MenuImage.QUIT_SWORD));
+        newGameButton = new MainMenuSwordButton(ImageContainer.getInstance().retrieveMenuImage(ImageContainer.MenuImage.NEW_GAME_SWORD));
+        optionsButton = new MainMenuSwordButton(ImageContainer.getInstance().retrieveMenuImage(ImageContainer.MenuImage.OPTIONS_SWORD));
+        quitButton = new MainMenuSwordButton(ImageContainer.getInstance().retrieveMenuImage(ImageContainer.MenuImage.QUIT_SWORD));
         buttonPanel = new JPanel();        // create button panel, which holds all of the buttons
         buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.Y_AXIS));    // used box layout because it's awesome
         buttonPanel.setOpaque(false);
@@ -63,15 +63,15 @@ public class MainMenu extends JPanel
     }
     
     // getter methods
-    public GameButton getNewGameButton()                            // getter method for the new game button 
+    public MainMenuSwordButton getNewGameButton()                            // getter method for the new game button 
     {
         return newGameButton;
     }
-    public GameButton getOptionsButton()                            // getter method for the options button
+    public MainMenuSwordButton getOptionsButton()                            // getter method for the options button
     {
         return optionsButton;
     }
-    public GameButton getQuitButton()                               // getter method for the quit button
+    public MainMenuSwordButton getQuitButton()                               // getter method for the quit button
     {
         return quitButton;
     }

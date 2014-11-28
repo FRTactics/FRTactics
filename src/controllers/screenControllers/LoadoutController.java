@@ -28,10 +28,11 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import model.GameManager;
+import model.ImageContainer;
 import view.CustomLabel;
 import view.LoadoutListModel;
 import view.LoadoutMenu;
-import view.StringFlavor;
+import model.StringFlavor;
 
 /**
  *
@@ -50,7 +51,7 @@ public class LoadoutController extends EventHandler{ // since both P1 and P2 Loa
         loadoutMenu.setLoadoutListCellRenderer(new LoadoutListCellRenderer());
         loadoutMenu.addLoadoutListDropHandler(new DropHandler());
         addLabelListeners();
-        System.out.println("Listener added ok");
+        
     }
     public void addLabelListeners(){
         ArrayList<CustomLabel> choices = loadoutMenu.getChoiceList();
@@ -92,33 +93,55 @@ public class LoadoutController extends EventHandler{ // since both P1 and P2 Loa
             }
             label.setForeground(Color.red);
             label.setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
-            loadoutMenu.getClassNameLabel().setText(label.getUnit().getClassName());
-            loadoutMenu.getMeleeAttackRangeValueLabel().setText(((Double)label.getUnit().getBaseHealth()).toString());
-            loadoutMenu.getMovementRangeValueLabel().setText(((Double)label.getUnit().getBaseMovementRange()).toString());
-            loadoutMenu.getMPValueLabel().setText(((Double)label.getUnit().getBaseMP()).toString());
-            loadoutMenu.getHPValueLabel().setText(((Double)label.getUnit().getBaseHealth()).toString());
-            loadoutMenu.getStrengthValueLabel().setText(((Double)label.getUnit().getBaseStrength()).toString());
-            loadoutMenu.getAgilityValueLabel().setText(((Double)label.getUnit().getBaseAgility()).toString());
-            loadoutMenu.getMeleeDamageValueLabel().setText(((Double)label.getUnit().getBaseMeleeDamage()).toString());
-            loadoutMenu.getRangedDamageValueLabel().setText(((Double)label.getUnit().getBaseRangedDamage()).toString());
-            loadoutMenu.getSpellDamageValueLabel().setText(((Double)label.getUnit().getBaseSpellDamage()).toString());
-            loadoutMenu.getMeleeAttackRangeValueLabel().setText(((Double)label.getUnit().getBaseMeleeAttackRange()).toString());
-            loadoutMenu.getRangedAttackRangeValueLabel().setText(((Double)label.getUnit().getBaseRangedAttackRange()).toString());
-            loadoutMenu.getMovementRangeValueLabel().setText(((Double)label.getUnit().getBaseMovementRange()).toString());
-            loadoutMenu.getDexterityValueLabel().setText(((Double)label.getUnit().getBaseDexterity()).toString());
-            loadoutMenu.getVitalityValueLabel().setText(((Double)label.getUnit().getBaseVitality()).toString());
-            loadoutMenu.getIntelligenceValueLabel().setText(((Double)label.getUnit().getBaseIntelligence()).toString());
-            loadoutMenu.getDodgeChanceValueLabel().setText(((Double)label.getUnit().getBaseDodgeChance()).toString());
-            loadoutMenu.getHealthRegenValueLabel().setText(((Double)label.getUnit().getBaseHealthRegen()).toString());
-            loadoutMenu.getArmorValueLabel().setText(((Double)label.getUnit().getBaseArmor()).toString());
+            //loadoutMenu.getClassNameLabel().setText(label.getUnit().getClassName());
+            loadoutMenu.getClassNameLabel().setText("");
+            switch(label.getUnit().getClassName()){
+                case "Warrior":
+                    loadoutMenu.getClassNameLabel().setIcon(new ImageIcon(ImageContainer.getInstance().retrieveStatusLabelImages(ImageContainer.StatusLabelImage.WARRIOR_TEXT).getScaledInstance(80, 40, 0)));
+                    break;
+                case "Wizard":
+                    loadoutMenu.getClassNameLabel().setIcon(new ImageIcon(ImageContainer.getInstance().retrieveStatusLabelImages(ImageContainer.StatusLabelImage.WIZARD_TEXT).getScaledInstance(80, 40, 0)));
+                    break;
+                case "Rogue":
+                    loadoutMenu.getClassNameLabel().setIcon(new ImageIcon(ImageContainer.getInstance().retrieveStatusLabelImages(ImageContainer.StatusLabelImage.ROGUE_TEXT).getScaledInstance(80, 40, 0)));
+                    break;
+                case "Healer":
+                    loadoutMenu.getClassNameLabel().setIcon(new ImageIcon(ImageContainer.getInstance().retrieveStatusLabelImages(ImageContainer.StatusLabelImage.HEALER_TEXT).getScaledInstance(80, 40, 0)));
+                    break;
+                case "Archer":
+                    loadoutMenu.getClassNameLabel().setIcon(new ImageIcon(ImageContainer.getInstance().retrieveStatusLabelImages(ImageContainer.StatusLabelImage.ARCHER_TEXT).getScaledInstance(80, 40, 0)));
+                    break;
+                default:
+                    return;
+                    
+            }
+            
+            loadoutMenu.getMeleeAttackRangeValueLabel().setText("" + (int)label.getUnit().getBaseHealth());
+            loadoutMenu.getMovementRangeValueLabel().setText("" + (int)label.getUnit().getBaseMovementRange());
+            loadoutMenu.getMPValueLabel().setText("" +(int)label.getUnit().getBaseMP());
+            loadoutMenu.getHPValueLabel().setText("" + (int)label.getUnit().getBaseHealth());
+            loadoutMenu.getStrengthValueLabel().setText("" + (int)label.getUnit().getBaseStrength());
+            loadoutMenu.getAgilityValueLabel().setText("" + (int)label.getUnit().getBaseAgility());
+            loadoutMenu.getMeleeDamageValueLabel().setText("" + (int)label.getUnit().getBaseMeleeDamage());
+            loadoutMenu.getRangedDamageValueLabel().setText("" + (int)label.getUnit().getBaseRangedDamage());
+            loadoutMenu.getSpellDamageValueLabel().setText("" + (int)label.getUnit().getBaseSpellDamage());
+            loadoutMenu.getMeleeAttackRangeValueLabel().setText("" + (int)label.getUnit().getBaseMeleeAttackRange());
+            loadoutMenu.getRangedAttackRangeValueLabel().setText("" + (int)label.getUnit().getBaseRangedAttackRange());
+            loadoutMenu.getMovementRangeValueLabel().setText("" + label.getUnit().getBaseMovementRange());
+            loadoutMenu.getDexterityValueLabel().setText("" + (int)label.getUnit().getBaseDexterity());
+            loadoutMenu.getVitalityValueLabel().setText("" + (int)label.getUnit().getBaseVitality());
+            loadoutMenu.getIntelligenceValueLabel().setText("" + (int)label.getUnit().getBaseIntelligence());
+            loadoutMenu.getDodgeChanceValueLabel().setText("" + (int)label.getUnit().getBaseDodgeChance());
+            loadoutMenu.getHealthRegenValueLabel().setText("" + (int)label.getUnit().getBaseHealthRegen());
+            loadoutMenu.getArmorValueLabel().setText("" + (int)label.getUnit().getBaseArmor());
             
            label.updateUI();
        }  
    }
-    private class RemoveButtonListener implements ActionListener{
+    private class RemoveButtonListener extends MouseAdapter{
 
         @Override
-        public void actionPerformed(ActionEvent e) {
+        public void mousePressed(MouseEvent e) {
             if(loadoutMenu.getLoadoutJList().getSelectedIndex() != -1 && loadoutMenu.getLoadoutJList().getModel().getSize() != 0){
                 ((LoadoutListModel)(loadoutMenu.getLoadoutJList().getModel())).removeElementAt(loadoutMenu.getLoadoutJList().getSelectedIndex());
                 loadoutMenu.getLoadoutJList().updateUI();
@@ -133,6 +156,7 @@ public class LoadoutController extends EventHandler{ // since both P1 and P2 Loa
            //CustomLabel label = new CustomLabel((String)value, JLabel.CENTER, imageMap.get((String)value));
            //label.setIcon(new ImageIcon(imageMap.get((String) value).getScaledInstance(75, 75, 0)));
            label.setName((String)value);
+           label.setFont(loadoutMenu.getLabelFont());
            label.setIcon(new ImageIcon(imageMap.get((String)value).getScaledInstance(100, 100, 0)));
            Color c = label.getBackground();
            
@@ -195,10 +219,8 @@ public class LoadoutController extends EventHandler{ // since both P1 and P2 Loa
                                    listModel.addElement(string);
                                }
 
-                               list.setModel(listModel);
-                               for(int i = 0; i < listModel.getSize(); i++){
-                                   System.out.println(listModel.getElementAt(i));
-                               }
+                               //list.setModel(listModel);
+                               
                                dtde.acceptDrop(DnDConstants.ACTION_COPY);
                                list.invalidate();
                                list.updateUI();
@@ -222,6 +244,7 @@ public class LoadoutController extends EventHandler{ // since both P1 and P2 Loa
                    dtde.dropComplete(success);
                }
            }
+           
 
        }
 

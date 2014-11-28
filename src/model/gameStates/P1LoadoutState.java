@@ -57,6 +57,7 @@ public class P1LoadoutState extends GameState{
         for(int i = 0; i < temp.getLoadout().size(); i++){
             System.out.println(temp.getLoadout().get(i));
         }
+        
     }
 
 

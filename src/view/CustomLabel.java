@@ -72,7 +72,6 @@ public class CustomLabel extends JLabel implements DragGestureListener, DragSour
             Transferable t = new StringSelection(getText());
 
             try{
-                System.out.println("HEY");
                 e.startDrag(DragSource.DefaultCopyNoDrop, image.getScaledInstance(100, 100, 0),new Point(0,0), t, this);
             }
             catch(Exception ex){
@@ -86,10 +85,8 @@ public class CustomLabel extends JLabel implements DragGestureListener, DragSour
 
     @Override
     public void dragDropEnd(DragSourceDropEvent e) {
-        System.out.println("Drag and drop end");
 
         if (e.getDropSuccess() == false) {
-            System.out.println("unsuccessful");
             return;
         }
 
@@ -100,7 +97,6 @@ public class CustomLabel extends JLabel implements DragGestureListener, DragSour
 
     @Override
     public void dragEnter(DragSourceDragEvent e) {
-        System.out.println("Entering drop target #2");
 
         DragSourceContext ctx = e.getDragSourceContext();
 
@@ -117,17 +113,16 @@ public class CustomLabel extends JLabel implements DragGestureListener, DragSour
     public void dragExit(DragSourceEvent e) {
         DragSourceContext ctx = e.getDragSourceContext();
         ctx.setCursor(DragSource.DefaultCopyNoDrop);
-        System.out.println("Exiting drop target #2");
     }
 
     @Override
     public void dragOver(DragSourceDragEvent e) {
-        System.out.println("Dragging over drop target #2");
+        // do nothing
     }
 
     @Override
     public void dropActionChanged(DragSourceDragEvent e) {
-        System.out.println("Drop action changed #2");
+        // do nothing
     }
 }
 

@@ -12,7 +12,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.JPanel;
 import model.GameManager;
-import view.GameButton;
+import view.MainMenuSwordButton;
 import view.MainMenu;
 
 /**
@@ -30,7 +30,7 @@ public class MainMenuController extends EventHandler{
         // add listeners to view (views should have methods that allow listeners to be added to specific components
     }
     public class StartButtonListener extends MouseAdapter{      // listener for the start button
-        private GameButton button;
+        private MainMenuSwordButton button;
         public StartButtonListener(){              
             button = menu.getNewGameButton();
         }
@@ -48,7 +48,7 @@ public class MainMenuController extends EventHandler{
        }
     }
     public class QuitButtonListener extends MouseAdapter{       // exit button listener
-        private GameButton button;
+        private MainMenuSwordButton button;
         public QuitButtonListener(){
             button = menu.getQuitButton();
         }
@@ -66,7 +66,7 @@ public class MainMenuController extends EventHandler{
        }
     }
     public class OptionsButtonListener extends MouseAdapter{     // options button listener
-        private GameButton button;
+        private MainMenuSwordButton button;
         public OptionsButtonListener(){
             button = menu.getOptionsButton();
         }

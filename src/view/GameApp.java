@@ -90,7 +90,7 @@ public class GameApp{
         //frame.setUndecorated(true);
         frame.setLayout(new BorderLayout());
         frame.add(view, BorderLayout.CENTER);   // add the view to the frame
-        frame.setMinimumSize(new Dimension(1500, 900));
+        frame.setMinimumSize(new Dimension(1600, 900));
         frame.setVisible(true);                 // allow the frame to be visible
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);       
     }
