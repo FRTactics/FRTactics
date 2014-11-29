@@ -4,11 +4,9 @@ package view.ingame;
 import controllers.screenControllers.ScrollPaneController;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
-import java.awt.Window;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
-import model.GameManager;
 import view.GameApp;
 
 public class GameWindow extends JPanel
@@ -21,7 +19,7 @@ public class GameWindow extends JPanel
     public void createAndShowGUI()
     {
         //Get the size of the windwow
-        windowSize = this.getSize();
+        windowSize = GameApp.frame.getSize();
         //Make the Scroll Pane Visible
         pane.setVisible(true);
         //Create the game board
@@ -30,6 +28,8 @@ public class GameWindow extends JPanel
         add(pane,BorderLayout.CENTER);
         //add the board to the scroll pane
         pane.setViewportView(dp);
+        //Set the preferred size of the scroll pane
+        //pane.setPreferredSize(GameApp.frame.getSize());
         //remove the scroll bars
         pane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         pane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
@@ -39,15 +39,15 @@ public class GameWindow extends JPanel
         dp.placeHexagons();
         //Create the glass pane and add it to the frame
         GlassPane glass = new GlassPane();
-        glass.setSize(getWidth(),getHeight());
+        glass.setSize(GameApp.frame.getWidth(),GameApp.frame.getHeight());
         GameApp.frame.getRootPane().setGlassPane(glass);        
         //create the pause menu
         PauseDialog dialog = new PauseDialog(GameApp.frame, glass);
         //Create the instance for statspopup
         StatsPopup.createInstance(GameApp.frame);
         //add the listeners
-        addKeyListener(new ScrollPaneController(pane.getViewport(),dp,this,dialog));
-        pane.getVerticalScrollBar().addAdjustmentListener(event -> repaint());
-        pane.getHorizontalScrollBar().addAdjustmentListener(event -> repaint());
+        GameApp.frame.addKeyListener(new ScrollPaneController(pane.getViewport(),dp,this,dialog));
+        pane.getVerticalScrollBar().addAdjustmentListener(event -> GameApp.frame.repaint());
+        pane.getHorizontalScrollBar().addAdjustmentListener(event -> GameApp.frame.repaint());
     }
 }

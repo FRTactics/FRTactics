@@ -225,7 +225,6 @@ public class Generator
         Polygon polygon = new Polygon();
         int hexaWidth = GameWindow.windowSize.width /grid.length;
         int hexaHeight = GameWindow.windowSize.height/grid.length;
-        
         hexaWidth = (GameWindow.windowSize.width - hexaWidth/2) /grid.length;//creates extra spacing on the sides to account for indented tiles
         hexaHeight = (int) ((GameWindow.windowSize.height + ((hexaHeight * .25))* grid.length)/grid.length);//Should account for the extra spaceing caused by indented tiles
         

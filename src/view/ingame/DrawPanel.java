@@ -19,9 +19,9 @@ public class DrawPanel extends JPanel
     public DrawPanel(int arraySize)
     {
         this.setBackground(Color.BLACK);
-        this.setMinimumSize(GameApp.frame.getPreferredSize());
-        this.setPreferredSize(GameApp.frame.getPreferredSize());
-        this.setMaximumSize(new Dimension(GameApp.frame.getPreferredSize().width + 2000, GameApp.frame.getPreferredSize().height + 2000));
+        this.setMinimumSize(GameApp.frame.getSize());
+        this.setPreferredSize(GameApp.frame.getSize());
+        this.setMaximumSize(new Dimension(GameApp.frame.getPreferredSize().width + 2000, GameApp.frame.getPreferredSize().height + 1600));
         this.setVisible(true);
         this.setLayout(layout);
         grid = new Tile[arraySize][arraySize];

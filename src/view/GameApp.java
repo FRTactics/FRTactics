@@ -22,7 +22,6 @@ import javax.swing.UIManager.LookAndFeelInfo;
 import javax.swing.plaf.ColorUIResource;
 import model.GameManager;
 import model.ImageContainer;
-import model.gameStates.GameState;
 import view.View;
 
 /**
@@ -86,11 +85,11 @@ public class GameApp{
         gm.initialize(view);            // immediately initialize it with the view, this also starts up the state machine
         // set of the frame to make it pretty
         frame.setTitle("FRTactics");
-        //frame.setExtendedState(Frame.MAXIMIZED_BOTH);
-        //frame.setUndecorated(true);
+        frame.setExtendedState(Frame.MAXIMIZED_BOTH);
+        frame.setUndecorated(true);
         frame.setLayout(new BorderLayout());
         frame.add(view, BorderLayout.CENTER);   // add the view to the frame
-        frame.setMinimumSize(new Dimension(1600, 900));
+        //frame.setMinimumSize(new Dimension(1600, 900));
         frame.setVisible(true);                 // allow the frame to be visible
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);       
     }
