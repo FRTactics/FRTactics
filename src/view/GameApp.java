@@ -11,7 +11,6 @@ import controllers.screenControllers.LoadoutController;
 import controllers.screenControllers.MainMenuController;
 import java.awt.BorderLayout;
 import java.awt.Component;
-import java.awt.Dimension;
 import java.awt.Frame;
 import java.awt.Graphics2D;
 import javax.swing.JFrame;
@@ -22,7 +21,6 @@ import javax.swing.UIManager.LookAndFeelInfo;
 import javax.swing.plaf.ColorUIResource;
 import model.GameManager;
 import model.ImageContainer;
-import view.View;
 
 /**
  *
