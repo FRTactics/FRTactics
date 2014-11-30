@@ -128,9 +128,9 @@ public class ImageContainer
                 case MAIN_MENU_BACKGROUND:
                     return mainMenuBackground == null ? mainMenuBackground = ImageIO.read(new File(".//resources//menu//backgrounds//mainMenuBackground.png")) : mainMenuBackground;
                 case P1_LOADOUT_BACKGROUND:
-                    return p1LoadoutBackground == null ? p1LoadoutBackground = ImageIO.read(new File(".//resources//menu//backgrounds/p1LoadoutBackground.png")) : p1LoadoutBackground;
+                    return p1LoadoutBackground == null ? p1LoadoutBackground = ImageIO.read(new File(".//resources//menu//backgrounds//p1LoadoutBackground.png")) : p1LoadoutBackground;
                 case P2_LOADOUT_BACKGROUND:
-                    return p2LoadoutBackground == null ? p2LoadoutBackground = ImageIO.read(new File(".//resources//menu//backgrounds/p2LoadoutBackground.png")) : p2LoadoutBackground;
+                    return p2LoadoutBackground == null ? p2LoadoutBackground = ImageIO.read(new File(".//resources//menu//backgrounds//p2LoadoutBackground.png")) : p2LoadoutBackground;
                 case PAUSE_MENU_BACKGROUND:
                     return pauseMenuBackground == null ? pauseMenuBackground = ImageIO.read(new File(".//resources//menu//pauseMenuBackground.png")): pauseMenuBackground;
                 case PAUSE_MENU_OPTIONS:
@@ -152,7 +152,8 @@ public class ImageContainer
         return null;
     }
     
-    public Image retrieveStatusLabelImages(StatusLabelImage selection){
+    public Image retrieveStatusLabelImages(StatusLabelImage selection)
+    {
         try 
         {
             switch(selection)
@@ -205,8 +206,9 @@ public class ImageContainer
                     return wizardText == null ? wizardText = ImageIO.read(new File(".//resources//menu//statusImages//MageText.png")): wizardText;
             }
         }
-        catch(Exception ex){
-            ex.printStackTrace();
+        catch(Exception ex)
+        {
+            ex.printStackTrace(System.out);
         }
         return null;
     }

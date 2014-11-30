@@ -1,7 +1,6 @@
 package view.ingame;
 
 import com.jhlabs.image.GlowFilter;
-import java.awt.CardLayout;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Image;
@@ -65,6 +64,8 @@ public class PauseMenuButton extends JPanel
                  case MAIN:
                      GameManager.getInstance().processEvent(GameManager.RETURN_TO_MAIN);
                      GameManager.getInstance().removeGameWindow();
+                     parent.setVisible(false);
+                     parent.dispose();
                      break;
              }
          }
