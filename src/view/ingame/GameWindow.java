@@ -13,7 +13,8 @@ public class GameWindow extends JPanel
 {
     public static Dimension windowSize;
     public static JScrollPane pane = new JScrollPane();
-    public GameWindow(){
+    public GameWindow()
+    {
         setLayout(new BorderLayout());
         createAndShowGUI();
     }

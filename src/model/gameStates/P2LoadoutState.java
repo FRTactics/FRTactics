@@ -19,49 +19,58 @@ public class P2LoadoutState extends GameState{
     private static P2LoadoutState instance;
 
  
-    private P2LoadoutState(){
+    private P2LoadoutState()
+    {
         
     }
-    public static synchronized P2LoadoutState getInstance(){
+    public static synchronized P2LoadoutState getInstance()
+    {
         if(instance == null){
             instance = new P2LoadoutState();
         }
         return instance;
     }
+    
     @Override
-    public GameState processEvent(int eventID) {
-        if(eventID == GameManager.BACK_SELECTED){
+    public GameState processEvent(int eventID) 
+    {
+        if(eventID == GameManager.BACK_SELECTED)
+        {
             return nextState(GameState.p1State);
         }
-        else if(eventID == GameManager.CONTINUE_SELECTED){
+        else if(eventID == GameManager.CONTINUE_SELECTED)
+        {
             return nextState(GameState.igState);
         }
         return this;
     }
 
     @Override
-    protected void enter() {    // upon entry of this class
+    protected void enter() 
+    {    // upon entry of this class
         CardLayout layout = (CardLayout)gm.getView().getLayout();
         layout.show(gm.getView(), GameManager.P2_LOADOUT_MENU);
     }
 
     @Override
-    protected void exit() {
+    protected void exit() 
+    {
         setLoadout();
         initGame();
     }
 
     @Override
-    protected void doActivity() {
-    }
-    private void setLoadout(){          // modify this later to convert the strings into actual units and place them in an array
+    protected void doActivity() 
+    {}
+    
+    private void setLoadout()
+    {          // modify this later to convert the strings into actual units and place them in an array
         LoadoutMenu temp = ((LoadoutMenu)gm.getView().getFrontView());
         gm.populateLoadout(temp.getLoadout(), gm.getP2Loadout()); 
     }
-    private void initGame(){
-        
-        gm.getView().add(new GameWindow(), GameManager.INGAME);
-        
+    private void initGame()
+    {
+        gm.getView().add(new GameWindow(), GameManager.INGAME);      
     }
 
  

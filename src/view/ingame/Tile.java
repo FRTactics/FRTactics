@@ -14,6 +14,7 @@ import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
 import javax.swing.JPanel;
+import model.classSystem.DefaultClass;
 
 public class Tile extends JPanel
 {
@@ -28,9 +29,10 @@ public class Tile extends JPanel
     private Image tileImage;
     private Image attackRange;
     private Image moveRange;
-    private Image character;
+    private Image characterImage;
     private final int xLocation;
     private final int yLocation;
+    private DefaultClass character;
     private boolean characterOnTile = false;
     private boolean displayMovementRange = false;
     private boolean displayAttackRange = false;
@@ -68,6 +70,16 @@ public class Tile extends JPanel
     public void updatePreferredSize(Dimension preferredSize)
     {
         setPreferredSize(preferredSize);
+    }
+    
+    public void updateCharacterClass(DefaultClass character)
+    {
+        this.character = character;
+    }
+    
+    public void updateCharacterImage(Image characterImage)
+    {
+        this.characterImage = characterImage;
     }
     
     public void createPolygon(Polygon polygon)
@@ -171,7 +183,7 @@ public class Tile extends JPanel
         if(characterOnTile)
         {
             g2d.setClip(polygon);
-            g.drawImage(character,0,0,hexaWidth,hexaHeight, this);
+            g.drawImage(characterImage,0,0,hexaWidth,hexaHeight, this);
             this.getParent().repaint();
         }
         
