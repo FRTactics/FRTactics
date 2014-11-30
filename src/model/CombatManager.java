@@ -15,7 +15,12 @@ public class CombatManager
     public void displayRange(int x,int y)
     {
         Tile currentTile = DrawPanel.getGrid()[x][y];
-        DefaultClass character;
+        DefaultClass character = currentTile.retrieveCharacter();
+        
+        RangeChecker checker = new RangeChecker();
+        int range = (int)character.getBaseMovementRange();
+        
+        checker.calculateRange(x, y, range);
     }
     
     

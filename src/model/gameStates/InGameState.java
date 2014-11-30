@@ -9,40 +9,42 @@ package model.gameStates;
 import java.awt.CardLayout;
 import model.GameManager;
 
-
-/**
- *
- * @author Charlie
- */
-public class InGameState extends GameState{        // name subject to change
+// name subject to change
+public class InGameState extends GameState
+    {        
     private static InGameState instance;        
-    private InGameState(){      
-        
-    }
-    public static synchronized InGameState getInstance(){
+    private InGameState()
+    {}
+    
+    public static synchronized InGameState getInstance()
+    {
         if(instance == null){
             instance = new InGameState();
         }
         return instance;
     }
     @Override
-    public GameState processEvent(int eventID) {
+    public GameState processEvent(int eventID) 
+    {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    protected void enter() {
+    protected void enter() 
+    {
         CardLayout layout = (CardLayout)gm.getView().getLayout();
         layout.show(gm.getView(), GameManager.INGAME);
     }
 
     @Override
-    protected void exit() {
+    protected void exit() 
+    {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    protected void doActivity() {
+    protected void doActivity() 
+    {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 

@@ -14,7 +14,10 @@ import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
 import javax.swing.JPanel;
+import model.CombatManager;
 import model.classSystem.DefaultClass;
+import model.classSystem.WarriorClass;
+import view.GameApp;
 
 public class Tile extends JPanel
 {
@@ -32,7 +35,7 @@ public class Tile extends JPanel
     private Image characterImage;
     private final int xLocation;
     private final int yLocation;
-    private DefaultClass character;
+    private DefaultClass character = new WarriorClass();
     private boolean characterOnTile = false;
     private boolean displayMovementRange = false;
     private boolean displayAttackRange = false;
@@ -80,6 +83,11 @@ public class Tile extends JPanel
     public void updateCharacterImage(Image characterImage)
     {
         this.characterImage = characterImage;
+    }
+    
+    public DefaultClass retrieveCharacter()
+    {
+        return character;
     }
     
     public void createPolygon(Polygon polygon)
@@ -184,21 +192,21 @@ public class Tile extends JPanel
         {
             g2d.setClip(polygon);
             g.drawImage(characterImage,0,0,hexaWidth,hexaHeight, this);
-            this.getParent().repaint();
+            //this.getParent().repaint();
         }
         
         if(displayMovementRange && !characterOnTile)
         {
             g2d.setClip(polygon);
             g.drawImage(moveRange,0,0,hexaWidth,hexaHeight, this);
-            this.getParent().repaint();
+            //this.getParent().repaint();
         }
         
         if(displayAttackRange)
         {
             g2d.setClip(polygon);
             g.drawImage(attackRange,0,0,hexaWidth,hexaHeight, this);
-            this.getParent().repaint();
+            //this.getParent().repaint();
         }
    }
    
@@ -245,6 +253,13 @@ public class Tile extends JPanel
            }
        }
        
+       @Override
+       public void mouseClicked(MouseEvent e)
+       {
+           CombatManager combat = new CombatManager();
+           combat.displayRange(xLocation, yLocation);
+           GameApp.frame.repaint();
+       }
    }
 
    public class TileMouseMotionAdapter extends MouseMotionAdapter

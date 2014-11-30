@@ -3,6 +3,7 @@ package model;
 import view.ingame.Tile;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
+import view.ingame.DrawPanel;
 
 public class RangeChecker 
 {
@@ -10,13 +11,13 @@ public class RangeChecker
     private final int [][] neighborsOdd = {{+1,+1},{+1,0},{0,-1},{-1,0},{+1,-1},{0,+1}};
     private final Tile grid[][];
     
-    public RangeChecker(Tile grid[][])
+    public RangeChecker()
     {
-        this.grid = grid;
+        this.grid = DrawPanel.getGrid();
     }
     
     public void calculateRange(int xstart,int ystart, int range)
-    {
+    {        
        ArrayList start = new ArrayList();
        ArrayDeque nodes = new ArrayDeque();
        ArrayList finish = new ArrayList();
