@@ -6,12 +6,18 @@
 
 package model;
 
+import java.awt.CardLayout;
+import java.awt.Color;
+import java.awt.Component;
 import java.util.ArrayList;
 import model.gameStates.GameState;
 import javax.swing.JList;
+import javax.swing.JPanel;
 import model.classSystem.*;
+import view.GameApp;
 import view.LoadoutListModel;
 import view.View;
+import view.ingame.GlassPane;
 
 public class GameManager
 {
@@ -26,6 +32,8 @@ public class GameManager
     public final static String OPTIONS_MENU = "Option Menu";
     public final static String SETTINGS_MENU = "Settings Menu";
     public final static String INGAME = "InGame";
+    // string that is associated with the glass pane, so we can remove it
+    public static final String GLASSPANE = "GlassPane";
     // ArrayLists for the player loadouts
     private ArrayList<DefaultClass> p1Loadout;
     private ArrayList<DefaultClass> p2Loadout;
@@ -40,6 +48,7 @@ public class GameManager
     public static final int ADD_UNIT_SELECTED = 50;
     public static final int REMOVE_UNIT_SELECTED = 60;
     public static final int OPTIONS_SELECTED = 70;
+    public static final int RETURN_TO_MAIN = 80;
     // in game events
     public static final int UNIT_SELECTED = 0;
     public static final int MOVE_UNIT_SELECTED = 1;
@@ -77,6 +86,19 @@ public class GameManager
     public View getView()       // retrieves the view
     {
         return gameView;
+    }
+    public void removeGameWindow(){
+        Component[] components = gameView.getComponents();
+        System.out.println(components.length);
+        for(int i = 0; i < components.length; i++){
+            System.out.println(components[i].getName());
+            if(components[i].getName().equals(GameManager.INGAME)){
+                gameView.remove(components[i]);
+                JPanel panel = new JPanel();
+                GameApp.frame.removeKeyListener(GameApp.frame.getKeyListeners()[0]);
+            }
+        }
+        
     }
     public static GameState getGameState()  // returns the game state
     {

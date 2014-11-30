@@ -8,6 +8,7 @@ import java.awt.event.MouseAdapter;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JPanel;
+import model.GameManager;
 import model.ImageContainer;
 
 public class MainMenu extends JPanel 
@@ -22,6 +23,7 @@ public class MainMenu extends JPanel
     public MainMenu()
     {
         // instantiate all of the buttons with the appropriate images
+        this.setName(GameManager.MAIN_MENU);
         newGameButton = new MainMenuSwordButton(ImageContainer.getInstance().retrieveMenuImage(ImageContainer.MenuImage.NEW_GAME_SWORD));
         optionsButton = new MainMenuSwordButton(ImageContainer.getInstance().retrieveMenuImage(ImageContainer.MenuImage.OPTIONS_SWORD));
         quitButton = new MainMenuSwordButton(ImageContainer.getInstance().retrieveMenuImage(ImageContainer.MenuImage.QUIT_SWORD));

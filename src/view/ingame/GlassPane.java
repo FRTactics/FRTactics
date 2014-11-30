@@ -12,6 +12,7 @@ public class GlassPane extends JPanel
         this.setOpaque(false);
     }
     
+    
     @Override
     public void paintComponent(Graphics g)
     {

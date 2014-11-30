@@ -3,6 +3,7 @@ package view.ingame;
 
 import controllers.screenControllers.ScrollPaneController;
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -21,6 +22,7 @@ public class GameWindow extends JPanel
     public final void createAndShowGUI()
     {
         //Get the size of the windwow
+        this.setBackground(Color.BLACK);
         windowSize = GameApp.frame.getSize();
         //Make the Scroll Pane Visible
         pane.setVisible(true);

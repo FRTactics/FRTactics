@@ -123,6 +123,7 @@ public class LoadoutMenu extends JPanel {             // still a work in progres
     
     public LoadoutMenu(String identifier, Image image) {
         this.identifier = identifier;
+        this.setName(identifier);
         // initialize everything first
         font = new Font("Comic Sans MS" , Font.PLAIN, 20);
         imageMap = createImageMap();

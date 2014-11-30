@@ -24,9 +24,13 @@ public class InGameState extends GameState
         return instance;
     }
     @Override
-    public GameState processEvent(int eventID) 
-    {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public GameState processEvent(int eventID) {
+        if(eventID == GameManager.RETURN_TO_MAIN){
+            return nextState(GameState.mmState);
+        }
+        else{
+            return this;
+        }
     }
 
     @Override
@@ -37,10 +41,9 @@ public class InGameState extends GameState
     }
 
     @Override
-    protected void exit() 
-    {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    protected void exit() {
     }
+    
 
     @Override
     protected void doActivity() 

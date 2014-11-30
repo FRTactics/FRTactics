@@ -21,6 +21,7 @@ public class View extends JPanel{
         this.setLayout(layout);
         this.setBackground(Color.BLACK);
         this.setDoubleBuffered(true);
+        this.setName("View");
     }
     public JPanel getFrontView(){
         JPanel frontComponent = null;

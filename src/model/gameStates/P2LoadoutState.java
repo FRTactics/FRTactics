@@ -68,9 +68,11 @@ public class P2LoadoutState extends GameState{
         LoadoutMenu temp = ((LoadoutMenu)gm.getView().getFrontView());
         gm.populateLoadout(temp.getLoadout(), gm.getP2Loadout()); 
     }
-    private void initGame()
-    {
-        gm.getView().add(new GameWindow(), GameManager.INGAME);      
+    private void initGame(){
+        GameWindow gameWindow = new GameWindow();
+        gameWindow.setName(GameManager.INGAME);
+        gm.getView().add(gameWindow, GameManager.INGAME);
+        
     }
 
  

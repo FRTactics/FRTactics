@@ -1,6 +1,7 @@
 package view.ingame;
 
 import com.jhlabs.image.GlowFilter;
+import java.awt.CardLayout;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Image;
@@ -9,6 +10,7 @@ import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
+import model.GameManager;
 
 public class PauseMenuButton extends JPanel
 {
@@ -61,10 +63,12 @@ public class PauseMenuButton extends JPanel
                      System.exit(0);
                      break;
                  case MAIN:
+                     GameManager.getInstance().processEvent(GameManager.RETURN_TO_MAIN);
+                     GameManager.getInstance().removeGameWindow();
                      break;
              }
          }
-         
+        
          @Override
          public void mouseEntered(MouseEvent e)
          {
