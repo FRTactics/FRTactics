@@ -90,10 +90,12 @@ public class LoadoutController extends EventHandler{ // since both P1 and P2 Loa
        
        @Override
        public void mousePressed(MouseEvent e){
+           
             for(int i = 0; i < loadoutMenu.getChoiceList().size();i++){
                loadoutMenu.getChoiceList().get(i).setForeground(Color.WHITE);
                loadoutMenu.getChoiceList().get(i).setBorder(null);
             }
+            loadoutMenu.repaint();
             label.setForeground(Color.red);
             label.setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
             //loadoutMenu.getClassNameLabel().setText(label.getUnit().getClassName());
@@ -156,14 +158,13 @@ public class LoadoutController extends EventHandler{ // since both P1 and P2 Loa
        public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected, boolean cellHasFocus){
            
            JLabel label = (JLabel)super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
-           //CustomLabel label = new CustomLabel((String)value, JLabel.CENTER, imageMap.get((String)value));
-           //label.setIcon(new ImageIcon(imageMap.get((String) value).getScaledInstance(75, 75, 0)));
            label.setName((String)value);
            label.setFont(loadoutMenu.getLabelFont());
            label.setIcon(new ImageIcon(imageMap.get((String)value).getScaledInstance(100, 100, 0)));
            Color c = label.getBackground();
            
            if(isSelected){
+               loadoutMenu.repaint();
                label.setBackground(new Color(0,0,0,0));
                label.setForeground(Color.RED);
                label.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));

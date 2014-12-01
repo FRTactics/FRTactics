@@ -170,12 +170,19 @@ public class LoadoutMenu extends JPanel {             // still a work in progres
         LoadoutListModel model = new LoadoutListModel();
         loadoutList = new JList(model);
         loadoutList.setDragEnabled(false);
-        loadoutList.setBackground(Color.DARK_GRAY);
+        //loadoutList.setBackground(Color.DARK_GRAY);
+        
+        loadoutList.setBackground(new Color(44,53,57, 200));
         loadoutList.setOpaque(false);
         GameManager.getInstance().setLoadoutJList(identifier, loadoutList);
         loadoutScroll = new JScrollPane(loadoutList);
         loadoutScroll.setWheelScrollingEnabled(true);
         loadoutScroll.setPreferredSize(new Dimension(400,500));
+        loadoutScroll.setOpaque(false);
+        loadoutScroll.setBackground(new Color(44,53,57, 200));
+        loadoutScroll.getVerticalScrollBar().addAdjustmentListener(event -> loadoutScroll.repaint());
+        
+        loadoutScroll.setWheelScrollingEnabled(true);
         loadoutPanel.add(loadoutScroll);
         loadoutPanel.add(Box.createVerticalGlue());
         loadoutPanel.add(removeButton);
@@ -194,13 +201,18 @@ public class LoadoutMenu extends JPanel {             // still a work in progres
         centerPanel.setLayout(new BoxLayout(centerPanel, BoxLayout.Y_AXIS));
         choicePanel = new JPanel();
         choicePanel.setMinimumSize(new Dimension(400,500));
-        choicePanel.setBackground(Color.DARK_GRAY);
+        //choicePanel.setBackground(Color.DARK_GRAY);
+        //choicePanel
+        choicePanel.setBackground(new Color(44,53,57, 200));
         choicePanel.setLayout(new GridLayout(3,2));
+        
         populateChoiceList();
         for(int i = 0; i < choiceList.size(); i++){
             choicePanel.add(choiceList.get(i));
         }
         centerScroll = new JScrollPane(choicePanel);
+        centerScroll.setBackground(new Color(44,53,57, 200));
+        centerScroll.getVerticalScrollBar().addAdjustmentListener(event -> centerPanel.repaint());
         //centerTabs = new JTabbedPane();
         //centerTabs.putClientProperty("JComponent.sizeVariant", "large");
         //centerTabs.addTab("Classes", centerScroll);
@@ -484,6 +496,9 @@ public class LoadoutMenu extends JPanel {             // still a work in progres
    }
    public void setLoadoutListCellRenderer(DefaultListCellRenderer d){
        loadoutList.setCellRenderer(d);
+   }
+   public void addChoiceListScrollListener(){
+       
    }
    
    public ArrayList<CustomLabel> getChoiceList(){
