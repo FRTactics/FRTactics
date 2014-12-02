@@ -51,6 +51,7 @@ public class MainMenuState extends GameState{       // state that handles all ev
        // then move the associated screen to the front
        CardLayout layout = (CardLayout)gm.getView().getLayout();
        layout.show(gm.getView(), GameManager.MAIN_MENU);
+       gm.getView().repaint();
     }
 
     @Override                   

@@ -22,9 +22,9 @@ public class MenuButton extends JPanel          // gameButton class
     {
         this.image = image;
         this.setOpaque(false);
-        this.setPreferredSize(new Dimension(400,100));
+        //this.setPreferredSize(new Dimension(400,100));
        
-        this.setMinimumSize(new Dimension(40,10)); 
+        //this.setMinimumSize(new Dimension(40,10)); 
         this.setDoubleBuffered(true);
         this.setVisible(true);
 

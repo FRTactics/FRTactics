@@ -11,6 +11,7 @@ import controllers.screenControllers.LoadoutController;
 import controllers.screenControllers.MainMenuController;
 import java.awt.BorderLayout;
 import java.awt.Component;
+import java.awt.Dimension;
 import java.awt.Frame;
 import java.awt.Graphics2D;
 import javax.swing.JFrame;
@@ -84,13 +85,17 @@ public class GameApp{
         gm.initialize(view);            // immediately initialize it with the view, this also starts up the state machine
         // set of the frame to make it pretty
         frame.setTitle("FRTactics");
-        frame.setExtendedState(Frame.MAXIMIZED_BOTH);
-        frame.setUndecorated(true);
+        //frame.setExtendedState(Frame.MAXIMIZED_BOTH);
+        //frame.setUndecorated(true);
         frame.setLayout(new BorderLayout());
         frame.add(view, BorderLayout.CENTER);   // add the view to the frame
-        //frame.setMinimumSize(new Dimension(1600, 900));
+        frame.setMinimumSize(new Dimension(1200, 800));
         frame.setVisible(true);                 // allow the frame to be visible
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);       
+        mainMenu.updateScreen();
+        p1LoadoutMenu.updateScreen();
+        p2LoadoutMenu.repaint();
+        frame.repaint();
     }
     private static String getLookAndFeelClassName(String nameSnippet) {
         LookAndFeelInfo[] plafs = UIManager.getInstalledLookAndFeels();

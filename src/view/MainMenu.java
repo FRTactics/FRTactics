@@ -2,8 +2,11 @@ package view;
 
 import controllers.screenControllers.MainMenuController;
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Image;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 import java.awt.event.MouseAdapter;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -24,10 +27,12 @@ public class MainMenu extends JPanel
     {
         // instantiate all of the buttons with the appropriate images
         this.setName(GameManager.MAIN_MENU);
+        this.addComponentListener(new MainMenuComponentListener());
         newGameButton = new MainMenuSwordButton(ImageContainer.getInstance().retrieveMenuImage(ImageContainer.MenuImage.NEW_GAME_SWORD));
         optionsButton = new MainMenuSwordButton(ImageContainer.getInstance().retrieveMenuImage(ImageContainer.MenuImage.OPTIONS_SWORD));
         quitButton = new MainMenuSwordButton(ImageContainer.getInstance().retrieveMenuImage(ImageContainer.MenuImage.QUIT_SWORD));
         buttonPanel = new JPanel();        // create button panel, which holds all of the buttons
+        buttonPanel.setPreferredSize(new Dimension(GameApp.frame.getWidth()/5, GameApp.frame.getHeight()/5));
         buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.Y_AXIS));    // used box layout because it's awesome
         buttonPanel.setOpaque(false);
         // add the rest of the buttons to the button container
@@ -42,6 +47,17 @@ public class MainMenu extends JPanel
         this.setLayout(new BorderLayout());         // used border layout for the entire screen
         this.add(buttonPanel, BorderLayout.EAST);   // button panel is placed on the right side of the screen
         
+    }
+    public void updateScreen(){
+        buttonPanel.setPreferredSize(new Dimension(GameApp.frame.getWidth()/4, GameApp.frame.getHeight()));
+        newGameButton.setMaxImagePos((int)buttonPanel.getPreferredSize().getWidth()/2);
+        optionsButton.setMaxImagePos((int)buttonPanel.getPreferredSize().getWidth()/2);
+        quitButton.setMaxImagePos((int)buttonPanel.getPreferredSize().getWidth()/2);
+        newGameButton.repaint();
+        optionsButton.repaint();
+        quitButton.repaint();
+        this.revalidate();
+        repaint();
     }
     @Override
     public void paintComponent(Graphics g)              // paints the background onto the screen
@@ -76,6 +92,12 @@ public class MainMenu extends JPanel
     public MainMenuSwordButton getQuitButton()                               // getter method for the quit button
     {
         return quitButton;
+    }
+    public class MainMenuComponentListener extends ComponentAdapter{
+        @Override
+        public void componentResized(ComponentEvent e){
+            updateScreen();
+        }
     }
 }
 

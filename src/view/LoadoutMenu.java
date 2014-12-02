@@ -16,6 +16,8 @@ import java.awt.Image;
 import java.awt.dnd.DropTarget;
 import java.awt.dnd.DropTargetListener;
 import java.awt.event.ActionListener;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 import java.awt.event.MouseAdapter;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -42,12 +44,24 @@ public class LoadoutMenu extends JPanel {             // still a work in progres
     private ArrayList<CustomLabel> choiceList = new ArrayList();
     private String identifier;      //String used to indentify which loadout this is P1 or P2
     private JPanel loadoutPanel;
+    private JPanel loadoutPanelBottomFiller;
+    private JPanel loadoutPanelMiddleFiller;
     private JList loadoutList;
     private JPanel choicePanel;
     private HashMap<String, Image> imageMap;
     private JPanel buttonPanel; // placed on east side
+    private JPanel buttonPanelMiddleFiller;
+    private JPanel buttonPanelBottomFiller;
     private JPanel leftPanel;
+    private JPanel leftPanelLeftFiller;
+    private JPanel leftPanelRightFiller;
     private JPanel centerPanel;     // will hold a jpanel containing all of the images (gridlayout)
+    private JPanel bottomPanel;
+    private JPanel bottomPanelLeftFiller;
+    private JPanel bottomPanelRightFiller;
+    private JPanel rightPanel;
+    private JPanel rightPanelLeftFiller;
+    private JPanel rightPanelRightFiller;
     private JScrollPane centerScroll;
     //private JTabbedPane centerTabs;
     private JScrollPane loadoutScroll;
@@ -59,12 +73,12 @@ public class LoadoutMenu extends JPanel {             // still a work in progres
     // labels for the stats
     
     // Column 1
-    private JLabel statsLabel;
-    private JLabel classLabel;
-    private JLabel hpLabel;
-    private JLabel mpLabel;
-    private JLabel strengthLabel;
-    private JLabel agilityLabel;
+    private StatLabel statsLabel;
+    private StatLabel classLabel;
+    private StatLabel hpLabel;
+    private StatLabel mpLabel;
+    private StatLabel strengthLabel;
+    private StatLabel agilityLabel;
     // Column 2
     private JLabel column2TempLabel;
     private JLabel classNameLabel;
@@ -75,11 +89,11 @@ public class LoadoutMenu extends JPanel {             // still a work in progres
     
     // Column 3
     private JLabel column3TempLabel;
-    private JLabel meleeDamageLabel;
-    private JLabel rangedDamageLabel;
-    private JLabel spellDamageLabel;
-    private JLabel meleeAttackRangeLabel;
-    private JLabel rangedAttackRangeLabel;
+    private StatLabel meleeDamageLabel;
+    private StatLabel rangedDamageLabel;
+    private StatLabel spellDamageLabel;
+    private StatLabel meleeAttackRangeLabel;
+    private StatLabel rangedAttackRangeLabel;
 
     // Column 4
     private JLabel column4TempLabel;
@@ -91,11 +105,11 @@ public class LoadoutMenu extends JPanel {             // still a work in progres
     
     // Column 5
     private JLabel column5TempLabel;
-    private JLabel movementRangeLabel;
-    private JLabel dexterityLabel;
-    private JLabel vitalityLabel;
-    private JLabel intelligenceLabel;
-    private JLabel dodgeChanceLabel;
+    private StatLabel movementRangeLabel;
+    private StatLabel dexterityLabel;
+    private StatLabel vitalityLabel;
+    private StatLabel intelligenceLabel;
+    private StatLabel dodgeChanceLabel;
     // Column 6
     private JLabel column6TempLabel;
     private JLabel movementRangeValueLabel;
@@ -106,8 +120,8 @@ public class LoadoutMenu extends JPanel {             // still a work in progres
     
     // Column 7
     private JLabel column7TempLabel;
-    private JLabel healthRegenLabel;
-    private JLabel armorLabel;
+    private StatLabel healthRegenLabel;
+    private StatLabel armorLabel;
     // Column 8
     private JLabel column8TempLabel;
     private JLabel healthRegenValueLabel;
@@ -134,8 +148,31 @@ public class LoadoutMenu extends JPanel {             // still a work in progres
         initLoadoutPanel();
         initChoicePanel();
         initStatsPanel();
-        centerPanel.add(statsPanel);
+        bottomPanel = new JPanel();
+        bottomPanel.setOpaque(false);
+        bottomPanel.setLayout(new BorderLayout());
+        bottomPanelLeftFiller = new JPanel();
+        bottomPanelRightFiller = new JPanel();
+        bottomPanelLeftFiller.setPreferredSize(new Dimension(50,50));
+        bottomPanelLeftFiller.setOpaque(false);
+        bottomPanelRightFiller.setPreferredSize(new Dimension(50,50));
+        bottomPanelRightFiller.setOpaque(false);
+        bottomPanel.add(bottomPanelLeftFiller, BorderLayout.WEST);
+        bottomPanel.add(statsPanel, BorderLayout.CENTER);
+        bottomPanel.add(bottomPanelRightFiller, BorderLayout.EAST);
+        centerPanel.add(bottomPanel);
         centerPanel.add(Box.createVerticalGlue());
+        rightPanel = new JPanel();
+        rightPanel.setOpaque(false);
+        rightPanel.setLayout(new BoxLayout(rightPanel, BoxLayout.X_AXIS));
+        rightPanelLeftFiller = new JPanel();
+        rightPanelRightFiller = new JPanel();
+        rightPanelLeftFiller.setOpaque(false);
+        rightPanelRightFiller.setOpaque(false);
+        rightPanel.setPreferredSize(new Dimension(100,400));
+        rightPanel.add(rightPanelLeftFiller);
+        rightPanel.add(buttonPanel);
+        rightPanel.add(rightPanelRightFiller);
         this.setLayout(new BorderLayout());
         topBuffer.setOpaque(false);
         loadoutPanel.setOpaque(false);
@@ -146,17 +183,27 @@ public class LoadoutMenu extends JPanel {             // still a work in progres
         this.add(topBuffer, BorderLayout.NORTH);
         this.add(leftPanel, BorderLayout.WEST);
         this.add(centerPanel, BorderLayout.CENTER);
-        this.add(buttonPanel, BorderLayout.EAST);
+        this.add(rightPanel, BorderLayout.EAST);
         loadoutList.setDragEnabled(false);
+        this.addComponentListener(new LoadoutMenuComponentListener());
     }
     // initializes the Button JPanel, located on the right side of the screen
     private void initButtonPanel(){
         buttonPanel = new JPanel();
+        buttonPanelMiddleFiller = new JPanel();
+        buttonPanelBottomFiller = new JPanel();
+        buttonPanelMiddleFiller.setOpaque(false);
+        buttonPanelBottomFiller.setOpaque(false);
+        buttonPanelMiddleFiller.setPreferredSize(new Dimension(50,50));
+        buttonPanelBottomFiller.setPreferredSize(new Dimension(50,50));
+        buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.Y_AXIS));
         buttonPanel.setPreferredSize(new Dimension(400,100));
         continueButton = new MenuButton(ImageContainer.getInstance().retrieveMenuImage(ImageContainer.MenuImage.MENU_CONTINUE));
         backButton = new MenuButton(ImageContainer.getInstance().retrieveMenuImage(ImageContainer.MenuImage.MENU_BACK));
         buttonPanel.add(continueButton);
+        buttonPanel.add(buttonPanelMiddleFiller);
         buttonPanel.add(backButton);
+        buttonPanel.add(buttonPanelBottomFiller);
     }
     // initializes the loadout panel, located on the left side of the screen
     private void initLoadoutPanel(){ 
@@ -166,30 +213,51 @@ public class LoadoutMenu extends JPanel {             // still a work in progres
         loadoutPanel.setLayout(new BoxLayout(loadoutPanel, BoxLayout.Y_AXIS));
         //loadoutPanel.setLayout(new BoxLayout(loadoutPanel, BoxLayout.Y_AXIS));
         removeButton = new MenuButton(ImageContainer.getInstance().retrieveMenuImage(ImageContainer.MenuImage.MENU_REMOVE));
-        loadoutPanel.setPreferredSize(new Dimension(400,600));
+        //loadoutPanel.setPreferredSize(new Dimension(400,600));
         LoadoutListModel model = new LoadoutListModel();
         loadoutList = new JList(model);
         loadoutList.setDragEnabled(false);
         //loadoutList.setBackground(Color.DARK_GRAY);
-        
+        loadoutPanelMiddleFiller = new JPanel();
+        loadoutPanelBottomFiller = new JPanel();
         loadoutList.setBackground(new Color(44,53,57, 200));
         loadoutList.setOpaque(false);
         GameManager.getInstance().setLoadoutJList(identifier, loadoutList);
         loadoutScroll = new JScrollPane(loadoutList);
         loadoutScroll.setWheelScrollingEnabled(true);
-        loadoutScroll.setPreferredSize(new Dimension(400,500));
+        loadoutScroll.setPreferredSize(new Dimension(150,500));
         loadoutScroll.setOpaque(false);
         loadoutScroll.setBackground(new Color(44,53,57, 200));
         loadoutScroll.getVerticalScrollBar().addAdjustmentListener(event -> loadoutScroll.repaint());
         
         loadoutScroll.setWheelScrollingEnabled(true);
+        loadoutPanelMiddleFiller = new JPanel();
+        loadoutPanelBottomFiller = new JPanel();
+        loadoutPanelMiddleFiller.setOpaque(false);
+        loadoutPanelBottomFiller.setOpaque(false);
+        loadoutPanelMiddleFiller.setPreferredSize(new Dimension(50,50));
+        loadoutPanelBottomFiller.setPreferredSize(new Dimension(50,50));
         loadoutPanel.add(loadoutScroll);
-        loadoutPanel.add(Box.createVerticalGlue());
+        //loadoutPanel.add(Box.createVerticalGlue());
+        loadoutPanel.add(loadoutPanelMiddleFiller);
         loadoutPanel.add(removeButton);
-        loadoutPanel.add(Box.createRigidArea(new Dimension(100,100)));
-        leftPanel.add(Box.createRigidArea(new Dimension(60,100)));
+        //loadoutPanel.add(Box.createVerticalGlue());
+        loadoutPanel.add(loadoutPanelBottomFiller);
+        leftPanelLeftFiller = new JPanel();
+        leftPanelRightFiller = new JPanel();
+        leftPanelLeftFiller.setOpaque(false);
+        leftPanelRightFiller.setOpaque(false);
+        leftPanelLeftFiller.setPreferredSize(new Dimension(50,50));
+        leftPanelRightFiller.setPreferredSize(new Dimension(50,50));
+        leftPanel.add(leftPanelLeftFiller);
         leftPanel.add(loadoutPanel);
-        leftPanel.add(Box.createRigidArea(new Dimension(60,100)));
+        leftPanel.add(leftPanelRightFiller);
+        
+        /*
+        leftPanel.add(Box.createHorizontalGlue());
+        leftPanel.add(loadoutPanel);
+        leftPanel.add(Box.createHorizontalGlue());
+        */
         loadoutList.setDragEnabled(true);
         loadoutList.setPreferredSize(new Dimension(350,loadoutPanel.getPreferredSize().height));
         loadoutList.setOpaque(true);
@@ -225,9 +293,10 @@ public class LoadoutMenu extends JPanel {             // still a work in progres
     }
     // initialize the status panel with all of the labels needed
     private void initStatsPanel(){
+        
         statsPanel = new JPanel();
         // permanent labels
-        
+        /*
         statsLabel= new JLabel(new ImageIcon(ImageContainer.getInstance().retrieveStatusLabelImages(ImageContainer.StatusLabelImage.STATS).getScaledInstance(100, 50, 0)));
         classLabel = new JLabel(new ImageIcon(ImageContainer.getInstance().retrieveStatusLabelImages(ImageContainer.StatusLabelImage.CLASS).getScaledInstance(80, 40, 0)));
         meleeAttackRangeLabel = new JLabel(new ImageIcon(ImageContainer.getInstance().retrieveStatusLabelImages(ImageContainer.StatusLabelImage.ATTACK_RANGE).getScaledInstance(120, 40, 0)));
@@ -247,6 +316,26 @@ public class LoadoutMenu extends JPanel {             // still a work in progres
         dodgeChanceLabel = new JLabel(new ImageIcon(ImageContainer.getInstance().retrieveStatusLabelImages(ImageContainer.StatusLabelImage.DODGE_CHANCE).getScaledInstance(120, 40, 0)));
         healthRegenLabel = new JLabel(new ImageIcon(ImageContainer.getInstance().retrieveStatusLabelImages(ImageContainer.StatusLabelImage.HEALTH_REGEN).getScaledInstance(120, 40, 0)));
         armorLabel = new JLabel(new ImageIcon(ImageContainer.getInstance().retrieveStatusLabelImages(ImageContainer.StatusLabelImage.ARMOR).getScaledInstance(80, 40, 0)));
+        */
+        statsLabel= new StatLabel(ImageContainer.getInstance().retrieveStatusLabelImages(ImageContainer.StatusLabelImage.STATS));
+        classLabel = new StatLabel(ImageContainer.getInstance().retrieveStatusLabelImages(ImageContainer.StatusLabelImage.CLASS));
+        meleeAttackRangeLabel = new StatLabel(ImageContainer.getInstance().retrieveStatusLabelImages(ImageContainer.StatusLabelImage.ATTACK_RANGE));
+        movementRangeLabel = new StatLabel(ImageContainer.getInstance().retrieveStatusLabelImages(ImageContainer.StatusLabelImage.MOVEMENT_RANGE));
+        mpLabel = new StatLabel(ImageContainer.getInstance().retrieveStatusLabelImages(ImageContainer.StatusLabelImage.MP));
+        hpLabel = new StatLabel(ImageContainer.getInstance().retrieveStatusLabelImages(ImageContainer.StatusLabelImage.HP));
+        strengthLabel = new StatLabel(ImageContainer.getInstance().retrieveStatusLabelImages(ImageContainer.StatusLabelImage.STRENGTH));
+        agilityLabel = new StatLabel(ImageContainer.getInstance().retrieveStatusLabelImages(ImageContainer.StatusLabelImage.AGILITY));
+        meleeDamageLabel = new StatLabel(ImageContainer.getInstance().retrieveStatusLabelImages(ImageContainer.StatusLabelImage.MELEE_DAMAGE));
+        rangedDamageLabel = new StatLabel(ImageContainer.getInstance().retrieveStatusLabelImages(ImageContainer.StatusLabelImage.RANGED_DAMAGE));
+        spellDamageLabel = new StatLabel(ImageContainer.getInstance().retrieveStatusLabelImages(ImageContainer.StatusLabelImage.SPELL_DAMAGE));
+        rangedAttackRangeLabel = new StatLabel(ImageContainer.getInstance().retrieveStatusLabelImages(ImageContainer.StatusLabelImage.RANGED_ATTACK_RANGE));
+        movementRangeLabel = new StatLabel(ImageContainer.getInstance().retrieveStatusLabelImages(ImageContainer.StatusLabelImage.MOVEMENT_RANGE));
+        dexterityLabel = new StatLabel(ImageContainer.getInstance().retrieveStatusLabelImages(ImageContainer.StatusLabelImage.DEXTERITY));
+        vitalityLabel = new StatLabel(ImageContainer.getInstance().retrieveStatusLabelImages(ImageContainer.StatusLabelImage.VITALITY));
+        intelligenceLabel = new StatLabel(ImageContainer.getInstance().retrieveStatusLabelImages(ImageContainer.StatusLabelImage.INTELLIGENCE));
+        dodgeChanceLabel = new StatLabel(ImageContainer.getInstance().retrieveStatusLabelImages(ImageContainer.StatusLabelImage.DODGE_CHANCE));
+        healthRegenLabel = new StatLabel(ImageContainer.getInstance().retrieveStatusLabelImages(ImageContainer.StatusLabelImage.HEALTH_REGEN));
+        armorLabel = new StatLabel(ImageContainer.getInstance().retrieveStatusLabelImages(ImageContainer.StatusLabelImage.ARMOR));
         
         // labels that can be changed
         classNameLabel = new JLabel("-------"); 
@@ -324,7 +413,8 @@ public class LoadoutMenu extends JPanel {             // still a work in progres
         healthRegenValueLabel.setForeground(Color.WHITE);
         armorValueLabel.setForeground(Color.WHITE);
         // temp labels to help with alignment
-        column2TempLabel = new JLabel();
+        column2TempLabel = new JLabel(" ");
+        column2TempLabel.setFont(font);
         column3TempLabel = new JLabel();
         column4TempLabel = new JLabel();
         column5TempLabel = new JLabel();
@@ -459,7 +549,28 @@ public class LoadoutMenu extends JPanel {             // still a work in progres
         super.paintComponent(g);
         g.drawImage(background, 0, 0, this.getWidth(), this.getHeight(), this);
     }
-   
+   public void updateScreen(){
+        rightPanel.setPreferredSize(new Dimension(GameApp.frame.getWidth()/4, rightPanel.getHeight()));
+        rightPanelLeftFiller.setPreferredSize(new Dimension(rightPanel.getWidth()/10, rightPanel.getHeight()));
+        rightPanelRightFiller.setPreferredSize(new Dimension(rightPanel.getWidth()/10, rightPanel.getHeight()));
+        leftPanel.setPreferredSize(new Dimension((GameApp.frame.getWidth()/4), leftPanel.getHeight()));
+        leftPanelLeftFiller.setPreferredSize(new Dimension(leftPanel.getWidth()/10, leftPanel.getHeight()));
+        leftPanelRightFiller.setPreferredSize(new Dimension(leftPanel.getWidth()/10, leftPanel.getHeight()));
+        loadoutPanel.setPreferredSize(new Dimension((int)(leftPanel.getWidth()*.8), (int)(loadoutPanel.getHeight()*.7)));
+        topBuffer.setPreferredSize(new Dimension(GameApp.frame.getWidth(), GameApp.frame.getHeight()/4));
+        bottomPanel.setPreferredSize(new Dimension(centerPanel.getWidth(), GameApp.frame.getHeight()/4));
+        loadoutPanelMiddleFiller.setPreferredSize(new Dimension(10,GameApp.frame.getHeight()/20));
+        loadoutPanelBottomFiller.setPreferredSize(new Dimension(10,GameApp.frame.getHeight()/20));
+        bottomPanelRightFiller.setPreferredSize(new Dimension(bottomPanel.getWidth()/10, bottomPanel.getHeight()));
+        bottomPanelLeftFiller.setPreferredSize(new Dimension(bottomPanel.getWidth()/10, bottomPanel.getHeight()));
+        removeButton.setPreferredSize(new Dimension(buttonPanel.getWidth(), GameApp.frame.getHeight()/10));
+        backButton.setPreferredSize(new Dimension(buttonPanel.getWidth(), GameApp.frame.getHeight()/10));
+        continueButton.setPreferredSize(new Dimension(buttonPanel.getWidth(), GameApp.frame.getHeight()/10));
+        buttonPanelMiddleFiller.setPreferredSize(new Dimension(10, GameApp.frame.getHeight()/10));
+        buttonPanelBottomFiller.setPreferredSize(new Dimension(10, (int)(GameApp.frame.getHeight()/2)));
+        this.revalidate();
+        repaint();
+    }
    
    private HashMap<String, Image> createImageMap(){        // creates the image map
        HashMap<String, Image> map = new HashMap<>();
@@ -522,12 +633,7 @@ public class LoadoutMenu extends JPanel {             // still a work in progres
    public JLabel getClassNameLabel(){
        return classNameLabel;
    }
-   public JLabel getMeleeAttackRangeLabel(){
-       return meleeAttackRangeLabel;
-   }
-   public JLabel getMovementRangeLabel(){
-       return movementRangeLabel;
-   }
+   
    public JLabel getMPValueLabel(){
        return mpValueLabel;
    }
@@ -576,5 +682,10 @@ public class LoadoutMenu extends JPanel {             // still a work in progres
    public JLabel getArmorValueLabel(){
        return armorValueLabel;
    }
-   
+   public class LoadoutMenuComponentListener extends ComponentAdapter{
+        @Override
+        public void componentResized(ComponentEvent e){
+            updateScreen();
+        }
+    }
 }
