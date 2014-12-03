@@ -28,11 +28,14 @@ public class P1LoadoutState extends GameState{
     }
     @Override
     public GameState processEvent(int eventID) {            // process all events associated with this state
+        CardLayout layout = (CardLayout)gm.getView().getLayout();
         if(eventID == GameManager.BACK_SELECTED){  // move back a state (to Main menu)
-            gm.clearLoadouts();
+            layout.previous(gm.getView());
             return nextState(GameState.mmState);
         }
         else if(eventID == GameManager.CONTINUE_SELECTED){  // move to the next state
+            setLoadout();
+            layout.next(gm.getView());
             return nextState(GameState.p2State);
         }
         return this;
@@ -40,14 +43,12 @@ public class P1LoadoutState extends GameState{
 
     @Override
     protected void enter() {            // upon entry, move associated screen to the front of the view
-        CardLayout layout = (CardLayout)gm.getView().getLayout();
-        layout.show(gm.getView(), GameManager.P1_LOADOUT_MENU);
        
     }
 
     @Override
     protected void exit() {
-        setLoadout();
+        
     }
 
     @Override

@@ -15,6 +15,7 @@ import java.awt.Dimension;
 import java.awt.Frame;
 import java.awt.Graphics2D;
 import javax.swing.JFrame;
+import javax.swing.JPanel;
 import javax.swing.Painter;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
@@ -77,9 +78,10 @@ public class GameApp{
         p1LoadoutController = new LoadoutController(p1LoadoutMenu);
         p2LoadoutController = new LoadoutController(p2LoadoutMenu);
         // add the screens to the view, using the string associated with that menu
+        view.add(mainMenu, GameManager.MAIN_MENU);
         view.add(p1LoadoutMenu, GameManager.P1_LOADOUT_MENU);
         view.add(p2LoadoutMenu, GameManager.P2_LOADOUT_MENU);
-        view.add(mainMenu, GameManager.MAIN_MENU);
+        
         // instantiate the GameManager
         gm = GameManager.getInstance();
         gm.initialize(view);            // immediately initialize it with the view, this also starts up the state machine

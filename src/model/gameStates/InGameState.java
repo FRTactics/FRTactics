@@ -25,7 +25,9 @@ public class InGameState extends GameState
     }
     @Override
     public GameState processEvent(int eventID) {
+        CardLayout layout = (CardLayout)gm.getView().getLayout();
         if(eventID == GameManager.RETURN_TO_MAIN){
+            layout.show(gm.getView(), GameManager.INGAME);
             return nextState(GameState.mmState);
         }
         else{
@@ -36,8 +38,7 @@ public class InGameState extends GameState
     @Override
     protected void enter() 
     {
-        CardLayout layout = (CardLayout)gm.getView().getLayout();
-        layout.show(gm.getView(), GameManager.INGAME);
+        
     }
 
     @Override

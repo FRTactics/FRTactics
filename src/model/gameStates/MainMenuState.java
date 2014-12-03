@@ -28,9 +28,10 @@ public class MainMenuState extends GameState{       // state that handles all ev
     }
     @Override
     public GameState processEvent(int eventID) {        // events are passed from the Main Menu's controller
+        CardLayout layout = (CardLayout)gm.getView().getLayout();
         if(eventID == GameManager.NEW_GAME_SELECTED){   // when new game event is thrown, move to the next state (P1 loadout)
+            layout.next(gm.getView());
             return nextState(GameState.p1State);
-            
         }
         else if(eventID == GameManager.EXIT_SELECTED){  // when exit is selected, close the program
             gm.endGame();
@@ -48,10 +49,9 @@ public class MainMenuState extends GameState{       // state that handles all ev
     protected void enter() {            
        // upon entry, clear out the loadouts
        gm.clearLoadouts();
-       // then move the associated screen to the front
-       CardLayout layout = (CardLayout)gm.getView().getLayout();
-       layout.show(gm.getView(), GameManager.MAIN_MENU);
-       gm.getView().repaint();
+       //CardLayout layout = (CardLayout)gm.getView().getLayout();
+       //layout.show(gm.getView(), GameManager.MAIN_MENU);
+       
     }
 
     @Override                   

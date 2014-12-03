@@ -34,12 +34,17 @@ public class P2LoadoutState extends GameState{
     @Override
     public GameState processEvent(int eventID) 
     {
+        CardLayout layout = (CardLayout)gm.getView().getLayout();
         if(eventID == GameManager.BACK_SELECTED)
         {
+            layout.previous(gm.getView());
             return nextState(GameState.p1State);
         }
         else if(eventID == GameManager.CONTINUE_SELECTED)
         {
+            setLoadout();
+            initGame();
+            layout.next(gm.getView());
             return nextState(GameState.igState);
         }
         return this;
@@ -48,19 +53,19 @@ public class P2LoadoutState extends GameState{
     @Override
     protected void enter() 
     {    // upon entry of this class
-        CardLayout layout = (CardLayout)gm.getView().getLayout();
-        layout.show(gm.getView(), GameManager.P2_LOADOUT_MENU);
+        //CardLayout layout = (CardLayout)gm.getView().getLayout();
+        //layout.show(gm.getView(), GameManager.P2_LOADOUT_MENU);
     }
 
     @Override
     protected void exit() 
     {
-        setLoadout();
-        initGame();
+        // not needed
+        
     }
 
     @Override
-    protected void doActivity() 
+    protected void doActivity() // not needed
     {}
     
     private void setLoadout()

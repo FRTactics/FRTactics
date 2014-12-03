@@ -29,9 +29,8 @@ public class OptionsMenuState extends GameState{        // state that handles al
     }
 
     @Override
-    protected void enter() {                        // upon entry of this state, move the associated screen to the front
-       CardLayout layout = (CardLayout)gm.getView().getLayout();
-       layout.show(gm.getView(), GameManager.OPTIONS_MENU);   
+    protected void enter() {                       
+         
     }
 
     @Override
