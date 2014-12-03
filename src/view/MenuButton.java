@@ -18,6 +18,10 @@ public class MenuButton extends JPanel          // gameButton class
 {
 
     Image image;
+    /**
+     * Constructor for the menu button, accepts an image
+     * @param image 
+     */
     public MenuButton(Image image)
     {
         this.image = image;

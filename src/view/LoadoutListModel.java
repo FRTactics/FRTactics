@@ -28,15 +28,30 @@ public class LoadoutListModel implements ListModel{     // a custom list model t
     public Object getElementAt(int index) {
         return selections.get(index);
     }
+    /**
+     * Adds an element to the list model
+     * @param element 
+     */
     public void addElement(String element){
         selections.add(element);
     }
+    /**
+     * Removes the element at the specified index
+     * @param index 
+     */
     public void removeElementAt(int index){
         selections.remove(index);
     }
+    /**
+     * Clears the list model
+     */
     public void clear(){
         selections.clear();
     }
+    /**
+     * Gets the contents of the list
+     * @return 
+     */
     public ArrayList<String> getSelections(){
         return selections;
     }

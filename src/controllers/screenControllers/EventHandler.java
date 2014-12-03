@@ -18,6 +18,10 @@ public abstract class EventHandler{     // abstract Event handler class that is 
     public EventHandler(){
         this.gm = GameManager.getInstance();    // retrieve instance of Game Manager
     }
+    /**
+     * Passes on the event ID to the Game Manager for processing
+     * @param eventID 
+     */
     public void handleEvent(int eventID){       // method that passes event to Game Manager for processing
         gm.processEvent(eventID);
     }

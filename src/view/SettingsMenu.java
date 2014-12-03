@@ -11,7 +11,12 @@ import javax.swing.JPanel;
  *
  * @author Charlie
  */
-public class SettingsMenu extends JPanel{
+public class SettingsMenu extends MenuPanel{
     public SettingsMenu(){
+    }
+
+    @Override
+    public void updateScreen() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

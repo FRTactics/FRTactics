@@ -41,7 +41,10 @@ import model.StringFlavor;
 public class LoadoutController extends EventHandler{ // since both P1 and P2 Loadout 
     private LoadoutMenu loadoutMenu;
     HashMap <String, Image> imageMap;
-    
+    /**
+     * Constructor for the LoadoutMenuController, adds all of the listeners to the loadoutMenu
+     * @param loadoutMenu 
+     */
     public LoadoutController(LoadoutMenu loadoutMenu){
         this.loadoutMenu = loadoutMenu;
         imageMap = loadoutMenu.getImageMap();
@@ -53,7 +56,10 @@ public class LoadoutController extends EventHandler{ // since both P1 and P2 Loa
         addLabelListeners();
         
     }
-    public void addLabelListeners(){
+    /**
+     * Adds the Label MouseListeners to all of the choices in the loadoutMenu
+     */
+    private void addLabelListeners(){
         ArrayList<CustomLabel> choices = loadoutMenu.getChoiceList();
         for(int i = 0; i < choices.size(); i++){
             choices.get(i).addMouseListener(new LabelMouseListener(choices.get(i)));
@@ -156,7 +162,7 @@ public class LoadoutController extends EventHandler{ // since both P1 and P2 Loa
    public class LoadoutListCellRenderer extends DefaultListCellRenderer {
        @Override
        public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected, boolean cellHasFocus){
-           
+           // creates a Jlabel that is shown in the Jlist
            JLabel label = (JLabel)super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
            label.setName((String)value);
            label.setFont(loadoutMenu.getLabelFont());
@@ -183,8 +189,8 @@ public class LoadoutController extends EventHandler{ // since both P1 and P2 Loa
            @Override
            public void dragEnter(DropTargetDragEvent dtde) {
 
-               if(dtde.isDataFlavorSupported(StringFlavor.SHARED_INSTANCE)){
-
+               if(dtde.isDataFlavorSupported(StringFlavor.SHARED_INSTANCE)){            // upon entry of the drop target, allow the drop to happen if the 
+                                                                                        // data flavor is a StringFlavor
                    dtde.acceptDrag(DnDConstants.ACTION_COPY);
                }
                else{
@@ -206,16 +212,16 @@ public class LoadoutController extends EventHandler{ // since both P1 and P2 Loa
            @Override
            public void drop(DropTargetDropEvent dtde) {
                boolean success = false;
-               if(dtde.isDataFlavorSupported(StringFlavor.SHARED_INSTANCE)){
-                   Transferable transferable = dtde.getTransferable();
+               if(dtde.isDataFlavorSupported(StringFlavor.SHARED_INSTANCE)){                // check if the data flavor is supported
+                   Transferable transferable = dtde.getTransferable();                      // if it is, create a transferable
 
                    try{
-                       Object data = transferable.getTransferData(StringFlavor.SHARED_INSTANCE);
-                       if(data instanceof String){
+                       Object data = transferable.getTransferData(StringFlavor.SHARED_INSTANCE);    // get the data from the transferabke
+                       if(data instanceof String){                                                  // if the data is a string
                            String string = (String)data;
                            DropTargetContext dtc = dtde.getDropTargetContext();
                            Component component = dtc.getComponent();
-                           if(component instanceof JList){
+                           if(component instanceof JList){                                          // if the drop target is a JList, add the string to the list
                                success = true;
                                JList list = (JList)component;
                                LoadoutListModel listModel = (LoadoutListModel)(((JList)component).getModel());

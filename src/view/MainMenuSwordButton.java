@@ -12,6 +12,10 @@ public class MainMenuSwordButton extends JPanel          // gameButton class
     private Image image;
     private int xPos;
     private int maxPos;
+    /**
+     * Constructor for the main menu buttons, accepts an image to be used 
+     * @param image 
+     */
     public MainMenuSwordButton(Image image)
     {
         this.image = image;
@@ -26,6 +30,10 @@ public class MainMenuSwordButton extends JPanel          // gameButton class
         //xPos = 0;
         
     }
+    /**
+     * Sets the "Max Image Position" which is the limit as to which the image can be offset (preferably have the length of the button)
+     * @param pos 
+     */
     public void setMaxImagePos(int pos){
         maxPos = pos;
         xPos = pos;
@@ -37,13 +45,18 @@ public class MainMenuSwordButton extends JPanel          // gameButton class
         g.drawImage(image, xPos, 0, this.getWidth(), this.getHeight(), this);
         
     }
-    
+    /**
+     * "Animates" the button to the left
+     */
     public void animateLeft()
     {
        
         xPos = 0;
         repaint();
     }
+    /**
+     * "Animates" the button to the right
+     */
     public void animateRight()
     {
         xPos = maxPos;

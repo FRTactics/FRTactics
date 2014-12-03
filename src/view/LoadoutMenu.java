@@ -39,7 +39,7 @@ import model.classSystem.*;
  *
  * @author Charlie
  */
-public class LoadoutMenu extends JPanel {             // still a work in progress, looks like a piece of shit now - Charlie
+public class LoadoutMenu extends MenuPanel{             // still a work in progress, looks like a piece of shit now - Charlie
     
     private ArrayList<CustomLabel> choiceList = new ArrayList();
     private String identifier;      //String used to indentify which loadout this is P1 or P2
@@ -135,6 +135,11 @@ public class LoadoutMenu extends JPanel {             // still a work in progres
     private DropTarget dropTarget;
     private final Font font;
     
+    /**
+     * Constructor for the LoadoutMenu, takes in an identifier and a background image
+     * @param identifier
+     * @param image 
+     */
     public LoadoutMenu(String identifier, Image image) {
         this.identifier = identifier;
         this.setName(identifier);
@@ -187,7 +192,9 @@ public class LoadoutMenu extends JPanel {             // still a work in progres
         loadoutList.setDragEnabled(false);
         this.addComponentListener(new LoadoutMenuComponentListener());
     }
-    // initializes the Button JPanel, located on the right side of the screen
+    /**
+     * Initializes the Button JPanel, located on the right side of the screen
+     **/
     private void initButtonPanel(){
         buttonPanel = new JPanel();
         buttonPanelMiddleFiller = new JPanel();
@@ -205,7 +212,9 @@ public class LoadoutMenu extends JPanel {             // still a work in progres
         buttonPanel.add(backButton);
         buttonPanel.add(buttonPanelBottomFiller);
     }
-    // initializes the loadout panel, located on the left side of the screen
+    /**
+     * initializes the loadout panel, located on the left side of the screen
+     **/
     private void initLoadoutPanel(){ 
         loadoutPanel = new JPanel();
         leftPanel = new JPanel();
@@ -262,18 +271,17 @@ public class LoadoutMenu extends JPanel {             // still a work in progres
         loadoutList.setPreferredSize(new Dimension(350,loadoutPanel.getPreferredSize().height));
         loadoutList.setOpaque(true);
     }
-    // initializes the center panel, which contains a panel that holds all of the player choices
+    /**
+     * Initializes the center panel where the choices are displayed
+     */
     private void initChoicePanel(){
         centerPanel = new JPanel();
         
         centerPanel.setLayout(new BoxLayout(centerPanel, BoxLayout.Y_AXIS));
         choicePanel = new JPanel();
         choicePanel.setMinimumSize(new Dimension(400,500));
-        //choicePanel.setBackground(Color.DARK_GRAY);
-        //choicePanel
         choicePanel.setBackground(new Color(44,53,57, 200));
         choicePanel.setLayout(new GridLayout(3,2));
-        
         populateChoiceList();
         for(int i = 0; i < choiceList.size(); i++){
             choicePanel.add(choiceList.get(i));
@@ -281,42 +289,18 @@ public class LoadoutMenu extends JPanel {             // still a work in progres
         centerScroll = new JScrollPane(choicePanel);
         centerScroll.setBackground(new Color(44,53,57, 200));
         centerScroll.getVerticalScrollBar().addAdjustmentListener(event -> centerPanel.repaint());
-        //centerTabs = new JTabbedPane();
-        //centerTabs.putClientProperty("JComponent.sizeVariant", "large");
-        //centerTabs.addTab("Classes", centerScroll);
-        //centerTabs.addTab("Empty", new JPanel());
         centerScroll.setPreferredSize(new Dimension(700,600));
         centerScroll.setWheelScrollingEnabled(true);
         centerPanel.add(centerScroll);
         centerPanel.add(Box.createVerticalGlue());
         
     }
-    // initialize the status panel with all of the labels needed
+    /**
+     * Initializes the status panel with all of the needed information
+     */
     private void initStatsPanel(){
         
         statsPanel = new JPanel();
-        // permanent labels
-        /*
-        statsLabel= new JLabel(new ImageIcon(ImageContainer.getInstance().retrieveStatusLabelImages(ImageContainer.StatusLabelImage.STATS).getScaledInstance(100, 50, 0)));
-        classLabel = new JLabel(new ImageIcon(ImageContainer.getInstance().retrieveStatusLabelImages(ImageContainer.StatusLabelImage.CLASS).getScaledInstance(80, 40, 0)));
-        meleeAttackRangeLabel = new JLabel(new ImageIcon(ImageContainer.getInstance().retrieveStatusLabelImages(ImageContainer.StatusLabelImage.ATTACK_RANGE).getScaledInstance(120, 40, 0)));
-        movementRangeLabel = new JLabel(new ImageIcon(ImageContainer.getInstance().retrieveStatusLabelImages(ImageContainer.StatusLabelImage.MOVEMENT_RANGE).getScaledInstance(120, 40, 0)));
-        mpLabel = new JLabel(new ImageIcon(ImageContainer.getInstance().retrieveStatusLabelImages(ImageContainer.StatusLabelImage.MP).getScaledInstance(80, 40, 0)));
-        hpLabel = new JLabel(new ImageIcon(ImageContainer.getInstance().retrieveStatusLabelImages(ImageContainer.StatusLabelImage.HP).getScaledInstance(80, 40, 0)));
-        strengthLabel = new JLabel(new ImageIcon(ImageContainer.getInstance().retrieveStatusLabelImages(ImageContainer.StatusLabelImage.STRENGTH).getScaledInstance(80, 40, 0)));
-        agilityLabel = new JLabel(new ImageIcon(ImageContainer.getInstance().retrieveStatusLabelImages(ImageContainer.StatusLabelImage.AGILITY).getScaledInstance(80, 40, 0)));
-        meleeDamageLabel = new JLabel(new ImageIcon(ImageContainer.getInstance().retrieveStatusLabelImages(ImageContainer.StatusLabelImage.MELEE_DAMAGE).getScaledInstance(120, 40, 0)));
-        rangedDamageLabel = new JLabel(new ImageIcon(ImageContainer.getInstance().retrieveStatusLabelImages(ImageContainer.StatusLabelImage.RANGED_DAMAGE).getScaledInstance(120, 40, 0)));
-        spellDamageLabel = new JLabel(new ImageIcon(ImageContainer.getInstance().retrieveStatusLabelImages(ImageContainer.StatusLabelImage.SPELL_DAMAGE).getScaledInstance(120, 40, 0)));
-        rangedAttackRangeLabel = new JLabel(new ImageIcon(ImageContainer.getInstance().retrieveStatusLabelImages(ImageContainer.StatusLabelImage.RANGED_ATTACK_RANGE).getScaledInstance(80, 40, 0)));
-        movementRangeLabel = new JLabel(new ImageIcon(ImageContainer.getInstance().retrieveStatusLabelImages(ImageContainer.StatusLabelImage.MOVEMENT_RANGE).getScaledInstance(120, 40, 0)));
-        dexterityLabel = new JLabel(new ImageIcon(ImageContainer.getInstance().retrieveStatusLabelImages(ImageContainer.StatusLabelImage.DEXTERITY).getScaledInstance(120, 40, 0)));
-        vitalityLabel = new JLabel(new ImageIcon(ImageContainer.getInstance().retrieveStatusLabelImages(ImageContainer.StatusLabelImage.VITALITY).getScaledInstance(120, 40, 0)));
-        intelligenceLabel = new JLabel(new ImageIcon(ImageContainer.getInstance().retrieveStatusLabelImages(ImageContainer.StatusLabelImage.INTELLIGENCE).getScaledInstance(120, 40, 0)));
-        dodgeChanceLabel = new JLabel(new ImageIcon(ImageContainer.getInstance().retrieveStatusLabelImages(ImageContainer.StatusLabelImage.DODGE_CHANCE).getScaledInstance(120, 40, 0)));
-        healthRegenLabel = new JLabel(new ImageIcon(ImageContainer.getInstance().retrieveStatusLabelImages(ImageContainer.StatusLabelImage.HEALTH_REGEN).getScaledInstance(120, 40, 0)));
-        armorLabel = new JLabel(new ImageIcon(ImageContainer.getInstance().retrieveStatusLabelImages(ImageContainer.StatusLabelImage.ARMOR).getScaledInstance(80, 40, 0)));
-        */
         statsLabel= new StatLabel(ImageContainer.getInstance().retrieveStatusLabelImages(ImageContainer.StatusLabelImage.STATS));
         classLabel = new StatLabel(ImageContainer.getInstance().retrieveStatusLabelImages(ImageContainer.StatusLabelImage.CLASS));
         meleeAttackRangeLabel = new StatLabel(ImageContainer.getInstance().retrieveStatusLabelImages(ImageContainer.StatusLabelImage.ATTACK_RANGE));
@@ -534,6 +518,9 @@ public class LoadoutMenu extends JPanel {             // still a work in progres
                         .addComponent(dodgeChanceValueLabel))
         );
     }
+    /**
+     * Populates the choiceList with custom labels
+     */
     private void populateChoiceList(){
         choiceList.add(new CustomLabel("Archer", JLabel.CENTER, ImageContainer.getInstance().retrieveCharacterImage(ImageContainer.CharacterImage.ARCHER), new ArcherClass()));
         choiceList.add(new CustomLabel("Warrior", JLabel.CENTER, ImageContainer.getInstance().retrieveCharacterImage(ImageContainer.CharacterImage.WARRIOR), new WarriorClass()));
@@ -549,7 +536,8 @@ public class LoadoutMenu extends JPanel {             // still a work in progres
         super.paintComponent(g);
         g.drawImage(background, 0, 0, this.getWidth(), this.getHeight(), this);
     }
-   public void updateScreen(){
+    
+    public void updateScreen(){
         rightPanel.setPreferredSize(new Dimension(GameApp.frame.getWidth()/4, rightPanel.getHeight()));
         rightPanelLeftFiller.setPreferredSize(new Dimension(rightPanel.getWidth()/10, rightPanel.getHeight()));
         rightPanelRightFiller.setPreferredSize(new Dimension(rightPanel.getWidth()/10, rightPanel.getHeight()));
@@ -591,94 +579,196 @@ public class LoadoutMenu extends JPanel {             // still a work in progres
    }
    
    // methods that allow for the controller to add listeners/adapters
+   /**
+    * Adds a mouse adapter to the continue button
+    * @param adapter 
+    */
    public void addContinueButtonListener(MouseAdapter adapter){
        continueButton.addMouseListener(adapter);
    }
-   
+   /**
+    * Adds a mouse adapter to the back button
+    * @param adapter 
+    */
    public void addBackButtonListener(MouseAdapter adapter){
-       backButton.addMouseListener(adapter);
-      
+       backButton.addMouseListener(adapter);   
    }
+   /**
+    * adds a mouse adapter to the remove button to allow
+    * @param adapter 
+    */
    public void addRemoveButtonController(MouseAdapter adapter){
        removeButton.addMouseListener(adapter);
    }
+   /**
+    * adds a mouse adapter to the custom label
+    * @param label
+    * @param adapter 
+    */
    public void addLabelListener(CustomLabel label, MouseAdapter adapter){
        label.addMouseListener(adapter);
    }
-   public void setLoadoutListCellRenderer(DefaultListCellRenderer d){
-       loadoutList.setCellRenderer(d);
+   /**
+    * sets the loadout list's cell renderer
+    * @param cellRenderer
+    */
+   public void setLoadoutListCellRenderer(DefaultListCellRenderer cellRenderer){
+       loadoutList.setCellRenderer(cellRenderer);
    }
-   public void addChoiceListScrollListener(){
-       
-   }
-   
+   /**
+    * 
+    * @return returns an arrayList containing all of the possible units available for the user to choose from
+    */
    public ArrayList<CustomLabel> getChoiceList(){
        return choiceList;
    }
+   /**
+    * 
+    * @return an ArrayList containing Strings associated with each value in the loadout JList
+    */
    public ArrayList<String> getLoadout(){
        return ((LoadoutListModel)loadoutList.getModel()).getSelections();
    }
+   /**
+    * 
+    * @return the Loadout JList
+    */
    public JList getLoadoutJList(){
        return loadoutList;
    }
+   /**
+    * instantiates a drop target and associates it with the loadout list along with a custom drop handler
+    * @param handler 
+    */
    public void addLoadoutListDropHandler(DropTargetListener handler){
        dropTarget = new DropTarget(loadoutList, handler);
    }
-   
+   /**
+    * 
+    * @return the menu's specified Font
+    */
    public Font getLabelFont(){
        return font;
    }
    
    // getter methods for the stats labels
+  
+   /**
+    * 
+    * @return the JLabel associated with the selected unit's class name
+    */
    public JLabel getClassNameLabel(){
        return classNameLabel;
    }
-   
+   /**
+    * 
+    * @return the JLabel associated with the selected unit's MP
+    */
    public JLabel getMPValueLabel(){
        return mpValueLabel;
    }
+   /**
+    * 
+    * @return the JLabel associated with the selected unit's HP
+    */
    public JLabel getHPValueLabel(){
        return hpValueLabel;
    }
+   /**
+    * 
+    * @return the JLabel associated with the selected unit's strength
+    */
    public JLabel getStrengthValueLabel(){
        return strengthValueLabel;
    }
+   /**
+    * 
+    * @return the JLabel associated with the selected unit's agility
+    */
    public JLabel getAgilityValueLabel(){
        return agilityValueLabel;
    }
+   /**
+    * 
+    * @return the JLabel associated with the selected unit's melee damage
+    */
    public JLabel getMeleeDamageValueLabel(){
        return meleeDamageValueLabel;
    }
+   /**
+    * 
+    * @return the JLabel associated with the selected unit's ranged damage
+    */
    public JLabel getRangedDamageValueLabel(){
        return rangedDamageValueLabel;
    }
+   /**
+    * 
+    * @return the JLabel associated with the selected unit's spell damage
+    */
    public JLabel getSpellDamageValueLabel(){
        return spellDamageValueLabel;
    }
+   /**
+    * 
+    * @return the JLabel associated with the selected unit's melee attack range
+    */
    public JLabel getMeleeAttackRangeValueLabel(){
        return meleeAttackRangeValueLabel;
    }
+   /**
+    * 
+    * @return the JLabel associated with the selected unit's ranged attack range
+    */
    public JLabel getRangedAttackRangeValueLabel(){
        return rangedAttackRangeValueLabel;
    }
+   /**
+    * 
+    * @return the JLabel associated with the selected unit's movement range
+    */
    public JLabel getMovementRangeValueLabel(){
        return movementRangeValueLabel;
    }
+   /**
+    * 
+    * @return the JLabel associated with the selected unit's dexterity
+    */
    public JLabel getDexterityValueLabel(){
        return dexterityValueLabel;
    }
+   /**
+    * 
+    * @return the JLabel associated with the selected unit's vitality
+    */
    public JLabel getVitalityValueLabel(){
        return vitalityValueLabel;
    }
+   /**
+    * 
+    * @return the JLabel associated with the selected unit's intelligence
+    */
    public JLabel getIntelligenceValueLabel(){
        return intelligenceValueLabel;
    }
+   /**
+    * 
+    * @return the JLabel associated with the selected unit's dodge chance
+    */
    public JLabel getDodgeChanceValueLabel(){
        return dodgeChanceValueLabel;
    }
+   /**
+    * 
+    * @return the JLabel associated with the selected unit's health regen
+    */
    public JLabel getHealthRegenValueLabel(){
        return healthRegenValueLabel;
    }
+   /**
+    * 
+    * @return the JLabel associated with the selected unit's armor
+    */
    public JLabel getArmorValueLabel(){
        return armorValueLabel;
    }

@@ -59,9 +59,17 @@ public class CustomLabel extends JLabel implements DragGestureListener, DragSour
         int action = DnDConstants.ACTION_COPY_OR_MOVE;
         ds.createDefaultDragGestureRecognizer(this, action, this);
     }
+    /**
+     * 
+     * @return Returns the unit associated with the label
+     */
     public DefaultClass getUnit(){
         return unit;
     }
+    /**
+     * 
+     * @return Returns the image of the label
+     */
     public Image getImage(){
         return image;
     }
@@ -69,10 +77,10 @@ public class CustomLabel extends JLabel implements DragGestureListener, DragSour
     @Override
     public void dragGestureRecognized(DragGestureEvent e) {
         try {
-            Transferable t = new StringSelection(getText());
+            Transferable t = new StringSelection(getText());            // create a new transferrable from selection
 
             try{
-                e.startDrag(DragSource.DefaultCopyNoDrop, image.getScaledInstance(100, 100, 0),new Point(0,0), t, this);
+                e.startDrag(DragSource.DefaultCopyNoDrop, image.getScaledInstance(100, 100, 0),new Point(0,0), t, this);    // begin dragging, using the image
             }
             catch(Exception ex){
                  ex.printStackTrace();
@@ -86,31 +94,24 @@ public class CustomLabel extends JLabel implements DragGestureListener, DragSour
     @Override
     public void dragDropEnd(DragSourceDropEvent e) {
 
-        if (e.getDropSuccess() == false) {
+        if (e.getDropSuccess() == false) {      // if the drop failed, return
             return;
         }
 
-        int action = e.getDropAction();
+        int action = e.getDropAction(); 
         if ((action & DnDConstants.ACTION_MOVE) != 0)
             setText("");
   }
 
     @Override
-    public void dragEnter(DragSourceDragEvent e) {
-
-        DragSourceContext ctx = e.getDragSourceContext();
-
+    public void dragEnter(DragSourceDragEvent e) {  //upon entry, set the cusror to the default copy drop cursor
+        DragSourceContext ctx = e.getDragSourceContext();   
         int action = e.getDropAction();
-        /*
-        if ((action & DnDConstants.ACTION_COPY) != 0)
-            ctx.setCursor(DragSource.DefaultCopyNoDrop);
-        else
-        */
         ctx.setCursor(DragSource.DefaultCopyDrop);
   }
 
     @Override
-    public void dragExit(DragSourceEvent e) {
+    public void dragExit(DragSourceEvent e) {   // upon exit of the target, set the cursor to default no drop cursor
         DragSourceContext ctx = e.getDragSourceContext();
         ctx.setCursor(DragSource.DefaultCopyNoDrop);
     }

@@ -14,8 +14,7 @@ import javax.swing.JPanel;
 import model.GameManager;
 import model.ImageContainer;
 
-public class MainMenu extends JPanel 
-{
+public class MainMenu extends MenuPanel{
     // buttons
     private final MainMenuSwordButton newGameButton;
     private final MainMenuSwordButton optionsButton;
@@ -23,6 +22,9 @@ public class MainMenu extends JPanel
     // containers
     private final JPanel buttonPanel;
     private final Image background;
+    /**
+     * Constructor for the main menu
+     */
     public MainMenu()
     {
         // instantiate all of the buttons with the appropriate images
@@ -48,6 +50,9 @@ public class MainMenu extends JPanel
         this.add(buttonPanel, BorderLayout.EAST);   // button panel is placed on the right side of the screen
         
     }
+    /**
+     * Updates the screen 
+     */
     public void updateScreen(){
         buttonPanel.setPreferredSize(new Dimension(GameApp.frame.getWidth()/4, GameApp.frame.getHeight()));
         newGameButton.setMaxImagePos((int)buttonPanel.getPreferredSize().getWidth()/2);
