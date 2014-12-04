@@ -1,20 +1,29 @@
 package view.ingame;
 
 import exceptions.InstanceNotCreatedException;
+import java.awt.Component;
 import model.ImageContainer;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.Polygon;
+import java.awt.datatransfer.Transferable;
+import java.awt.datatransfer.UnsupportedFlavorException;
+import java.awt.dnd.DnDConstants;
+import java.awt.dnd.DropTarget;
+import java.awt.dnd.DropTargetAdapter;
+import java.awt.dnd.DropTargetContext;
+import java.awt.dnd.DropTargetDropEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
+import java.io.IOException;
 import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
 import javax.swing.JPanel;
-import model.CombatManager;
+import model.CharacterFlavor;
 import model.classSystem.DefaultClass;
 import model.classSystem.WarriorClass;
 import view.GameApp;
@@ -30,16 +39,17 @@ public class Tile extends JPanel
     private static Timer timer;
     private Polygon polygon;
     private Image tileImage;
-    private Image attackRange;
-    private Image moveRange;
+    private Image attackRangeImage;
+    private Image moveRangeImage;
+    private Image placeUnitImage;
     private Image characterImage;
     private final int xLocation;
     private final int yLocation;
-    private DefaultClass character = new WarriorClass();
+    private DefaultClass character;
     private boolean characterOnTile = false;
     private boolean displayMovementRange = false;
     private boolean displayAttackRange = false;
-    
+    private boolean displayPlaceUnit = false;
     /**The constructor is used to define the type of tile that the 
     *hexagon will become.
     * @param landType The enum value that will assign the land type to the tile
@@ -55,6 +65,7 @@ public class Tile extends JPanel
         this.gridSize = gridSize;
         this.addMouseListener(new TileMouseAdapter());
         this.addMouseMotionListener(new TileMouseMotionAdapter());
+        DropTarget drop = new DropTarget(this, new TileDropTargetAdapter());
     }
     
     /**Method returns an enum of LandType based on its current set value.
@@ -90,6 +101,11 @@ public class Tile extends JPanel
         return character;
     }
     
+    public Image retrieveCharacterImage()
+    {
+        return characterImage;
+    }
+    
     public void createPolygon(Polygon polygon)
     {
         this.polygon = polygon;
@@ -97,16 +113,23 @@ public class Tile extends JPanel
     
     public void displayAttackRange(boolean enable)
     {
-        if(attackRange == null)
-            attackRange = ImageContainer.getInstance().retrieveTileEffects(ImageContainer.TileEffects.ATTACK_TILE);
+        if(attackRangeImage == null)
+            attackRangeImage = ImageContainer.getInstance().retrieveTileEffects(ImageContainer.TileEffects.ATTACK_TILE);
         this.displayAttackRange = enable;
     }
     
     public void displayMovementRange(boolean enable)
     {
-        if(moveRange == null)
-            moveRange = ImageContainer.getInstance().retrieveTileEffects(ImageContainer.TileEffects.MOVE_TILE);
+        if(moveRangeImage == null)
+            moveRangeImage = ImageContainer.getInstance().retrieveTileEffects(ImageContainer.TileEffects.MOVE_TILE);
         this.displayMovementRange = enable;
+    }
+    
+    public void displayUnitPlacement(boolean enable)
+    {
+        if(placeUnitImage == null)
+            placeUnitImage = ImageContainer.getInstance().retrieveTileEffects(ImageContainer.TileEffects.PLACE_UNIT);
+        this.displayPlaceUnit = enable;    
     }
     public int getXLocation()
     {
@@ -192,21 +215,24 @@ public class Tile extends JPanel
         {
             g2d.setClip(polygon);
             g.drawImage(characterImage,0,0,hexaWidth,hexaHeight, this);
-            //this.getParent().repaint();
         }
         
         if(displayMovementRange && !characterOnTile)
         {
             g2d.setClip(polygon);
-            g.drawImage(moveRange,0,0,hexaWidth,hexaHeight, this);
-            //this.getParent().repaint();
+            g.drawImage(moveRangeImage,0,0,hexaWidth,hexaHeight, this);
         }
         
         if(displayAttackRange)
         {
             g2d.setClip(polygon);
-            g.drawImage(attackRange,0,0,hexaWidth,hexaHeight, this);
-            //this.getParent().repaint();
+            g.drawImage(attackRangeImage,0,0,hexaWidth,hexaHeight, this);
+        }
+        
+        if(displayPlaceUnit && !characterOnTile)
+        {
+            g2d.setClip(polygon);
+            g.drawImage(placeUnitImage,0,0,hexaWidth,hexaHeight, this);
         }
    }
    
@@ -256,9 +282,7 @@ public class Tile extends JPanel
        @Override
        public void mouseClicked(MouseEvent e)
        {
-           CombatManager combat = new CombatManager();
-           combat.displayRange(xLocation, yLocation);
-           GameApp.frame.repaint();
+           
        }
    }
 
@@ -277,5 +301,55 @@ public class Tile extends JPanel
                System.out.println(ex);
            }
        }
+   }
+   
+   public class TileDropTargetAdapter extends DropTargetAdapter
+   {
+        @Override
+        public void drop(DropTargetDropEvent dtde) 
+        {
+
+            if(dtde.isDataFlavorSupported(CharacterFlavor.instance))
+            {
+                Transferable transferable = dtde.getTransferable();
+
+                try
+                {
+                    Object[] data = (Object[])transferable.getTransferData(CharacterFlavor.instance);
+                    
+                    if(data[0] instanceof DefaultClass)
+                    {
+                        DropTargetContext dtc = dtde.getDropTargetContext();
+                        Component component = dtc.getComponent();
+                        
+                        if(component instanceof Tile)
+                        {
+                            character = (DefaultClass)data[0];
+                            characterImage = (Image)data[1];
+                            characterOnTile = true;
+                            GameApp.frame.repaint();
+                            dtde.acceptDrop(DnDConstants.ACTION_COPY);
+                            dtde.dropComplete(true);
+                        }
+                        
+                        else
+                        {
+                            dtde.rejectDrop();
+                            dtde.dropComplete(false);
+                        }
+                    }
+                    else
+                    {
+                        dtde.rejectDrop();
+                        dtde.dropComplete(false);
+                    }
+                }
+                catch(UnsupportedFlavorException | IOException ex)
+                {
+                    ex.printStackTrace(System.out);
+                }
+            
+            }
+        }   
    }
 }

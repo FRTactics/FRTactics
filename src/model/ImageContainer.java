@@ -21,11 +21,11 @@ public class ImageContainer
         MAIN_MENU, NEW_GAME_SWORD, OPTIONS_SWORD, QUIT_SWORD,
         PAUSE_MENU_BACKGROUND,PAUSE_MENU_OPTIONS, PAUSE_MENU_RESUME, MENU_CONTINUE, MENU_BACK, MENU_REMOVE,
         PAUSE_MENU_QUIT,PAUSE_MENU_MAIN, MAIN_MENU_BACKGROUND, P1_LOADOUT_BACKGROUND,
-        P2_LOADOUT_BACKGROUND, POPUP_BACKGROUND
+        P2_LOADOUT_BACKGROUND, POPUP_BACKGROUND, HUD_BACKGROUND
     };
     
     public enum TileEffects{
-       MOVE_TILE, ATTACK_TILE
+       MOVE_TILE, ATTACK_TILE, PLACE_UNIT
     };
     
     public enum TileImage{
@@ -51,6 +51,7 @@ public class ImageContainer
     private Image pauseMenuBackground;
     private Image move;
     private Image attack;
+    private Image placeUnit;
     private Image grass;
     private Image water;
     private Image hill;
@@ -67,7 +68,7 @@ public class ImageContainer
     private Image mainMenuBackground;
     private Image p1LoadoutBackground;
     private Image p2LoadoutBackground;
-    
+    private Image hudBackground;
     
     //stuff for stats
     private Image stats;
@@ -143,6 +144,8 @@ public class ImageContainer
                     return pauseMenuMain == null ? pauseMenuMain = ImageIO.read(new File(".//resources//menu//pauseMenuMain.png")): pauseMenuMain;
                 case POPUP_BACKGROUND:
                     return popupBackground == null ? popupBackground = ImageIO.read(new File(".//resources//menu//CombatPopup.png")) : popupBackground;
+                case HUD_BACKGROUND:
+                    return hudBackground == null ? hudBackground = ImageIO.read(new File(".//resources//menu//backgrounds//hudBackground.png")): hudBackground;
             }
         } 
         catch (IOException ex) 
@@ -224,6 +227,8 @@ public class ImageContainer
                         return attack == null ? attack = ImageIO.read(new File(".//resources//tile//effectsImages//attackTile.png")): attack;
                 case MOVE_TILE:
                         return move == null ? move = ImageIO.read(new File(".//resources//tile//effectsImages//moveTile.png")): move;
+                case PLACE_UNIT:
+                        return placeUnit == null ? placeUnit = ImageIO.read(new File(".//resources//tile//effectsImages//placeUnit.png")) : placeUnit;
             }
         }
         catch(IOException ex)

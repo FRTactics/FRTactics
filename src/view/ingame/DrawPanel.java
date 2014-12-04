@@ -53,7 +53,7 @@ public class DrawPanel extends JPanel
                  {
                     if(!firstHexagonInRow)
                     {
-                        layout.putConstraint(SpringLayout.WEST,grid[j][i],0,SpringLayout.WEST,this);//X
+                        layout.putConstraint(SpringLayout.WEST,grid[j][i],(hexaWidth / 2),SpringLayout.WEST,this);//X
                         layout.putConstraint(SpringLayout.NORTH,grid[j][i],hexaHeight * i,SpringLayout.NORTH,this);//Y
                         firstHexagonInRow = true;
                     }
@@ -72,7 +72,7 @@ public class DrawPanel extends JPanel
                 {
                    if(!firstHexagonInRow)
                    {
-                       layout.putConstraint(SpringLayout.WEST,grid[j][i],hexaWidth/2,SpringLayout.WEST,this);//X
+                       layout.putConstraint(SpringLayout.WEST,grid[j][i],hexaWidth,SpringLayout.WEST,this);//X
                        layout.putConstraint(SpringLayout.NORTH,grid[j][i],(hexaHeight * i),SpringLayout.NORTH,this);//Y
                        firstHexagonInRow = true;
                    }
@@ -153,7 +153,7 @@ public class DrawPanel extends JPanel
                  {
                     if(!firstHexagonInRow)
                     {
-                        layout.putConstraint(SpringLayout.WEST,grid[j][i],0,SpringLayout.WEST,this);//X
+                        layout.putConstraint(SpringLayout.WEST,grid[j][i],hexaWidth/2,SpringLayout.WEST,this);//X
                         layout.putConstraint(SpringLayout.NORTH,grid[j][i],hexaHeight * i,SpringLayout.NORTH,this);//Y
                         this.add(grid[j][i]);
                         firstHexagonInRow = true;
@@ -174,7 +174,7 @@ public class DrawPanel extends JPanel
                 {
                    if(!firstHexagonInRow)
                    {
-                       layout.putConstraint(SpringLayout.WEST,grid[j][i],hexaWidth/2,SpringLayout.WEST,this);//X
+                       layout.putConstraint(SpringLayout.WEST,grid[j][i],hexaWidth,SpringLayout.WEST,this);//X
                        layout.putConstraint(SpringLayout.NORTH,grid[j][i],(hexaHeight * i),SpringLayout.NORTH,this);//Y
                        this.add(grid[j][i]);
                        firstHexagonInRow = true;
@@ -188,6 +188,6 @@ public class DrawPanel extends JPanel
                 }
                 firstHexagonInRow = false;
             }
-        }   
+        }
    }        
 }

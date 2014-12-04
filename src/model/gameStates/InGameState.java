@@ -8,6 +8,8 @@ package model.gameStates;
 
 import java.awt.CardLayout;
 import model.GameManager;
+import model.GamePlayManager;
+import view.GameApp;
 
 // name subject to change
 public class InGameState extends GameState
@@ -38,7 +40,9 @@ public class InGameState extends GameState
     @Override
     protected void enter() 
     {
-        
+        GamePlayManager manager = new GamePlayManager();
+        manager.displayCharacterSelectionBar();
+        GameApp.frame.repaint();
     }
 
     @Override

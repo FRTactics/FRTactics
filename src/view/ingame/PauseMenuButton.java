@@ -1,6 +1,7 @@
 package view.ingame;
 
 import com.jhlabs.image.GlowFilter;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Image;
@@ -10,6 +11,7 @@ import java.awt.image.BufferedImage;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
 import model.GameManager;
+import view.GameApp;
 
 public class PauseMenuButton extends JPanel
 {
@@ -64,8 +66,11 @@ public class PauseMenuButton extends JPanel
                  case MAIN:
                      GameManager.getInstance().processEvent(GameManager.RETURN_TO_MAIN);
                      GameManager.getInstance().removeGameWindow();
+                     parent.removeWindowListener(parent.getWindowListeners()[0]);
                      parent.setVisible(false);
                      parent.dispose();
+                     Component glass = GameApp.frame.getGlassPane();
+                     glass.setVisible(false);
                      break;
              }
          }

@@ -2,6 +2,7 @@ package view.ingame;
 
 import model.ImageContainer;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Image;
@@ -16,9 +17,13 @@ import javax.swing.BoxLayout;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.JRootPane;
+import view.GameApp;
 
 public class PauseDialog extends JDialog
 {
+    private Component oldPane;
+    private boolean oldVisibility;
+    
     public PauseDialog(Window frame,final JPanel glass)
     {
         super(frame);
@@ -46,6 +51,9 @@ public class PauseDialog extends JDialog
             @Override
             public void windowActivated(WindowEvent e)
             {
+                oldPane = GameApp.frame.getGlassPane();
+                oldVisibility = oldPane.isVisible();
+                GameApp.frame.setGlassPane(glass);
                 glass.setVisible(true);
             }
             
@@ -53,6 +61,8 @@ public class PauseDialog extends JDialog
             public void windowDeactivated(WindowEvent e)
             {
                 glass.setVisible(false);
+                GameApp.frame.setGlassPane(oldPane);
+                oldPane.setVisible(oldVisibility);
             }
         });
 
