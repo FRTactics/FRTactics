@@ -15,6 +15,7 @@ public abstract class DefaultClass {        // abstract class used for polymorph
    public String className;
    protected boolean hasMoved;
    protected boolean hasAttacked;
+   protected boolean defending;
    protected double health;             
    protected double mp;                      
    protected double dodgeChance;                  
@@ -177,10 +178,10 @@ public abstract class DefaultClass {        // abstract class used for polymorph
    public boolean hasAttacked(){
        return hasAttacked;
    }
-     /**
-    * 
-    * @return the unit's base health
-    */
+     
+   public boolean isDefending(){
+       return defending;
+   }
    
    //Setter methods
 
@@ -304,6 +305,9 @@ public abstract class DefaultClass {        // abstract class used for polymorph
 
    public void setAttacked(boolean attacked){
        hasAttacked = attacked;
+   }
+   public void setDefending(boolean defending){
+       this.defending = defending;
    }
    
 }

@@ -69,6 +69,13 @@ public class GamePlayManager
         this.sourceX = startX;
         this.sourceY = startY;
     }
+    public void resetUnits(){
+        for(DefaultClass unit : GameManager.getInstance().getP1Loadout()){
+            unit.setMoved(false);
+            unit.setAttacked(false);
+            
+        }
+    }
     public Action getGameplayStatus()
     {
         return isAttacking ? Action.ATTACK : isMoving ? Action.MOVE : isDefending ? Action.DEFEND : isHealing ? Action.HEAL : isMagic ? Action.MAGIC : Action.WAITING;
@@ -86,11 +93,13 @@ public class GamePlayManager
         if(destinationTile.isMovementRangeDisplayed())
         {
             if(!destinationTile.isCharacterOnTile())
-            {      
+            {   
+                removeDisplayedRange((DefaultClass)currentTile.retrieveCharacter()[0]);
                 destinationTile.updateCharacter((DefaultClass)currentTile.retrieveCharacter()[0], (Image)currentTile.retrieveCharacter()[1]);
                 currentTile.removeCharacter();
-                removeDisplayedRange((DefaultClass)destinationTile.retrieveCharacter()[0]);
+                //removeDisplayedRange((DefaultClass)destinationTile.retrieveCharacter()[0]);
                 isMoving = false;
+                ((DefaultClass)(destinationTile.retrieveCharacter()[0])).setMoved(true);
                 return true;
             }
             else
@@ -99,7 +108,6 @@ public class GamePlayManager
         else
            return false;
     }
-    
     public void removeDisplayedRange(DefaultClass character)
     {      
         RangeChecker checker = new RangeChecker();
@@ -109,17 +117,27 @@ public class GamePlayManager
     }
     
   
-    public boolean attackUnit(int targetX, int targetY)
-    {
-        DefaultClass targetCharacter = (DefaultClass)DrawPanel.getGrid()[targetX][targetY].retrieveCharacter()[0];
+    public boolean attackUnit(int targetX, int targetY){        // we may need another field if we have to differentiate 
+                                                                // between they type of attack the source character is using
+    
+        Tile destinationTile = DrawPanel.getGrid()[targetX][targetY];
+        DefaultClass targetCharacter = (DefaultClass)destinationTile.retrieveCharacter()[0];
         DefaultClass sourceCharacter = (DefaultClass)DrawPanel.getGrid()[sourceX][sourceY].retrieveCharacter()[0];
-        if(targetCharacter != null)
-        {
-            
-            return true;
+        if(destinationTile.isAttackRangeDisplayed()){
+            if(targetCharacter != null){        // if the target is not null, proceed to attack
+                if(!targetCharacter.isDefending()){
+                    // do what changes if ther unit is defending
+                }
+                // do the rest of the attacking stuff
+                return true;
+            }
+            else
+                return false;
         }
-        else
+        else{
             return false;
+        }
+        
     }
     
     public void displayCharacterSelectionBar()

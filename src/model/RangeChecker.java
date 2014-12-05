@@ -34,7 +34,7 @@ public class RangeChecker
        //Get the size of the start array
        int size = start.size();
        //Store the start position in the node
-       nodes.addFirst(new CoordinatesHolder(xstart,ystart, range+1));
+       nodes.addFirst(new CoordinatesHolder(xstart,ystart, range));
        //start the search
        while((finish.size()) != size)
        {
@@ -59,24 +59,7 @@ public class RangeChecker
                             //make sure the range is greater than zero
                             if(node.getRange() > 0)
                             {
-                                //make sure its not the start tile
-                                if(node.getX() != xstart || node.getY() != ystart)
-                                {
-                                    switch(rangeType)
-                                    {
-                                        
-                                        case 0://move
-                                            grid[node.getX()][node.getY()].displayMovementRange(true);
-                                            break;
-                                        case 1://attack
-                                            grid[node.getX()][node.getY()].displayAttackRange(true);
-                                            break;
-                                        case 2://remove displayed range
-                                           grid[node.getX()][node.getY()].displayAttackRange(false);
-                                           grid[node.getX()][node.getY()].displayMovementRange(false);
-                                           break;
-                                    }
-                                } 
+                                
                                     nodes.add(start.get(j)); //add the found tile to the array deque
                                     ((CoordinatesHolder)(start.get(j))).setRange(node.getRange() + holyFuckingCaseStatementsBatman(node,x,y));// calculate the new movement range
                                     start.remove(j);// remove the node from the start array
@@ -103,23 +86,7 @@ public class RangeChecker
                             //make sure the range is greater than zero
                             if(node.getRange() > 0)
                             {
-                                //make sure its not the start tile
-                                if(node.getX() != xstart || node.getY() != ystart){
-                                    
-                                    switch(rangeType)
-                                    { 
-                                        case 0://move
-                                            grid[node.getX()][node.getY()].displayMovementRange(true);
-                                            break;
-                                        case 1://attack
-                                            grid[node.getX()][node.getY()].displayAttackRange(true);
-                                            break;
-                                        case 2://remove displayed range
-                                            grid[node.getX()][node.getY()].displayAttackRange(false);
-                                            grid[node.getX()][node.getY()].displayMovementRange(false);
-                                            break;
-                                    }
-                                }
+                               
                                 nodes.add(start.get(j)); //add the found tile to the array deque
                                 ((CoordinatesHolder)(start.get(j))).setRange(node.getRange() + holyFuckingCaseStatementsBatman(node,x,y));// calculate the new movement range
                                 start.remove(j);// remove the node from the start array
@@ -137,7 +104,29 @@ public class RangeChecker
                break;
            }
        }
-       
+      
+       // really terrible fix for the broken display range code
+       // looks for coordinates in the finish deque and checks to see if there are ranges above zero
+       // if there are, make it display what we want
+       for(int i = 0; i < finish.size();i++){
+            CoordinatesHolder node = (CoordinatesHolder)finish.get(i);
+            if(node.getX() != xstart || node.getY() != ystart){
+                                    
+                switch(rangeType)
+                { 
+                    case 0://move
+                        grid[node.getX()][node.getY()].displayMovementRange(true);
+                        break;
+                    case 1://attack
+                        grid[node.getX()][node.getY()].displayAttackRange(true);
+                        break;
+                    case 2://remove displayed range
+                        grid[node.getX()][node.getY()].displayAttackRange(false);
+                        grid[node.getX()][node.getY()].displayMovementRange(false);
+                        break;
+                }
+            }
+        }
     }
 
     private int holyFuckingCaseStatementsBatman(CoordinatesHolder node,int x, int y)

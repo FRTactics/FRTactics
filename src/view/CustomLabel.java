@@ -7,34 +7,22 @@
 package view;
 
 import java.awt.Color;
-import java.awt.Cursor;
 import java.awt.Image;
 import java.awt.Point;
-import java.awt.Toolkit;
 import java.awt.datatransfer.StringSelection;
 import java.awt.datatransfer.Transferable;
 import java.awt.dnd.DnDConstants;
 import java.awt.dnd.DragGestureEvent;
 import java.awt.dnd.DragGestureListener;
-import java.awt.dnd.DragGestureRecognizer;
 import java.awt.dnd.DragSource;
 import java.awt.dnd.DragSourceContext;
 import java.awt.dnd.DragSourceDragEvent;
 import java.awt.dnd.DragSourceDropEvent;
 import java.awt.dnd.DragSourceEvent;
 import java.awt.dnd.DragSourceListener;
-import java.awt.dnd.DragSourceMotionListener;
 import java.awt.dnd.InvalidDnDOperationException;
-import java.awt.dnd.MouseDragGestureRecognizer;
-import java.awt.event.MouseEvent;
-import java.io.File;
-import java.util.TooManyListenersException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
-import model.ImageContainer;
 import model.classSystem.DefaultClass;
 
 /**
