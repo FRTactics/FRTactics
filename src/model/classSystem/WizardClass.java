@@ -30,6 +30,8 @@ public class WizardClass extends DefaultClass {
         intelligence = 30;
         dexterity = 20;
         vitality = 15;
+        hasAttacked = false;
+        hasMoved = false;
         //calcStrength(); 
         calcHealth();
         calcMovement();

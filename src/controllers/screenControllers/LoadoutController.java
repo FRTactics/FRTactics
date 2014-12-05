@@ -127,24 +127,24 @@ public class LoadoutController extends EventHandler{ // since both P1 and P2 Loa
                     
             }
             
-            loadoutMenu.getMeleeAttackRangeValueLabel().setText("" + (int)label.getUnit().getBaseHealth());
-            loadoutMenu.getMovementRangeValueLabel().setText("" + (int)label.getUnit().getBaseMovementRange());
-            loadoutMenu.getMPValueLabel().setText("" +(int)label.getUnit().getBaseMP());
-            loadoutMenu.getHPValueLabel().setText("" + (int)label.getUnit().getBaseHealth());
-            loadoutMenu.getStrengthValueLabel().setText("" + (int)label.getUnit().getBaseStrength());
-            loadoutMenu.getAgilityValueLabel().setText("" + (int)label.getUnit().getBaseAgility());
-            loadoutMenu.getMeleeDamageValueLabel().setText("" + (int)label.getUnit().getBaseMeleeDamage());
-            loadoutMenu.getRangedDamageValueLabel().setText("" + (int)label.getUnit().getBaseRangedDamage());
-            loadoutMenu.getSpellDamageValueLabel().setText("" + (int)label.getUnit().getBaseSpellDamage());
-            loadoutMenu.getMeleeAttackRangeValueLabel().setText("" + (int)label.getUnit().getBaseMeleeAttackRange());
-            loadoutMenu.getRangedAttackRangeValueLabel().setText("" + (int)label.getUnit().getBaseRangedAttackRange());
-            loadoutMenu.getMovementRangeValueLabel().setText("" + label.getUnit().getBaseMovementRange());
-            loadoutMenu.getDexterityValueLabel().setText("" + (int)label.getUnit().getBaseDexterity());
-            loadoutMenu.getVitalityValueLabel().setText("" + (int)label.getUnit().getBaseVitality());
-            loadoutMenu.getIntelligenceValueLabel().setText("" + (int)label.getUnit().getBaseIntelligence());
-            loadoutMenu.getDodgeChanceValueLabel().setText("" + (int)label.getUnit().getBaseDodgeChance());
-            loadoutMenu.getHealthRegenValueLabel().setText("" + (int)label.getUnit().getBaseHealthRegen());
-            loadoutMenu.getArmorValueLabel().setText("" + (int)label.getUnit().getBaseArmor());
+            loadoutMenu.getMeleeAttackRangeValueLabel().setText("" + (int)label.getUnit().getHealth());
+            loadoutMenu.getMovementRangeValueLabel().setText("" + (int)label.getUnit().getMovementRange());
+            loadoutMenu.getMPValueLabel().setText("" +(int)label.getUnit().getMP());
+            loadoutMenu.getHPValueLabel().setText("" + (int)label.getUnit().getHealth());
+            loadoutMenu.getStrengthValueLabel().setText("" + (int)label.getUnit().getStrength());
+            loadoutMenu.getAgilityValueLabel().setText("" + (int)label.getUnit().getAgility());
+            loadoutMenu.getMeleeDamageValueLabel().setText("" + (int)label.getUnit().getMeleeDamage());
+            loadoutMenu.getRangedDamageValueLabel().setText("" + (int)label.getUnit().getRangedDamage());
+            loadoutMenu.getSpellDamageValueLabel().setText("" + (int)label.getUnit().getSpellDamage());
+            loadoutMenu.getMeleeAttackRangeValueLabel().setText("" + (int)label.getUnit().getMeleeAttackRange());
+            loadoutMenu.getRangedAttackRangeValueLabel().setText("" + (int)label.getUnit().getRangedAttackRange());
+            loadoutMenu.getMovementRangeValueLabel().setText("" + label.getUnit().getMovementRange());
+            loadoutMenu.getDexterityValueLabel().setText("" + (int)label.getUnit().getDexterity());
+            loadoutMenu.getVitalityValueLabel().setText("" + (int)label.getUnit().getVitality());
+            loadoutMenu.getIntelligenceValueLabel().setText("" + (int)label.getUnit().getIntelligence());
+            loadoutMenu.getDodgeChanceValueLabel().setText("" + (int)label.getUnit().getDodgeChance());
+            loadoutMenu.getHealthRegenValueLabel().setText("" + (int)label.getUnit().getHealthRegen());
+            loadoutMenu.getArmorValueLabel().setText("" + (int)label.getUnit().getArmor());
             
            label.updateUI();
        }  

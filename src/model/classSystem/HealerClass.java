@@ -31,6 +31,8 @@ public class HealerClass extends DefaultClass{
         intelligence = 30;
         dexterity = 20;
         vitality = 20;
+        hasAttacked = false;
+        hasMoved = false;
         //calcStrength();
         calcHealth();
         calcMovement();

@@ -30,6 +30,8 @@ public class RogueClass extends DefaultClass{
         intelligence = 10;
         dexterity = 25;
         vitality = 10;
+        hasAttacked = false;
+        hasMoved = false;
         //calcStrength();
         calcHealth();
         calcMovement();

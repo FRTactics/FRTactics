@@ -24,8 +24,9 @@ import java.util.Timer;
 import java.util.TimerTask;
 import javax.swing.JPanel;
 import model.CharacterFlavor;
+import model.GamePlayManager;
+import model.GamePlayManager.Action;
 import model.classSystem.DefaultClass;
-import model.classSystem.WarriorClass;
 import view.GameApp;
 
 public class Tile extends JPanel
@@ -85,25 +86,28 @@ public class Tile extends JPanel
     {
         setPreferredSize(preferredSize);
     }
+        
+    public boolean isCharacterOnTile()
+    {
+        return characterOnTile;   
+    }
     
-    public void updateCharacterClass(DefaultClass character)
+    public void updateCharacter(DefaultClass character, Image characterImage)
     {
         this.character = character;
-    }
-    
-    public void updateCharacterImage(Image characterImage)
-    {
         this.characterImage = characterImage;
+        characterOnTile = true;
+    }
+    public void removeCharacter()
+    {
+        character = null;
+        characterImage = null;
+        characterOnTile = false;
     }
     
-    public DefaultClass retrieveCharacter()
+    public Object[] retrieveCharacter()
     {
-        return character;
-    }
-    
-    public Image retrieveCharacterImage()
-    {
-        return characterImage;
+        return (new Object[]{character, characterImage});
     }
     
     public void createPolygon(Polygon polygon)
@@ -118,6 +122,11 @@ public class Tile extends JPanel
         this.displayAttackRange = enable;
     }
     
+   public boolean isAttackRangeDisplayed()
+   {
+        return displayAttackRange;
+   }
+    
     public void displayMovementRange(boolean enable)
     {
         if(moveRangeImage == null)
@@ -125,20 +134,28 @@ public class Tile extends JPanel
         this.displayMovementRange = enable;
     }
     
+    public boolean isMovementRangeDisplayed(){
+       
+        return displayMovementRange;
+   }
+    
     public void displayUnitPlacement(boolean enable)
     {
         if(placeUnitImage == null)
             placeUnitImage = ImageContainer.getInstance().retrieveTileEffects(ImageContainer.TileEffects.PLACE_UNIT);
         this.displayPlaceUnit = enable;    
     }
+    
     public int getXLocation()
     {
         return xLocation;
     }
+    
     public int getYLocation()
     {
         return yLocation;
     }
+    
     public void loadTileImage()
     {
         try
@@ -236,53 +253,68 @@ public class Tile extends JPanel
         }
    }
    
+
    //Classes for the mouse listener and mouse motion listener
    public class TileMouseAdapter extends MouseAdapter
    {
-       @Override
-       public void mouseEntered(MouseEvent e)
-       {
-            timer = new Timer();
-            TimerTask task = new TimerTask(){
-                @Override
-                public void run() 
-                {
-                    try
-                    {
-                        StatsPopup statsPopup = StatsPopup.getInstance();
-                        statsPopup.updateCharacterImage(ImageContainer.CharacterImage.WARRIOR);
-                        statsPopup.setLocation(e.getXOnScreen() + 20,(int)(e.getYOnScreen()- (.5*statsPopup.getHeight())));
-                        statsPopup.setVisible(true);
-                    }
-                    catch(InstanceNotCreatedException ex)
-                    {
-                        System.out.println(ex);
-                    }
-                }
-            };
-            timer.schedule(task, 2500); 
-       }
-       
-       @Override
-       public void mouseExited(MouseEvent e)
-       {
-           try 
-           {
-               timer.cancel();
-               timer.purge();
-               StatsPopup statsPopup = StatsPopup.getInstance();
-               statsPopup.setVisible(false);
-           } 
-           catch (InstanceNotCreatedException ex) 
-           {
-               System.out.println(ex);
-           }
-       }
+//       @Override
+//       public void mouseEntered(MouseEvent e)
+//       {
+//            timer = new Timer();
+//            TimerTask task = new TimerTask(){
+//                @Override
+//                public void run() 
+//                {
+//                    try
+//                    {
+//                        StatsPopup statsPopup = StatsPopup.getInstance();
+//                        statsPopup.updateCharacterImage(ImageContainer.CharacterImage.WARRIOR);
+//                        statsPopup.setLocation(e.getXOnScreen() + 20,(int)(e.getYOnScreen()- (.5*statsPopup.getHeight())));
+//                        statsPopup.setVisible(true);
+//                    }
+//                    catch(InstanceNotCreatedException ex)
+//                    {
+//                        System.out.println(ex);
+//                    }
+//                }
+//            };
+//            timer.schedule(task, 2500); 
+//       }
+//       
+//       @Override
+//       public void mouseExited(MouseEvent e)
+//       {
+//           try 
+//           {
+//               timer.cancel();
+//               timer.purge();
+//               StatsPopup statsPopup = StatsPopup.getInstance();
+//               statsPopup.setVisible(false);
+//           } 
+//           catch (InstanceNotCreatedException ex) 
+//           {
+//               System.out.println(ex);
+//           }
+//       }
        
        @Override
        public void mouseClicked(MouseEvent e)
        {
-           
+            GamePlayManager manager = GamePlayManager.getInstance();
+            if(manager.getGameplayStatus() == Action.WAITING)
+            {
+                manager.setUnit(xLocation, yLocation, GamePlayManager.Action.MOVE);
+                manager.displayRange(xLocation, yLocation, 0);
+                GameApp.frame.repaint();
+            }
+            else
+            {
+                if(manager.getGameplayStatus() == Action.MOVE)
+                {
+                    manager.moveUnit(xLocation, yLocation);
+                    GameApp.frame.repaint();
+                }
+            }
        }
    }
 

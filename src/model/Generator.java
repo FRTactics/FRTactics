@@ -131,17 +131,17 @@ public class Generator
             {
                 if(value > w + l0 && value <= w + l0 + l1)
                 {
-                    grid[x][y] = new Tile(Tile.LandType.HILL_TILE,grid.length,x,y);
+                    grid[x][y] = new Tile(Tile.LandType.GRASS_TILE,grid.length,x,y);
                 }
                 else
                 {
                     if(value > w + l0 + l1 && value <= w + l0 + l1 + l2)
                     {
-                        grid[x][y] = new Tile(Tile.LandType.RIDGE_TILE,grid.length,x,y);
+                        grid[x][y] = new Tile(Tile.LandType.GRASS_TILE,grid.length,x,y);
                     }
                     else
                     {
-                        grid[x][y] = new Tile(Tile.LandType.MOUNTAIN_TILE,grid.length,x,y);
+                        grid[x][y] = new Tile(Tile.LandType.GRASS_TILE,grid.length,x,y);
                     }
                 }
             }

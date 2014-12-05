@@ -163,46 +163,5 @@ public class GameManager
         model1.clear();
         LoadoutListModel model2 = (LoadoutListModel)p2LoadoutJList.getModel();
         model2.clear();
-    }
-    public static void setPlayerTurn(int player)            // not sure if this will stay or be added to the Combat Manager when we make it
-    {
-        if(player == 1)
-        {
-            isP1Turn = true;
-            isP2Turn = false;
-        }
-        else if(player == 2)
-        {
-            isP1Turn = false;
-            isP2Turn = true;
-        }
-    }
-  
-    public static String getPlayerTurn()            //same as above, may be moved
-    {
-        String temp = "";
-        if(isP1Turn)
-        {
-            temp += "Player 1 Turn";
-        }
-        else
-        {
-            temp += "Player 2 Turn";
-        }
-        return temp;
-    }
-    
-    public static void switchTurns()            // same as above
-    {
-        if(isP1Turn)
-        {
-            setPlayerTurn(1);
-        }
-        else
-        {
-            setPlayerTurn(2);
-        }
-    }
-   
-    
+    } 
 }
