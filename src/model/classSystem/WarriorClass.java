@@ -30,6 +30,8 @@ public class WarriorClass extends DefaultClass{
         intelligence = 20;
         dexterity = 20; 
         vitality = 20; 
+        hasAttacked = false;
+        hasMoved = false;
         //calcStrength();
         calcHealth();
         calcMovement();
@@ -37,11 +39,11 @@ public class WarriorClass extends DefaultClass{
     }
 
     @Override
-    public void calcHealth() {
-        
+    public void calcHealth() 
+    {    
        health = ((health * .1) + strength + health);       //increase base health based on strength
-       health = (health *.2) + vitality + health; // calculating max health
-       mp = ((mp*.2) + intelligence +mp);          //calculating your mana pool  
+       health = (health *.2) + vitality + health;          // calculating max health
+       mp = ((mp*.2) + intelligence + mp);                  //calculating your mana pool  
     }
     
     

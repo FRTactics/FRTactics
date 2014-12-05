@@ -4,11 +4,12 @@ import view.ingame.Tile;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import view.ingame.DrawPanel;
+import view.ingame.Tile.LandType;
 
 public class RangeChecker 
 {
-    private final int [][] neighborsEven = {{-1,-1}, {0,-1}, {+1, 0}, {0, +1}, {-1, +1}, {-1, 0}};
-    private final int [][] neighborsOdd = {{+1,+1},{+1,0},{0,-1},{-1,0},{+1,-1},{0,+1}};
+    private final int [][] neighborsEven = {{-1,-1},{0,-1},{+1,0},{0,+1},{-1,+1},{-1,0}};//{{-1,-1}, {0,-1}, {+1, 0}, {0, +1}, {-1, +1}, {-1, 0}};
+    private final int [][] neighborsOdd ={{0,-1},{+1,-1},{+1,0},{+1,+1},{0,+1},{-1,0}}; //{{+1,+1},{+1,0},{0,-1},{-1,0},{+1,-1},{0,+1}};
     private final Tile grid[][];
     
     public RangeChecker()
@@ -16,7 +17,7 @@ public class RangeChecker
         this.grid = DrawPanel.getGrid();
     }
     
-    public void calculateRange(int xstart,int ystart, int range)
+    public void calculateRange(int xstart,int ystart, int range, int rangeType)
     {        
        ArrayList start = new ArrayList();
        ArrayDeque nodes = new ArrayDeque();
@@ -27,7 +28,7 @@ public class RangeChecker
        {
            for(int j = 0; j < grid.length; ++j)
            {
-               start.add(new CoordinatesHolder(i,j));
+               start.add(new CoordinatesHolder(j,i));
            }
        }
        //Get the size of the start array
@@ -48,7 +49,7 @@ public class RangeChecker
                    //get the neighboring tiles x and y coordinate
                     int x = node.getX() + neighborsEven[i][0];
                     int y = node.getY() + neighborsEven[i][1];
-                  
+                    
                     //search for the tile in the start array
                     for(int j = 0; j < start.size(); ++j)
                     {
@@ -60,10 +61,25 @@ public class RangeChecker
                             {
                                 //make sure its not the start tile
                                 if(node.getX() != xstart || node.getY() != ystart)
-                                    grid[node.getX()][node.getY()].displayMovementRange(true);
-                                nodes.add(start.get(j)); //add the found tile to the array deque
-                                ((CoordinatesHolder)(start.get(j))).setRange(node.getRange() + holyFuckingCaseStatementsBatman(node,x,y));// calculate the new movement range
-                                start.remove(j);// remove the node from the start array
+                                {
+                                    switch(rangeType)
+                                    {
+                                        
+                                        case 0://move
+                                            grid[node.getX()][node.getY()].displayMovementRange(true);
+                                            break;
+                                        case 1://attack
+                                            grid[node.getX()][node.getY()].displayAttackRange(true);
+                                            break;
+                                        case 2://remove displayed range
+                                           grid[node.getX()][node.getY()].displayAttackRange(false);
+                                           grid[node.getX()][node.getY()].displayMovementRange(false);
+                                           break;
+                                    }
+                                } 
+                                    nodes.add(start.get(j)); //add the found tile to the array deque
+                                    ((CoordinatesHolder)(start.get(j))).setRange(node.getRange() + holyFuckingCaseStatementsBatman(node,x,y));// calculate the new movement range
+                                    start.remove(j);// remove the node from the start array
                             }
                         }
                     }  
@@ -88,9 +104,23 @@ public class RangeChecker
                             if(node.getRange() > 0)
                             {
                                 //make sure its not the start tile
-                                if(node.getX() != xstart || node.getY() != ystart)
-                                    grid[node.getX()][node.getY()].displayMovementRange(true);
-                                nodes.add(start.get(j));//add the found tile to the array deque
+                                if(node.getX() != xstart || node.getY() != ystart){
+                                    
+                                    switch(rangeType)
+                                    { 
+                                        case 0://move
+                                            grid[node.getX()][node.getY()].displayMovementRange(true);
+                                            break;
+                                        case 1://attack
+                                            grid[node.getX()][node.getY()].displayAttackRange(true);
+                                            break;
+                                        case 2://remove displayed range
+                                            grid[node.getX()][node.getY()].displayAttackRange(false);
+                                            grid[node.getX()][node.getY()].displayMovementRange(false);
+                                            break;
+                                    }
+                                }
+                                nodes.add(start.get(j)); //add the found tile to the array deque
                                 ((CoordinatesHolder)(start.get(j))).setRange(node.getRange() + holyFuckingCaseStatementsBatman(node,x,y));// calculate the new movement range
                                 start.remove(j);// remove the node from the start array
                             }
@@ -103,7 +133,9 @@ public class RangeChecker
            nodes.removeFirst();
            
            if(nodes.isEmpty())
+           {
                break;
+           }
        }
        
     }
