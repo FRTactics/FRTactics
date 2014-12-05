@@ -6,12 +6,12 @@
 package view.ingame;
 
 import java.awt.BorderLayout;
+import java.awt.CardLayout;
 import java.awt.Component;
 import java.awt.FlowLayout;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.util.ArrayList;
-import java.util.Vector;
 import javax.swing.DefaultListCellRenderer;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
@@ -29,58 +29,94 @@ public class CharacterGlassPane extends JPanel
         setOpaque(false);
         setLayout(new BorderLayout());
         //Create vector to store labels into
-        Vector list = new Vector();
-        //Populate the list
-        createCharacterLabels(list);
-        //create the holder panel for the jlabels
+        ArrayList playerOneList = new ArrayList();
+        ArrayList playerTwoList = new ArrayList();
+        //Populate the list for player one
+        createCharacterLabels(playerOneList,GameManager.getInstance().getP1Loadout());
+        //Populate the list for player two
+        createCharacterLabels(playerTwoList,GameManager.getInstance().getP2Loadout());
+        //Create the holder panel for the new layout
         JPanel holderPanel = new JPanel();
-        holderPanel.setLayout(new FlowLayout());
         holderPanel.setVisible(true);
         holderPanel.setOpaque(false);
-        for(Object label: list)
+        this.add(holderPanel,BorderLayout.SOUTH);
+        //Create the card layout for the two player and add to the pane
+        CardLayout playerView = new CardLayout();
+        holderPanel.setLayout(playerView);
+        //create the player panel for player one for the jlabels
+        JPanel playerOnePanel = designCharacterOnePanel();
+        //add the labels to player one panel
+        for(Object label: playerOneList)
         {
-            holderPanel.add((CharacterLabel)label);
+            playerOnePanel.add((CharacterLabel)label);
         }
-        this.add(holderPanel, BorderLayout.SOUTH);
+        //create the player panel for player two for the jlabels
+        JPanel playerTwoPanel = designCharacterTwoPanel();
+        //add the labels to player one panel
+        for(Object label: playerTwoList)
+        {
+            playerTwoPanel.add((CharacterLabel)label);
+        }
+        //Add the panels to the card layout
+        holderPanel.add(playerOnePanel,"Player One Panel");
+        holderPanel.add(playerTwoPanel,"Player Two Panel");
+        playerView.show(holderPanel,"Player One Panel");
     }
     
-    private void createCharacterLabels(Vector list)
+    private JPanel designCharacterOnePanel()
     {
-        ArrayList playerOneLoadout = GameManager.getInstance().getP1Loadout();
+        JPanel playerOnePanel = new JPanel();
+        playerOnePanel.setLayout(new FlowLayout());
+        playerOnePanel.setVisible(true);
+        playerOnePanel.setOpaque(false);
+        return playerOnePanel;
+    }
+    
+    private JPanel designCharacterTwoPanel()
+    {
+        JPanel playerTwoPanel = new JPanel();
+        playerTwoPanel.setLayout(new FlowLayout());
+        playerTwoPanel.setVisible(true);
+        playerTwoPanel.setOpaque(false);
+        return playerTwoPanel;
+    }
+    
+    private void createCharacterLabels(ArrayList list, ArrayList orginList)
+    {
         CharacterLabel character;
         
-        for(int i = 0; i < playerOneLoadout.size(); ++i)
+        for(int i = 0; i < orginList.size(); ++i)
         {
             character = new CharacterLabel();
             character.setVisible(true);
             character.setHorizontalTextPosition(JLabel.CENTER);
             character.setVerticalTextPosition(JLabel.BOTTOM);
             
-            switch(((DefaultClass)(playerOneLoadout.get(i))).className)
+            switch(((DefaultClass)(orginList.get(i))).className)
             {
                 case "Warrior":
                     character.setIcon(new ImageIcon(ImageContainer.getInstance().retrieveCharacterTileImage(ImageContainer.CharacterImage.WARRIOR).getScaledInstance(125, 100, 0)));
-                    character.setCharacter(((DefaultClass)(playerOneLoadout.get(i))),ImageContainer.getInstance().retrieveCharacterTileImage(ImageContainer.CharacterImage.WARRIOR));
+                    character.setCharacter(((DefaultClass)(orginList.get(i))),ImageContainer.getInstance().retrieveCharacterTileImage(ImageContainer.CharacterImage.WARRIOR));
                     character.setText("Warrior");
                     break;
                 case "Archer":
                     character.setIcon(new ImageIcon(ImageContainer.getInstance().retrieveCharacterTileImage(ImageContainer.CharacterImage.ARCHER).getScaledInstance(125, 100, 0)));
-                    character.setCharacter(((DefaultClass)(playerOneLoadout.get(i))),ImageContainer.getInstance().retrieveCharacterTileImage(ImageContainer.CharacterImage.ARCHER));
+                    character.setCharacter(((DefaultClass)(orginList.get(i))),ImageContainer.getInstance().retrieveCharacterTileImage(ImageContainer.CharacterImage.ARCHER));
                     character.setText("Archer");
                     break;
                 case "Wizard":
                     character.setIcon(new ImageIcon(ImageContainer.getInstance().retrieveCharacterTileImage(ImageContainer.CharacterImage.WIZARD).getScaledInstance(125, 100, 0)));
-                    character.setCharacter(((DefaultClass)(playerOneLoadout.get(i))),ImageContainer.getInstance().retrieveCharacterTileImage(ImageContainer.CharacterImage.WIZARD));
+                    character.setCharacter(((DefaultClass)(orginList.get(i))),ImageContainer.getInstance().retrieveCharacterTileImage(ImageContainer.CharacterImage.WIZARD));
                     character.setText("Wizard");
                     break;
                 case "Rogue":
                     character.setIcon(new ImageIcon(ImageContainer.getInstance().retrieveCharacterTileImage(ImageContainer.CharacterImage.ROGUE).getScaledInstance(125, 100, 0)));
-                    character.setCharacter(((DefaultClass)(playerOneLoadout.get(i))),ImageContainer.getInstance().retrieveCharacterTileImage(ImageContainer.CharacterImage.ROGUE));
+                    character.setCharacter(((DefaultClass)(orginList.get(i))),ImageContainer.getInstance().retrieveCharacterTileImage(ImageContainer.CharacterImage.ROGUE));
                     character.setText("Rogue");
                     break;
                 case "Healer":
                     character.setIcon(new ImageIcon(ImageContainer.getInstance().retrieveCharacterTileImage(ImageContainer.CharacterImage.HEALER).getScaledInstance(125, 100, 0)));
-                    character.setCharacter(((DefaultClass)(playerOneLoadout.get(i))),ImageContainer.getInstance().retrieveCharacterTileImage(ImageContainer.CharacterImage.HEALER));
+                    character.setCharacter(((DefaultClass)(orginList.get(i))),ImageContainer.getInstance().retrieveCharacterTileImage(ImageContainer.CharacterImage.HEALER));
                     character.setText("Healer");
                     break;
             }
