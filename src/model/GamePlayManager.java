@@ -40,8 +40,6 @@ public class GamePlayManager
     }
     
     /** Sets the current selected unit
-     * 
-     * 
      * @param startX starting x position
      * @param startY starting y position 
      * @param action 
@@ -69,11 +67,12 @@ public class GamePlayManager
         this.sourceX = startX;
         this.sourceY = startY;
     }
-    public void resetUnits(){
-        for(DefaultClass unit : GameManager.getInstance().getP1Loadout()){
+    public void resetUnits()
+    {
+        for(DefaultClass unit : GameManager.getInstance().getP1Loadout())
+        {
             unit.setMoved(false);
             unit.setAttacked(false);
-            
         }
     }
     public Action getGameplayStatus()
@@ -97,9 +96,8 @@ public class GamePlayManager
                 removeDisplayedRange((DefaultClass)currentTile.retrieveCharacter()[0]);
                 destinationTile.updateCharacter((DefaultClass)currentTile.retrieveCharacter()[0], (Image)currentTile.retrieveCharacter()[1]);
                 currentTile.removeCharacter();
-                //removeDisplayedRange((DefaultClass)destinationTile.retrieveCharacter()[0]);
-                isMoving = false;
                 ((DefaultClass)(destinationTile.retrieveCharacter()[0])).setMoved(true);
+                isMoving = false;
                 return true;
             }
             else
@@ -112,7 +110,6 @@ public class GamePlayManager
     {      
         RangeChecker checker = new RangeChecker();
         int range = (int)character.getMovementRange();
-        
         checker.calculateRange(sourceX, sourceY, range, 2);
     }
     

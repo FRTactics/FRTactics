@@ -258,55 +258,17 @@ public class Tile extends JPanel
 
    //Classes for the mouse listener and mouse motion listener
    public class TileMouseAdapter extends MouseAdapter
-   {
-//       @Override
-//       public void mouseEntered(MouseEvent e)
-//       {
-//            timer = new Timer();
-//            TimerTask task = new TimerTask(){
-//                @Override
-//                public void run() 
-//                {
-//                    try
-//                    {
-//                        StatsPopup statsPopup = StatsPopup.getInstance();
-//                        statsPopup.updateCharacterImage(ImageContainer.CharacterImage.WARRIOR);
-//                        statsPopup.setLocation(e.getXOnScreen() + 20,(int)(e.getYOnScreen()- (.5*statsPopup.getHeight())));
-//                        statsPopup.setVisible(true);
-//                    }
-//                    catch(InstanceNotCreatedException ex)
-//                    {
-//                        System.out.println(ex);
-//                    }
-//                }
-//            };
-//            timer.schedule(task, 2500); 
-//       }
-//       
-//       @Override
-//       public void mouseExited(MouseEvent e)
-//       {
-//           try 
-//           {
-//               timer.cancel();
-//               timer.purge();
-//               StatsPopup statsPopup = StatsPopup.getInstance();
-//               statsPopup.setVisible(false);
-//           } 
-//           catch (InstanceNotCreatedException ex) 
-//           {
-//               System.out.println(ex);
-//           }
-//       }
-       
+   {   
        @Override
        public void mouseClicked(MouseEvent e)
        {
             try 
             {
-                if(characterOnTile)
+                GamePlayManager manager = GamePlayManager.getInstance();
+                if(characterOnTile && (manager.getGameplayStatus() == Action.WAITING))
                 {
                     SelectionPopup popup = SelectionPopup.getInstance();
+                    popup.updateCharacter(character, xLocation, yLocation);
                     popup.setLocation(e.getXOnScreen() + 20,(int)(e.getYOnScreen()- (.5*popup.getHeight())));
                     popup.setVisible(true);
                 }
@@ -314,28 +276,20 @@ public class Tile extends JPanel
                 {
                     SelectionPopup popup = SelectionPopup.getInstance();
                     popup.setVisible(false);
+                    
+                    switch(manager.getGameplayStatus())
+                    {
+                        case MOVE:
+                            manager.moveUnit(xLocation, yLocation);
+                            GameApp.frame.repaint();
+                            break;
+                    }
                 }
             } 
             catch (InstanceNotCreatedException ex) 
             {
                 Logger.getLogger(Tile.class.getName()).log(Level.SEVERE, null, ex);
             }
-//            GamePlayManager manager = GamePlayManager.getInstance();
-//            if(manager.getGameplayStatus() == Action.WAITING)
-//            {
-//                manager.setUnit(xLocation, yLocation, GamePlayManager.Action.MOVE);
-//                manager.displayRange(xLocation, yLocation, 0);
-//                GameApp.frame.repaint();
-//            }
-//            else
-//            {
-//                if(manager.getGameplayStatus() == Action.MOVE)
-//                {
-//                    manager.moveUnit(xLocation, yLocation);
-//                    GameApp.frame.repaint();
-//                }
-//            }
-
        }
    }
 

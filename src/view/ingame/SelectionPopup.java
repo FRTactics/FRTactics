@@ -16,6 +16,8 @@ import java.awt.event.MouseEvent;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.JRootPane;
+import model.GamePlayManager;
+import view.GameApp;
 
 public class SelectionPopup extends JDialog
 {
@@ -27,7 +29,7 @@ public class SelectionPopup extends JDialog
     private final Image backgroundImage;
     private DefaultClass character;
     private static SelectionPopup instance;
-
+    private int xLocation, yLocation;
     private SelectionPopup(Window parent)
     {
         super(parent);
@@ -49,6 +51,9 @@ public class SelectionPopup extends JDialog
         backgroundImage = ImageContainer.getInstance().retrieveMenuImage(ImageContainer.MenuImage.POPUP_BACKGROUND);
         this.add(new SelectionButton(ButtonType.ATTACK));
         this.add(new SelectionButton(ButtonType.DEFEND));
+        this.add(new SelectionButton(ButtonType.MOVE));
+        this.add(new SelectionButton(ButtonType.MAGIC));
+        this.add(new SelectionButton(ButtonType.HEAL));
     }
 
     public static void createInstance(Window parent)
@@ -60,15 +65,18 @@ public class SelectionPopup extends JDialog
     public static SelectionPopup getInstance() throws InstanceNotCreatedException
     {
         if(instance == null)
-            throw new InstanceNotCreatedException("No instance exists for StatsPopup");
+            throw new InstanceNotCreatedException("No instance exists for SelectionPopup");
         return instance;
     }
 
-    public void updateCharacter(DefaultClass character)
+    public void updateCharacter(DefaultClass character, int xLocation,int yLocation)
     {
         this.character = character;
+        this.xLocation = xLocation;
+        this.yLocation = yLocation;
     }
-
+    
+    //Class for the jpanel the image is drawn on
     protected class StatsPanel extends JPanel
     {   
         @Override
@@ -78,7 +86,7 @@ public class SelectionPopup extends JDialog
         }
 
     }
-
+    //Inner Class for the button
     private class SelectionButton extends JPanel
     {
         private final ButtonType type;
@@ -90,6 +98,7 @@ public class SelectionPopup extends JDialog
             setOpaque(true);
             setVisible(true);
             setPreferredSize(new Dimension(70,80));
+            addMouseListener(new SelectionButtonAdapter());
             loadButtonImage();
         }
         
@@ -120,24 +129,43 @@ public class SelectionPopup extends JDialog
         {
             g.drawImage(buttonImage, 0, 0, getWidth(), getHeight(), SelectionPopup.this);
         }
-        
+        //Inner Class for the button Adapter
         private class SelectionButtonAdapter extends MouseAdapter
         {
             @Override
             public void mouseClicked(MouseEvent e)
             {
+                GamePlayManager manager = GamePlayManager.getInstance();
+                
                 switch(type)
                 {
                     case ATTACK:
-                        
-                    case DEFEND:
-                        
+                        manager.setUnit(xLocation, yLocation, GamePlayManager.Action.ATTACK);
+                        manager.displayRange(xLocation, yLocation, 1);
+                        SelectionPopup.this.setVisible(false);
+                        GameApp.frame.repaint();
+                        break;
+//                    case DEFEND:
+//                        manager.setUnit(xLocation, yLocation, GamePlayManager.Action.DEFEND);
+//                        break;
                     case MOVE:
-                        
+                        manager.setUnit(xLocation, yLocation, GamePlayManager.Action.MOVE);
+                        manager.displayRange(xLocation, yLocation, 0);
+                        SelectionPopup.this.setVisible(false);
+                        GameApp.frame.repaint();
+                        break;
                     case HEAL:
-                       
+                        manager.setUnit(xLocation, yLocation, GamePlayManager.Action.HEAL);
+                        manager.displayRange(xLocation, yLocation, 1);
+                        SelectionPopup.this.setVisible(false);
+                        GameApp.frame.repaint();
+                        break;
                     case MAGIC:
-                        
+                        manager.setUnit(xLocation, yLocation, GamePlayManager.Action.MAGIC);
+                        manager.displayRange(xLocation, yLocation, 1);
+                        SelectionPopup.this.setVisible(false);
+                        GameApp.frame.repaint();
+                        break;
                 }
             }
         }
