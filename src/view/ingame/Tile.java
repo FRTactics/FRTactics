@@ -22,6 +22,8 @@ import java.io.IOException;
 import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JPanel;
 import model.CharacterFlavor;
 import model.GamePlayManager;
@@ -300,39 +302,58 @@ public class Tile extends JPanel
        @Override
        public void mouseClicked(MouseEvent e)
        {
-            GamePlayManager manager = GamePlayManager.getInstance();
-            if(manager.getGameplayStatus() == Action.WAITING)
+            try 
             {
-                manager.setUnit(xLocation, yLocation, GamePlayManager.Action.MOVE);
-                manager.displayRange(xLocation, yLocation, 0);
-                GameApp.frame.repaint();
-            }
-            else
-            {
-                if(manager.getGameplayStatus() == Action.MOVE)
+                if(characterOnTile)
                 {
-                    manager.moveUnit(xLocation, yLocation);
-                    GameApp.frame.repaint();
+                    SelectionPopup popup = SelectionPopup.getInstance();
+                    popup.setLocation(e.getXOnScreen() + 20,(int)(e.getYOnScreen()- (.5*popup.getHeight())));
+                    popup.setVisible(true);
                 }
+                else
+                {
+                    SelectionPopup popup = SelectionPopup.getInstance();
+                    popup.setVisible(false);
+                }
+            } 
+            catch (InstanceNotCreatedException ex) 
+            {
+                Logger.getLogger(Tile.class.getName()).log(Level.SEVERE, null, ex);
             }
+//            GamePlayManager manager = GamePlayManager.getInstance();
+//            if(manager.getGameplayStatus() == Action.WAITING)
+//            {
+//                manager.setUnit(xLocation, yLocation, GamePlayManager.Action.MOVE);
+//                manager.displayRange(xLocation, yLocation, 0);
+//                GameApp.frame.repaint();
+//            }
+//            else
+//            {
+//                if(manager.getGameplayStatus() == Action.MOVE)
+//                {
+//                    manager.moveUnit(xLocation, yLocation);
+//                    GameApp.frame.repaint();
+//                }
+//            }
+
        }
    }
 
    public class TileMouseMotionAdapter extends MouseMotionAdapter
    {
-       @Override
-       public void mouseMoved(MouseEvent e)
-       {
-           try 
-           {
-               StatsPopup statsPopup = StatsPopup.getInstance();
-               statsPopup.setLocation(e.getXOnScreen() + 20,(int)(e.getYOnScreen()- (.5*statsPopup.getHeight())));
-           } 
-           catch (InstanceNotCreatedException ex) 
-           {
-               System.out.println(ex);
-           }
-       }
+//       @Override
+//       public void mouseMoved(MouseEvent e)
+//       {
+//           try 
+//           {
+//               SelectionPopup statsPopup = SelectionPopup.getInstance();
+//               statsPopup.setLocation(e.getXOnScreen() + 20,(int)(e.getYOnScreen()- (.5*statsPopup.getHeight())));
+//           } 
+//           catch (InstanceNotCreatedException ex) 
+//           {
+//               System.out.println(ex);
+//           }
+//       }
    }
    
    public class TileDropTargetAdapter extends DropTargetAdapter

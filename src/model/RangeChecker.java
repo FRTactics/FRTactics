@@ -4,7 +4,6 @@ import view.ingame.Tile;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import view.ingame.DrawPanel;
-import view.ingame.Tile.LandType;
 
 public class RangeChecker 
 {
@@ -96,35 +95,30 @@ public class RangeChecker
                 }
             }
            
-           finish.add(nodes.getFirst());
-           nodes.removeFirst();
-           
-           if(nodes.isEmpty())
-           {
-               break;
-           }
-       }
+            finish.add(nodes.getFirst());
+            nodes.removeFirst();
+
+            if(nodes.isEmpty())
+            {
+                break;
+            }
+        }
       
-       // really terrible fix for the broken display range code
-       // looks for coordinates in the finish deque and checks to see if there are ranges above zero
-       // if there are, make it display what we want
-       for(int i = 0; i < finish.size();i++){
-            CoordinatesHolder node = (CoordinatesHolder)finish.get(i);
-            if(node.getX() != xstart || node.getY() != ystart){
-                                    
-                switch(rangeType)
-                { 
-                    case 0://move
-                        grid[node.getX()][node.getY()].displayMovementRange(true);
-                        break;
-                    case 1://attack
-                        grid[node.getX()][node.getY()].displayAttackRange(true);
-                        break;
-                    case 2://remove displayed range
-                        grid[node.getX()][node.getY()].displayAttackRange(false);
-                        grid[node.getX()][node.getY()].displayMovementRange(false);
-                        break;
-                }
+        for (Object finish1 : finish) 
+        {
+            CoordinatesHolder node = (CoordinatesHolder) finish1;
+            switch(rangeType)
+            {
+                case 0://move
+                    grid[node.getX()][node.getY()].displayMovementRange(true);
+                    break;
+                case 1://attack
+                    grid[node.getX()][node.getY()].displayAttackRange(true);
+                    break;
+                case 2://remove displayed range
+                    grid[node.getX()][node.getY()].displayAttackRange(false);
+                    grid[node.getX()][node.getY()].displayMovementRange(false);
+                    break;
             }
         }
     }
