@@ -20,8 +20,9 @@ public class ImageContainer
     public enum MenuImage{
         MAIN_MENU, NEW_GAME_SWORD, OPTIONS_SWORD, QUIT_SWORD,
         PAUSE_MENU_BACKGROUND,PAUSE_MENU_OPTIONS, PAUSE_MENU_RESUME, MENU_CONTINUE, MENU_BACK, MENU_REMOVE,
-        PAUSE_MENU_QUIT,PAUSE_MENU_MAIN, MAIN_MENU_BACKGROUND, P1_LOADOUT_BACKGROUND,
-        P2_LOADOUT_BACKGROUND, POPUP_BACKGROUND, HUD_BACKGROUND, P1_TURN, P2_TURN
+        PAUSE_MENU_QUIT,PAUSE_MENU_MAIN, MAIN_MENU_BACKGROUND, P1_LOADOUT_BACKGROUND,P2_LOADOUT_BACKGROUND,
+        POPUP_BACKGROUND, HUD_BACKGROUND,SELECTION_ATTACK,SELECTION_MOVE,SELECTION_DEFEND,SELECTION_MAGIC, 
+        SELECTION_HEAL
     };
     
     public enum TileEffects{
@@ -44,6 +45,11 @@ public class ImageContainer
     private Image healer;
     private Image wizard;
     private Image rogue;
+    private Image attackButton;
+    private Image defendButton;
+    private Image magicButton;
+    private Image healButton;
+    private Image moveButton;
     private Image pauseMenuOptions;
     private Image pauseMenuResume;
     private Image pauseMenuQuit;
@@ -69,8 +75,6 @@ public class ImageContainer
     private Image p1LoadoutBackground;
     private Image p2LoadoutBackground;
     private Image hudBackground;
-    private Image p1Turn;
-    private Image p2Turn;
     
     //stuff for stats
     private Image stats;
@@ -145,13 +149,19 @@ public class ImageContainer
                 case PAUSE_MENU_MAIN:
                     return pauseMenuMain == null ? pauseMenuMain = ImageIO.read(new File(".//resources//menu//pauseMenuMain.png")): pauseMenuMain;
                 case POPUP_BACKGROUND:
-                    return popupBackground == null ? popupBackground = ImageIO.read(new File(".//resources//menu//CombatPopup.png")) : popupBackground;
+                    return popupBackground == null ? popupBackground = ImageIO.read(new File(".//resources//menu//SelectionPopUp.png")) : popupBackground;
                 case HUD_BACKGROUND:
                     return hudBackground == null ? hudBackground = ImageIO.read(new File(".//resources//menu//backgrounds//hudBackground.png")): hudBackground;
-                case P1_TURN:
-                    return p1Turn == null ? p1Turn = ImageIO.read(new File(".//resources//menu//p1Turn.png")): p1Turn;
-                case P2_TURN:
-                    return p2Turn == null ? p2Turn = ImageIO.read(new File(".//resources//menu//p2Turn.png")): p2Turn;
+                case SELECTION_ATTACK:
+                    return attackButton == null ? attackButton  = ImageIO.read(new File(".//resources//menu//attackButton.png")) : attackButton ;
+                case SELECTION_MOVE:
+                    return moveButton  == null ? moveButton = ImageIO.read(new File(".//resources//menu//moveButton.png")) : moveButton;
+                case SELECTION_DEFEND:
+                    return defendButton == null ? defendButton = ImageIO.read(new File(".//resources//menu//defendButton.png")) : defendButton;
+                case SELECTION_MAGIC:
+                    return magicButton == null ? magicButton = ImageIO.read(new File(".//resources//menu//magicButton.png")) : magicButton;
+                case SELECTION_HEAL:
+                    return healButton == null ? healButton = ImageIO.read(new File(".//resources//menu//healButton.png")) : healButton;
             }
         } 
         catch (IOException ex) 
@@ -331,11 +341,6 @@ public class ImageContainer
             newGameSword = ImageIO.read(new File(".//resources//menu//NewGame.png"));
             optionsSword = ImageIO.read(new File(".//resources//menu//Options.png"));
             quitSword = ImageIO.read(new File(".//resources//menu//Quit.png"));
-            warriorText = ImageIO.read(new File(".//resources//menu//statusImages//WarriorText.png"));
-            archerText = ImageIO.read(new File(".//resources//menu//statusImages//ArcherText.png"));
-            rogueText = ImageIO.read(new File(".//resources//menu//statusImages//RogueText.png"));
-            healerText = ImageIO.read(new File(".//resources//menu//statusImages//HealerText.png"));
-            wizardText = ImageIO.read(new File(".//resources//menu//statusImages//MageText.png"));
         }
         catch(IOException ex)
         {

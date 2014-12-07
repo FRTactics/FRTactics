@@ -4,7 +4,6 @@ import view.ingame.Tile;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import view.ingame.DrawPanel;
-import view.ingame.Tile.LandType;
 
 public class RangeChecker 
 {
@@ -96,32 +95,30 @@ public class RangeChecker
                 }
             }
            
-           finish.add(nodes.getFirst());
-           nodes.removeFirst();
-           
-           if(nodes.isEmpty())
-           {
-               break;
-           }
-       }
+            finish.add(nodes.getFirst());
+            nodes.removeFirst();
 
-        for (Object finish1 : finish) {
+            if(nodes.isEmpty())
+            {
+                break;
+            }
+        }
+      
+        for (Object finish1 : finish) 
+        {
             CoordinatesHolder node = (CoordinatesHolder) finish1;
-            if(node.getX() != xstart || node.getY() != ystart){
-                                    
-                switch(rangeType)
-                { 
-                    case 0://move
-                        grid[node.getX()][node.getY()].displayMovementRange(true);
-                        break;
-                    case 1://attack
-                        grid[node.getX()][node.getY()].displayAttackRange(true);
-                        break;
-                    case 2://remove displayed range
-                        grid[node.getX()][node.getY()].displayAttackRange(false);
-                        grid[node.getX()][node.getY()].displayMovementRange(false);
-                        break;
-                }
+            switch(rangeType)
+            {
+                case 0://move
+                    grid[node.getX()][node.getY()].displayMovementRange(true);
+                    break;
+                case 1://attack
+                    grid[node.getX()][node.getY()].displayAttackRange(true);
+                    break;
+                case 2://remove displayed range
+                    grid[node.getX()][node.getY()].displayAttackRange(false);
+                    grid[node.getX()][node.getY()].displayMovementRange(false);
+                    break;
             }
         }
     }

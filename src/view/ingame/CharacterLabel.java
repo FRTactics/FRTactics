@@ -1,5 +1,7 @@
 package view.ingame;
 
+import java.awt.Color;
+import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Point;
 import java.awt.datatransfer.DataFlavor;
@@ -14,9 +16,11 @@ import java.awt.dnd.DragSourceDropEvent;
 import java.awt.dnd.DragSourceEvent;
 import java.awt.dnd.DragSourceListener;
 import java.io.IOException;
+import javax.swing.BorderFactory;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.TransferHandler;
+import javax.swing.border.BevelBorder;
 import model.CharacterFlavor;
 import model.classSystem.DefaultClass;
 
@@ -48,11 +52,16 @@ public class CharacterLabel extends JLabel implements Transferable, DragSourceLi
         //Create the drag source and default gesture
         source = new DragSource();
         source.createDefaultDragGestureRecognizer(this, DnDConstants.ACTION_COPY, this);
+        // Set the size of the label
+        
     }
     
-    public Image retrieveCharacterImage()
+    @Override
+    public void paintComponent(Graphics g)
     {
-        return characterImage;
+        super.paintComponent(g);
+        g.setColor(Color.RED);
+        g.drawLine(0,getHeight()/2,getWidth(),getHeight()/2);
     }
     
     @Override

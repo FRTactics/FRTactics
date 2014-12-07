@@ -20,8 +20,8 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
 import java.io.IOException;
 import java.util.Random;
-import java.util.Timer;
-import java.util.TimerTask;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JPanel;
 import model.CharacterFlavor;
 import model.GamePlayManager;
@@ -37,7 +37,6 @@ public class Tile extends JPanel
     
     private final LandType landType;
     private final int gridSize;
-    private static Timer timer;
     private Polygon polygon;
     private Image tileImage;
     private Image attackRangeImage;
@@ -75,11 +74,6 @@ public class Tile extends JPanel
     public LandType returnLandType()
     {
         return landType;
-    }
-    
-    public static Timer getTimer()
-    {
-        return timer;
     }
     
     public void updatePreferredSize(Dimension preferredSize)
@@ -134,10 +128,10 @@ public class Tile extends JPanel
         this.displayMovementRange = enable;
     }
     
-    public boolean isMovementRangeDisplayed(){
-       
+    public boolean isMovementRangeDisplayed()
+    { 
         return displayMovementRange;
-   }
+    }
     
     public void displayUnitPlacement(boolean enable)
     {
@@ -255,88 +249,61 @@ public class Tile extends JPanel
    
 
    //Classes for the mouse listener and mouse motion listener
-   public class TileMouseAdapter extends MouseAdapter
-   {
-//       @Override
-//       public void mouseEntered(MouseEvent e)
-//       {
-//            timer = new Timer();
-//            TimerTask task = new TimerTask(){
-//                @Override
-//                public void run() 
-//                {
-//                    try
-//                    {
-//                        StatsPopup statsPopup = StatsPopup.getInstance();
-//                        statsPopup.updateCharacterImage(ImageContainer.CharacterImage.WARRIOR);
-//                        statsPopup.setLocation(e.getXOnScreen() + 20,(int)(e.getYOnScreen()- (.5*statsPopup.getHeight())));
-//                        statsPopup.setVisible(true);
-//                    }
-//                    catch(InstanceNotCreatedException ex)
-//                    {
-//                        System.out.println(ex);
-//                    }
-//                }
-//            };
-//            timer.schedule(task, 2500); 
-//       }
-//       
-//       @Override
-//       public void mouseExited(MouseEvent e)
-//       {
-//           try 
-//           {
-//               timer.cancel();
-//               timer.purge();
-//               StatsPopup statsPopup = StatsPopup.getInstance();
-//               statsPopup.setVisible(false);
-//           } 
-//           catch (InstanceNotCreatedException ex) 
-//           {
-//               System.out.println(ex);
-//           }
-//       }
-       
-       @Override
-       public void mouseClicked(MouseEvent e)
-       {
-            GamePlayManager manager = GamePlayManager.getInstance();
-            if(manager.getGameplayStatus() == Action.WAITING)
+    public class TileMouseAdapter extends MouseAdapter
+    {   
+        @Override
+        public void mouseClicked(MouseEvent e)
+        {
+            if(e.getButton() == MouseEvent.BUTTON1)
             {
-                manager.setUnit(xLocation, yLocation, GamePlayManager.Action.MOVE);
-                manager.displayRange(xLocation, yLocation, 0);
-                GameApp.frame.repaint();
+                try 
+                {
+                    GamePlayManager manager = GamePlayManager.getInstance();
+                    if(characterOnTile && (manager.getGameplayStatus() == Action.WAITING))
+                    {
+                        SelectionPopup popup = SelectionPopup.getInstance();
+                        popup.updateCharacter(character, xLocation, yLocation);
+                        popup.setLocation(e.getXOnScreen() + 20,(int)(e.getYOnScreen()- (.5*popup.getHeight())));
+                        popup.setVisible(true);
+                    }
+                    else
+                    {
+                        SelectionPopup popup = SelectionPopup.getInstance();
+                        popup.setVisible(false);
+
+                        switch(manager.getGameplayStatus())
+                        {
+                            case MOVE:
+                                manager.moveUnit(xLocation, yLocation);
+                                GameApp.frame.repaint();
+                                break;
+                            case ATTACK:
+                                manager.attackUnit(xLocation,yLocation);
+                                GameApp.frame.repaint();
+                                break;
+                        }
+                    }
+                } 
+                catch (InstanceNotCreatedException ex) 
+                {
+                    Logger.getLogger(Tile.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
             else
             {
-                if(manager.getGameplayStatus() == Action.MOVE)
+                if(e.getButton() == MouseEvent.BUTTON3)
                 {
-                    manager.moveUnit(xLocation, yLocation);
-                    GameApp.frame.repaint();
-                }
-                else if (manager.getGameplayStatus() == Action.ATTACK){
-                    manager.attackUnit(xLocation, yLocation);
+                    GamePlayManager manager = GamePlayManager.getInstance();
+                    manager.resetGameplayStatus(character);
                     GameApp.frame.repaint();
                 }
             }
-       }
-   }
+        }
+    }
 
    public class TileMouseMotionAdapter extends MouseMotionAdapter
    {
-       @Override
-       public void mouseMoved(MouseEvent e)
-       {
-           try 
-           {
-               StatsPopup statsPopup = StatsPopup.getInstance();
-               statsPopup.setLocation(e.getXOnScreen() + 20,(int)(e.getYOnScreen()- (.5*statsPopup.getHeight())));
-           } 
-           catch (InstanceNotCreatedException ex) 
-           {
-               System.out.println(ex);
-           }
-       }
+
    }
    
    public class TileDropTargetAdapter extends DropTargetAdapter

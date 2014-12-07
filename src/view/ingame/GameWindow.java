@@ -48,7 +48,7 @@ public class GameWindow extends JPanel
         //create the pause menu
         PauseDialog dialog = new PauseDialog(GameApp.frame, glass);
         //Create the instance for statspopup
-        StatsPopup.createInstance(GameApp.frame);
+        SelectionPopup.createInstance(GameApp.frame);
         //add the listeners
         GameApp.frame.addKeyListener(new ScrollPaneController(pane.getViewport(),dp,this,dialog));
         pane.getVerticalScrollBar().addAdjustmentListener(event -> GameApp.frame.repaint());
