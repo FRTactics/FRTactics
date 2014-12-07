@@ -17,12 +17,11 @@ public class ArcherClass extends DefaultClass{
         className = "Archer";
         health = 300;
         mp = 150;    
-        dodgeChance = 0;  
-        meleeDamage = 40;
-        rangedDamage = 70; 
+        dodgeChance = 0; 
+        attackDamage = 70;
+        //meleeDamage = 40;
+        //rangedDamage = 70; 
         spellDamage = 20; 
-        rangedAttackRange = 10;
-        meleeAttackRange = 1;  
         movementRange = 5;
         healthRegen = 0; 
         strength = 15;
@@ -60,28 +59,23 @@ public class ArcherClass extends DefaultClass{
        return spellDamage;
     }
 
-    @Override
-    public double calcRangedDamage() {
-        rangedDamage = (rangedDamage*.2) + dexterity + rangedDamage;   //calcuating the range damage
-        return rangedDamage;
-    }
+//    @Override
+//    public double calcRangedDamage() {
+//        rangedDamage = (rangedDamage*.2) + dexterity + rangedDamage;   //calcuating the range damage
+//        return rangedDamage;
+//    }
 
 
     @Override
-    public double calcMeleeDamage() {
-        meleeDamage = ((meleeDamage * .2) + strength + meleeDamage);    //increase melee damage based on strength
-        return meleeDamage;
-    }
-
-    @Override
-    public double calcRangeRange() {
-        rangedAttackRange = (dexterity/5);                    //calculating theattack range of attacks
-        return rangedAttackRange;
+    public double calcAttackDamage() {
+        attackDamage = ((attackDamage * .2) + dexterity + attackDamage);    //increase melee damage based on strength
+        return attackDamage;
     }
 
     @Override
-    public double calcMeleeRange() {
-        return 1;
+    public double calcAttackRange() {
+        attackRange = (dexterity/5);                    //calculating theattack range of attacks
+        return attackRange;
     }
     
     @Override

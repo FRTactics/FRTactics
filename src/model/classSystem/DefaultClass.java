@@ -19,11 +19,12 @@ public abstract class DefaultClass {        // abstract class used for polymorph
    protected double health;             
    protected double mp;                      
    protected double dodgeChance;                  
-   protected double meleeDamage;               
-   protected double rangedDamage;                  
-   protected double spellDamage;               
-   protected double rangedAttackRange;         
-   protected double meleeAttackRange;             
+   protected double attackDamage;               
+//   protected double rangedDamage;                  
+   protected double spellDamage;
+   protected double attackRange;
+//   protected double rangedAttackRange;         
+//   protected double meleeAttackRange;             
    protected double movementRange;         
    protected double healthRegen;            
    protected double strength;          
@@ -38,11 +39,12 @@ public abstract class DefaultClass {        // abstract class used for polymorph
    public abstract double calcDamageReduction(double incoming);
    public abstract double calcMovement();
    public abstract double calcSpellDamage();
-   public abstract double calcRangedDamage();
+   public abstract double calcAttackRange();
+   //public abstract double calcRangedDamage();
    public abstract void calcHealth();
-   public abstract double calcMeleeDamage();
-   public abstract double calcRangeRange();
-   public abstract double calcMeleeRange();
+   public abstract double calcAttackDamage();
+   //public abstract double calcRangeRange();
+   //public abstract double calcMeleeRange();
    
    // getter methods for the stats
    /**
@@ -73,20 +75,23 @@ public abstract class DefaultClass {        // abstract class used for polymorph
    public double getDodgeChance(){      //return dodge chance
        return dodgeChance;
    }
+   public double getAttackDamage(){
+       return attackDamage;
+   }
    /**
     * 
     * @return The unit's base melee damage
     */
-   public double getMeleeDamage(){      //return melee damage
-       return meleeDamage;
-   }
-   /**
-    * 
-    * @return the unit's base ranged damage
-    */
-   public double getRangedDamage(){     // return ranged damage
-       return rangedDamage;
-   }
+//   public double getMeleeDamage(){      //return melee damage
+//       return meleeDamage;
+//   }
+//   /**
+//    * 
+//    * @return the unit's base ranged damage
+//    */
+//   public double getRangedDamage(){     // return ranged damage
+//       return rangedDamage;
+//   }
    /**
     * 
     * @return The unit's base spell damage
@@ -94,20 +99,20 @@ public abstract class DefaultClass {        // abstract class used for polymorph
    public double getSpellDamage(){        // return spell damage
        return spellDamage;
    }
-   /**
-    * 
-    * @return The unit's base ranged attack range
-    */
-   public double getRangedAttackRange(){        // return ranged attack range
-       return rangedAttackRange;
-   }
-   /**
-    * 
-    * @return The unit's base melee attack range
-    */
-   public double getMeleeAttackRange(){         // return melee attack range
-       return meleeAttackRange;
-   }
+//   /**
+//    * 
+//    * @return The unit's base ranged attack range
+//    */
+//   public double getRangedAttackRange(){        // return ranged attack range
+//       return rangedAttackRange;
+//   }
+//   /**
+//    * 
+//    * @return The unit's base melee attack range
+//    */
+//   public double getMeleeAttackRange(){         // return melee attack range
+//       return meleeAttackRange;
+//   }
    /**
     * 
     * @return The unit's base movement range
@@ -164,6 +169,9 @@ public abstract class DefaultClass {        // abstract class used for polymorph
    public double getVitality(){             // return vitality
        return vitality;
    }
+   public double getattackRange(){
+       return attackRange;
+   }
    /**
     * 
     * @return whether the unit has moved or not
@@ -207,19 +215,22 @@ public abstract class DefaultClass {        // abstract class used for polymorph
    public void setDodgeChance(double dodgeChance){      
        this.dodgeChance = dodgeChance;
    }
-   /**Set the unit's Melee Damage
-    * 
-    * @param meleeDamage 
-    */
-   public void setMeleeDamage(double meleeDamage){    
-       this.meleeDamage = meleeDamage;
-   }
-  /**Set the unit's Ranged Damage
-    * 
-    * @param rangedDamage 
-    */
-   public void setRangedDamage(double rangedDamage){     
-       this.rangedDamage = rangedDamage;
+//   /**Set the unit's Melee Damage
+//    * 
+//    * @param meleeDamage 
+//    */
+//   public void setMeleeDamage(double meleeDamage){    
+//       this.meleeDamage = meleeDamage;
+//   }
+//  /**Set the unit's Ranged Damage
+//    * 
+//    * @param rangedDamage 
+//    */
+//   public void setRangedDamage(double rangedDamage){     
+//       this.rangedDamage = rangedDamage;
+//   }
+   public void setAttackRange(double attackRange){
+       this.attackRange = attackRange;
    }
    /**Set the unit's Spell Damage
     * 
@@ -228,20 +239,20 @@ public abstract class DefaultClass {        // abstract class used for polymorph
    public void setSpellDamage(double spellDamage){        
        this.spellDamage = spellDamage;
    }
-   /**Set the unit's Ranged Attack Range
-    * 
-    * @param rangedAttackRange 
-    */
-   public void setRangedAttackRange(int rangedAttackRange){        
-       this.rangedAttackRange = rangedAttackRange;
-   }
-   /**Set the unit's Melee Attack Range
-    * 
-    * @param meleeAttackRange
-    */
-   public void setMeleeAttackRange(int meleeAttackRange){        
-       this.meleeAttackRange =  meleeAttackRange;
-   }
+//   /**Set the unit's Ranged Attack Range
+//    * 
+//    * @param rangedAttackRange 
+//    */
+//   public void setRangedAttackRange(int rangedAttackRange){        
+//       this.rangedAttackRange = rangedAttackRange;
+//   }
+//   /**Set the unit's Melee Attack Range
+//    * 
+//    * @param meleeAttackRange
+//    */
+//   public void setMeleeAttackRange(int meleeAttackRange){        
+//       this.meleeAttackRange =  meleeAttackRange;
+//   }
   /**Set the unit's MovementRange
    * 
    * @param movementRange 

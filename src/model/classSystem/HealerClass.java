@@ -12,17 +12,14 @@ package model.classSystem;
  */
 public class HealerClass extends DefaultClass{
  //needs to have base stats properly balanced
-    
+     double healAmount;
     public HealerClass(){
         className = "Healer";
         health = 300;
         mp = 200;  
         dodgeChance = 0;
-        meleeDamage = 20; 
-        rangedDamage = 10;
         spellDamage = 30;
-        rangedAttackRange = 10;
-        meleeAttackRange = 1;
+        attackDamage = 10;
         movementRange = 3;
         healthRegen = 0;   
         strength = 15;
@@ -33,6 +30,7 @@ public class HealerClass extends DefaultClass{
         vitality = 20;
         hasAttacked = false;
         hasMoved = false;
+        healAmount = 50;
         //calcStrength();
         calcHealth();
         calcMovement();
@@ -60,28 +58,22 @@ public class HealerClass extends DefaultClass{
       
     }
 
+    public double calcHeal(){
+        //add actual calculations to determine the amount to be healed
+        return healAmount;
+    }
+    
     @Override
-    public double calcRangedDamage() {
-        return (rangedDamage*.2) + dexterity + rangedDamage;   //calcuating the range damage
+    public double calcAttackDamage() {
+        return (attackDamage*.2) + dexterity + attackDamage;   //calcuating the range damage
         
     }
 
-
     @Override
-    public double calcMeleeDamage() {
-        return ((meleeDamage * .2) + strength + meleeDamage);    //increase melee damage based on strength
-        
-    }
-
-    @Override
-    public double calcRangeRange() {
+    public double calcAttackRange() {
         return (dexterity/5);                    //calculating theattack range of attacks
     }
 
-    @Override
-    public double calcMeleeRange() {
-        return 1;
-    }
     
     @Override
     public double calcDamageReduction(double incoming) {

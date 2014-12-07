@@ -17,11 +17,13 @@ public class RogueClass extends DefaultClass{
         health = 400; 
         mp = 100;    
         dodgeChance = 15; 
-        meleeDamage = 50;
-        rangedDamage = 10;
+        //meleeDamage = 50;
+        //rangedDamage = 10;
+        attackDamage = 50;
         spellDamage = 5;
-        rangedAttackRange = 1;
-        meleeAttackRange = 1;   
+        //rangedAttackRange = 1;
+        //meleeAttackRange = 1; 
+        attackDamage = 50;
         movementRange = 2;
         healthRegen = 0;  
         strength = 25; 
@@ -55,33 +57,38 @@ public class RogueClass extends DefaultClass{
 
     @Override
     public double calcSpellDamage() {
-       return (intelligence * .3 + spellDamage);    //calculating you spell damage
-       
+       return (intelligence * .3 + spellDamage);    //calculating you spell damage     
     }
 
+//    @Override
+//    public double calcRangedDamage() {
+//        rangedDamage = (rangedDamage*.2) + dexterity + rangedDamage;   //calcuating the range damage
+//        return rangedDamage;
+//    }
+
+
+//    @Override
+//    public double calcMeleeDamage() {
+//        return ((meleeDamage * .2) + strength + meleeDamage);    //increase melee damage based on strength
+//        
+//    }
+
+//    @Override
+//    public double calcRangeRange() {
+//        return (dexterity/5);                    //calculating theattack range of attacks
+//        
+//    }
+
+//    @Override
+//    public double calcMeleeRange() {
+//        return 1;
+//    }
+    
     @Override
-    public double calcRangedDamage() {
-        rangedDamage = (rangedDamage*.2) + dexterity + rangedDamage;   //calcuating the range damage
-        return rangedDamage;
+    public double calcAttackRange(){
+         return (dexterity/7);                    //calculating theattack range of attacks
     }
-
-
-    @Override
-    public double calcMeleeDamage() {
-        return ((meleeDamage * .2) + strength + meleeDamage);    //increase melee damage based on strength
-        
-    }
-
-    @Override
-    public double calcRangeRange() {
-        return (dexterity/5);                    //calculating theattack range of attacks
-        
-    }
-
-    @Override
-    public double calcMeleeRange() {
-        return 1;
-    }
+    
     
     @Override
     public double calcDamageReduction(double incoming) {
@@ -108,6 +115,11 @@ public class RogueClass extends DefaultClass{
     @Override
     public final void calcStrength() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public double calcAttackDamage() {
+         return ((attackDamage * .2) + (strength/2) + (dexterity/2) + attackDamage);    //increase melee damage based on strength
     }
     
 }

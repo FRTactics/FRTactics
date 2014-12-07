@@ -17,11 +17,13 @@ public class WizardClass extends DefaultClass {
         health = 350;
         mp = 200;
         dodgeChance = 0;
-        meleeDamage = 20; 
-        rangedDamage = 10;
+        attackDamage = 10;
+        //meleeDamage = 20; 
+        //rangedDamage = 10;
         spellDamage = 60;
-        rangedAttackRange = 10;
-        meleeAttackRange = 3;
+        attackRange = 10;
+        //rangedAttackRange = 10;
+        //meleeAttackRange = 3;
         movementRange = 3;
         healthRegen = 0; 
         strength = 15;
@@ -58,28 +60,28 @@ public class WizardClass extends DefaultClass {
        return (intelligence * .3 + spellDamage);    //calculating you spell damage
     }
 
-    @Override
-    public double calcRangedDamage() {
-        return (rangedDamage*.2) + dexterity + rangedDamage;   //calcuating the range damage
-    
-    }
-
-
-    @Override
-    public double calcMeleeDamage() {
-        return ((meleeDamage * .2) + strength + meleeDamage);    //increase melee damage based on strength
-   
-    }
-
-    @Override
-    public double calcRangeRange() {
-        return (dexterity/5);                    //calculating theattack range of attacks
-    }
-
-    @Override
-    public double calcMeleeRange() {
-        return 1;
-    }
+//    @Override
+//    public double calcRangedDamage() {
+//        return (rangedDamage*.2) + dexterity + rangedDamage;   //calcuating the range damage
+//    
+//    }
+//
+//
+//    @Override
+//    public double calcMeleeDamage() {
+//        return ((meleeDamage * .2) + strength + meleeDamage);    //increase melee damage based on strength
+//   
+//    }
+//
+//    @Override
+//    public double calcRangeRange() {
+//        return (dexterity/5);                    //calculating theattack range of attacks
+//    }
+//
+//    @Override
+//    public double calcMeleeRange() {
+//        return 1;
+//    }
     
     @Override
     public double calcDamageReduction(double incoming) {
@@ -106,5 +108,15 @@ public class WizardClass extends DefaultClass {
     @Override
     public void calcStrength() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public double calcAttackRange() {
+        return (dexterity/5);                    //calculating theattack range of attacks
+    }
+
+    @Override
+    public double calcAttackDamage() {
+         return ((attackDamage * .2) + strength + attackDamage);    //increase melee damage based on strength
     }
 }
