@@ -5,7 +5,6 @@ import model.classSystem.DefaultClass;
 import model.ImageContainer;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Window;
@@ -30,6 +29,7 @@ public class SelectionPopup extends JDialog
     private DefaultClass character;
     private static SelectionPopup instance;
     private int xLocation, yLocation;
+    
     private SelectionPopup(Window parent)
     {
         super(parent);
@@ -40,7 +40,8 @@ public class SelectionPopup extends JDialog
         setUndecorated(true);
         setBackground(new Color(0,0,0,0));
         setModalityType(ModalityType.MODELESS);
-        addKeyListener(new KeyAdapter(){
+        addKeyListener(new KeyAdapter()
+        {
             @Override
             public void keyPressed(KeyEvent event)
             {
@@ -86,6 +87,7 @@ public class SelectionPopup extends JDialog
         }
 
     }
+    
     //Inner Class for the button
     private class SelectionButton extends JPanel
     {
@@ -129,6 +131,7 @@ public class SelectionPopup extends JDialog
         {
             g.drawImage(buttonImage, 0, 0, getWidth(), getHeight(), SelectionPopup.this);
         }
+        
         //Inner Class for the button Adapter
         private class SelectionButtonAdapter extends MouseAdapter
         {
@@ -145,9 +148,10 @@ public class SelectionPopup extends JDialog
                         SelectionPopup.this.setVisible(false);
                         GameApp.frame.repaint();
                         break;
-//                    case DEFEND:
-//                        manager.setUnit(xLocation, yLocation, GamePlayManager.Action.DEFEND);
-//                        break;
+                    case DEFEND:
+                        manager.setUnit(xLocation, yLocation, GamePlayManager.Action.DEFEND);
+                        SelectionPopup.this.setVisible(false);
+                        break;
                     case MOVE:
                         manager.setUnit(xLocation, yLocation, GamePlayManager.Action.MOVE);
                         manager.displayRange(xLocation, yLocation, 0);
@@ -168,6 +172,6 @@ public class SelectionPopup extends JDialog
                         break;
                 }
             }
-        }
+        }    
     }
 }

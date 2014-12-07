@@ -3,11 +3,9 @@ package controllers.screenControllers;
 import view.ingame.DrawPanel;
 import view.ingame.GameWindow;
 import view.ingame.PauseDialog;
-import view.ingame.Tile;
 import java.awt.Point;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.util.Timer;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JViewport;
@@ -47,12 +45,6 @@ public class ScrollPaneController extends KeyAdapter
                 pane.getHorizontalScrollBar().setValue(pane.getHorizontalScrollBar().getValue() + 50);
                 break;
             case KeyEvent.VK_ESCAPE:
-                Timer timer = Tile.getTimer();
-                if(timer != null)
-                {
-                    timer.cancel();
-                    timer.purge();
-                }
                 dialog.setVisible(true);
                 break;
             case KeyEvent.VK_ADD:

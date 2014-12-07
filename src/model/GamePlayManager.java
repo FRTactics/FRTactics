@@ -75,9 +75,32 @@ public class GamePlayManager
             unit.setAttacked(false);
         }
     }
+    
     public Action getGameplayStatus()
     {
         return isAttacking ? Action.ATTACK : isMoving ? Action.MOVE : isDefending ? Action.DEFEND : isHealing ? Action.HEAL : isMagic ? Action.MAGIC : Action.WAITING;
+    }
+    
+    public void resetGameplayStatus(DefaultClass character)
+    {
+        removeDisplayedRange(character);
+        isAttacking = false;
+        isMoving = false;
+        isHealing = false;
+        isMagic = false;
+    }
+    
+    public boolean defendUnit()
+    {
+        DefaultClass sourceCharacter = (DefaultClass)DrawPanel.getGrid()[sourceX][sourceY].retrieveCharacter()[0];
+        if(!sourceCharacter.isDefending())
+        {
+            sourceCharacter.setDefending(true); 
+            isDefending = false;
+        }
+        else
+            return false;
+        return true;
     }
     
     /** 
@@ -106,6 +129,7 @@ public class GamePlayManager
         else
            return false;
     }
+    
     public void removeDisplayedRange(DefaultClass character)
     {      
         RangeChecker checker = new RangeChecker();
