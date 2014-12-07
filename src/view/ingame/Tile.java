@@ -277,6 +277,10 @@ public class Tile extends JPanel
                                 manager.moveUnit(xLocation, yLocation);
                                 GameApp.frame.repaint();
                                 break;
+                            case ATTACK:
+                                manager.attackUnit(xLocation,yLocation);
+                                GameApp.frame.repaint();
+                                break;
                         }
                     }
                 } 
