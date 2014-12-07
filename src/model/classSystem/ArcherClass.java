@@ -16,11 +16,10 @@ public class ArcherClass extends DefaultClass{
     public ArcherClass(){
         className = "Archer";
         health = 300;
+        baseHealth = 0;
         mp = 150;    
         dodgeChance = 0; 
         attackDamage = 70;
-        //meleeDamage = 40;
-        //rangedDamage = 70; 
         spellDamage = 20; 
         movementRange = 5;
         healthRegen = 0; 
@@ -33,8 +32,8 @@ public class ArcherClass extends DefaultClass{
         hasAttacked = false;
         hasMoved = false;
         //calcStrength();
-        //calcHealth();
-        //calcMovement();
+        calcHealth();
+        calcMovement();
         
     }
 
@@ -43,6 +42,7 @@ public class ArcherClass extends DefaultClass{
         
        health = ((health * .1) + strength + health);       //increase base health based on strength
        health = (health *.2) + vitality + health; // calculating max health
+       baseHealth= health;
        mp = ((mp*.2) + intelligence +mp);          //calculating your mana pool  
     }
     
@@ -55,8 +55,8 @@ public class ArcherClass extends DefaultClass{
 
     @Override
     public double calcSpellDamage() {
-       spellDamage = (intelligence * .3 + spellDamage);    //calculating you spell damage
-       return spellDamage;
+ 
+       return spellDamage = (intelligence * .3 + spellDamage);    //calculating you spell damage
     }
 
 //    @Override
@@ -68,8 +68,8 @@ public class ArcherClass extends DefaultClass{
 
     @Override
     public double calcAttackDamage() {
-        attackDamage = ((attackDamage * .2) + dexterity + attackDamage);    //increase melee damage based on strength
-        return attackDamage;
+        
+        return attackDamage = ((attackDamage * .2) + dexterity + attackDamage);    //increase melee damage based on strength
     }
 
     @Override
@@ -95,8 +95,8 @@ public class ArcherClass extends DefaultClass{
     @Override
     public double calcMovement() {
         
-        movementRange = ((int)(agility/5)) - ((int)(armor/10)) + movementRange; //you get moremovementbased on agility but less depending on armor
-        return movementRange;
+        
+        return movementRange = ((int)(agility/5)) - ((int)(armor/10)) + movementRange; //you get moremovementbased on agility but less depending on armor
                 
     }
 

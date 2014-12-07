@@ -16,6 +16,7 @@ public class HealerClass extends DefaultClass{
     public HealerClass(){
         className = "Healer";
         health = 300;
+        baseHealth = 0;
         mp = 200;  
         dodgeChance = 0;
         spellDamage = 30;
@@ -42,6 +43,7 @@ public class HealerClass extends DefaultClass{
         
        health = ((health * .1) + strength + health);       //increase base health based on strength
        health = (health *.2) + vitality + health; // calculating max health
+       baseHealth = health;
        mp = ((mp*.2) + intelligence +mp);          //calculating your mana pool  
     }
     

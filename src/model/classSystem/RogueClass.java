@@ -15,6 +15,7 @@ public class RogueClass extends DefaultClass{
     public RogueClass(){
         className = "Rogue";
         health = 400; 
+        baseHealth = 0;
         mp = 100;    
         dodgeChance = 15; 
         //meleeDamage = 50;
@@ -45,6 +46,7 @@ public class RogueClass extends DefaultClass{
         
        health = ((health * .1) + strength + health);       //increase base health based on strength
        health = (health *.2) + vitality + health; // calculating max health
+       baseHealth = health;
        mp = ((mp*.2) + intelligence +mp);          //calculating your mana pool  
     }
     
@@ -60,30 +62,6 @@ public class RogueClass extends DefaultClass{
        return (intelligence * .3 + spellDamage);    //calculating you spell damage     
     }
 
-//    @Override
-//    public double calcRangedDamage() {
-//        rangedDamage = (rangedDamage*.2) + dexterity + rangedDamage;   //calcuating the range damage
-//        return rangedDamage;
-//    }
-
-
-//    @Override
-//    public double calcMeleeDamage() {
-//        return ((meleeDamage * .2) + strength + meleeDamage);    //increase melee damage based on strength
-//        
-//    }
-
-//    @Override
-//    public double calcRangeRange() {
-//        return (dexterity/5);                    //calculating theattack range of attacks
-//        
-//    }
-
-//    @Override
-//    public double calcMeleeRange() {
-//        return 1;
-//    }
-    
     @Override
     public double calcAttackRange(){
          return (dexterity/7);                    //calculating theattack range of attacks

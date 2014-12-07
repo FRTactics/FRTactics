@@ -14,15 +14,12 @@ public class WarriorClass extends DefaultClass{
     //needs to have base stats properly balanced
     public WarriorClass(){
         className = "Warrior";
+        baseHealth =0; 
         health = 500;
         mp = 100; 
         dodgeChance = 0;
         attackDamage = 50;
-//        meleeDamage = 50;
-//        rangedDamage = 10; 
         spellDamage = 5; 
-        //rangedAttackRange = 3;
-        //meleeAttackRange = 1; 
         movementRange = 2; 
         healthRegen = 0;
         strength = 20;
@@ -42,8 +39,10 @@ public class WarriorClass extends DefaultClass{
     @Override
     public void calcHealth() 
     {    
+       
        health = ((health * .1) + strength + health);       //increase base health based on strength
        health = (health *.2) + vitality + health;          // calculating max health
+       baseHealth = health;
        mp = ((mp*.2) + intelligence + mp);                  //calculating your mana pool  
     }
     
@@ -92,7 +91,7 @@ public class WarriorClass extends DefaultClass{
 
     @Override
     public double calcAttackDamage() {
-        attackDamage = ((attackDamage * .2) + strength + attackDamage);    //increase melee damage based on strength
-        return attackDamage;
+        return  ((attackDamage * .2) + strength + attackDamage);    //increase melee damage based on strength
+
     }
 }

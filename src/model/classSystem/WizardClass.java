@@ -15,6 +15,7 @@ public class WizardClass extends DefaultClass {
     public WizardClass(){
         className = "Wizard";
         health = 350;
+        baseHealth = 0;
         mp = 200;
         dodgeChance = 0;
         attackDamage = 10;
@@ -45,6 +46,7 @@ public class WizardClass extends DefaultClass {
         
        health = ((health * .1) + strength + health);       //increase base health based on strength
        health = (health *.2) + vitality + health; // calculating max health
+       baseHealth = health;
        mp = ((mp*.2) + intelligence +mp);          //calculating your mana pool  
     }
     
@@ -100,8 +102,8 @@ public class WizardClass extends DefaultClass {
     @Override
     public double calcMovement() {
         
-        movementRange = ((int)(agility/5)) - ((int)(armor/10)) + movementRange; //you get moremovementbased on agility but less depending on armor
-        return movementRange;
+        
+        return movementRange = ((int)(agility/5)) - ((int)(armor/10)) + movementRange; //you get moremovementbased on agility but less depending on armor
                 
     }
 

@@ -145,9 +145,10 @@ public class GamePlayManager
         DefaultClass targetCharacter = (DefaultClass)destinationTile.retrieveCharacter()[0];
         DefaultClass sourceCharacter = (DefaultClass)DrawPanel.getGrid()[sourceX][sourceY].retrieveCharacter()[0];
         if(destinationTile.isAttackRangeDisplayed()){
+            removeDisplayedRange((DefaultClass)DrawPanel.getGrid()[sourceX][sourceY].retrieveCharacter()[0]);
             if(targetCharacter != null){        // if the target is not null, proceed to attack
                 if(!targetCharacter.isDefending()){
-                    health = sourceCharacter.calcAttackDamage() - targetCharacter.getArmor() - 20;
+                    health = targetCharacter.getHealth() - (sourceCharacter.calcAttackDamage() - targetCharacter.getArmor() - 20);
                     targetCharacter.setHealth(health);
                     System.out.println(targetCharacter.getHealth());
                 }
@@ -156,6 +157,7 @@ public class GamePlayManager
                     targetCharacter.setHealth(health);    
                 }
                 // do the rest of the attacking stuff
+                isAttacking = false;
                 return true;
             }
             else
@@ -164,6 +166,13 @@ public class GamePlayManager
         else{
             return false;
         }
+        
+    }
+    
+    public void removeDiplsayedAttackRange(DefaultClass character){
+        RangeChecker checker = new RangeChecker();
+        int range = (int)character.getAttackRange();
+        checker.calculateRange(sourceX, sourceY, range, 2);
         
     }
     
