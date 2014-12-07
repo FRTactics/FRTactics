@@ -67,7 +67,6 @@ public class CharacterGlassPane extends JPanel
         
         topFiller = new JPanel();
         topFiller.setOpaque(false);
-        topFiller.addMouseListener(new MouseAdapter() {});
         topFiller.setPreferredSize(new Dimension(GameApp.frame.getWidth(),((GameApp.frame.getHeight()*39)/40)));
         middleFiller = new JPanel();
         middleFiller.addMouseListener(new MouseAdapter() {});
