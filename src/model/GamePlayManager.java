@@ -116,14 +116,49 @@ public class GamePlayManager
   
     public boolean attackUnit(int targetX, int targetY){        // we may need another field if we have to differentiate 
                                                                 // between they type of attack the source character is using
-    
+        double health;
         Tile destinationTile = DrawPanel.getGrid()[targetX][targetY];
         DefaultClass targetCharacter = (DefaultClass)destinationTile.retrieveCharacter()[0];
         DefaultClass sourceCharacter = (DefaultClass)DrawPanel.getGrid()[sourceX][sourceY].retrieveCharacter()[0];
         if(destinationTile.isAttackRangeDisplayed()){
             if(targetCharacter != null){        // if the target is not null, proceed to attack
                 if(!targetCharacter.isDefending()){
-                    // do what changes if ther unit is defending
+                    health = sourceCharacter.calcAttackDamage() - targetCharacter.getArmor() - 20;
+                    targetCharacter.setHealth(health);
+                    System.out.println(targetCharacter.getHealth());
+                }
+                else{
+                    health = sourceCharacter.calcAttackDamage() - targetCharacter.getArmor();
+                    targetCharacter.setHealth(health);    
+                }
+                // do the rest of the attacking stuff
+                return true;
+            }
+            else
+                return false;
+        }
+        else{
+            return false;
+        }
+        
+    }
+    
+    public boolean magicUnit(int targetX, int targetY){        // we may need another field if we have to differentiate 
+                                                                // between they type of attack the source character is using
+        double health;
+        Tile destinationTile = DrawPanel.getGrid()[targetX][targetY];
+        DefaultClass targetCharacter = (DefaultClass)destinationTile.retrieveCharacter()[0];
+        DefaultClass sourceCharacter = (DefaultClass)DrawPanel.getGrid()[sourceX][sourceY].retrieveCharacter()[0];
+        if(destinationTile.isAttackRangeDisplayed()){
+            if(targetCharacter != null){        // if the target is not null, proceed to attack
+                if(!targetCharacter.isDefending()){
+                    health = sourceCharacter.calcSpellDamage() - targetCharacter.getArmor() - 20;
+                    targetCharacter.setHealth(health);    
+                }
+                
+                else{
+                    health = sourceCharacter.calcSpellDamage() - targetCharacter.getArmor();
+                    targetCharacter.setHealth(health);    
                 }
                 // do the rest of the attacking stuff
                 return true;

@@ -16,12 +16,13 @@ public class WarriorClass extends DefaultClass{
         className = "Warrior";
         health = 500;
         mp = 100; 
-        dodgeChance = 0; 
-        meleeDamage = 50;
-        rangedDamage = 10; 
+        dodgeChance = 0;
+        attackDamage = 50;
+//        meleeDamage = 50;
+//        rangedDamage = 10; 
         spellDamage = 5; 
-        rangedAttackRange = 3;
-        meleeAttackRange = 1; 
+        //rangedAttackRange = 3;
+        //meleeAttackRange = 1; 
         movementRange = 2; 
         healthRegen = 0;
         strength = 20;
@@ -58,28 +59,6 @@ public class WarriorClass extends DefaultClass{
        return  (intelligence * .3 + spellDamage);    //calculating you spell damage
        
     }
-
-    @Override
-    public double calcRangedDamage() {
-        return (rangedDamage*.2) + dexterity + rangedDamage;   //calcuating the range damage
-    }
-
-
-    @Override
-    public double calcMeleeDamage() {
-        return ((meleeDamage * .2) + strength + meleeDamage);    //increase melee damage based on strength
-    }
-
-    @Override
-    public double calcRangeRange() {
-        return (dexterity/5);                    //calculating theattack range of attacks
-   
-    }
-
-    @Override
-    public double calcMeleeRange() {
-        return 1;
-    }
     
     @Override
     public double calcDamageReduction(double incoming) {
@@ -103,5 +82,17 @@ public class WarriorClass extends DefaultClass{
     @Override
     public void calcStrength() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public double calcAttackRange() {
+        attackRange = (dexterity/10);                    //calculating theattack range of attacks
+        return attackRange;
+    }
+
+    @Override
+    public double calcAttackDamage() {
+        attackDamage = ((attackDamage * .2) + strength + attackDamage);    //increase melee damage based on strength
+        return attackDamage;
     }
 }
