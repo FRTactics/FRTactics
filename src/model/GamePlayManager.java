@@ -187,7 +187,7 @@ public class GamePlayManager
                 
                 // do the rest of the attacking stuff
                 // currently just testing with base stats
-                targetCharacter.setHealth(targetCharacter.getHealth() - sourceCharacter.getMeleeDamage());
+                targetCharacter.setHealth(targetCharacter.getHealth() - sourceCharacter.getAttackDamage());
                 isAttacking = false;
                 removeDisplayedRange(sourceCharacter);
                 return true;
