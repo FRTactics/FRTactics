@@ -125,10 +125,15 @@ public class GamePlayManager
         DefaultClass sourceCharacter = (DefaultClass)DrawPanel.getGrid()[sourceX][sourceY].retrieveCharacter()[0];
         if(destinationTile.isAttackRangeDisplayed()){
             if(targetCharacter != null){        // if the target is not null, proceed to attack
-                if(!targetCharacter.isDefending()){
+                if(targetCharacter.isDefending()){
                     // do what changes if ther unit is defending
                 }
+                
                 // do the rest of the attacking stuff
+                // currently just testing with base stats
+                targetCharacter.setHealth(targetCharacter.getHealth() - sourceCharacter.getMeleeDamage());
+                isAttacking = false;
+                removeDisplayedRange(sourceCharacter);
                 return true;
             }
             else

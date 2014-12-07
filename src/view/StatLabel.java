@@ -19,8 +19,12 @@ public class StatLabel extends JPanel{
         image = i;
         this.setVisible(true);
     }
+    public void setImage(Image i){
+        image = i;
+    }
     @Override
     public void paintComponent(Graphics g){
-        g.drawImage(image, 0, 0, this.getWidth(), this.getHeight(), this);
+        if(image != null)
+            g.drawImage(image, 0, 0, this.getWidth(), this.getHeight(), this);
     }
 }

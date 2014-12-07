@@ -21,7 +21,7 @@ public class ImageContainer
         MAIN_MENU, NEW_GAME_SWORD, OPTIONS_SWORD, QUIT_SWORD,
         PAUSE_MENU_BACKGROUND,PAUSE_MENU_OPTIONS, PAUSE_MENU_RESUME, MENU_CONTINUE, MENU_BACK, MENU_REMOVE,
         PAUSE_MENU_QUIT,PAUSE_MENU_MAIN, MAIN_MENU_BACKGROUND, P1_LOADOUT_BACKGROUND,
-        P2_LOADOUT_BACKGROUND, POPUP_BACKGROUND, HUD_BACKGROUND
+        P2_LOADOUT_BACKGROUND, POPUP_BACKGROUND, HUD_BACKGROUND, P1_TURN, P2_TURN
     };
     
     public enum TileEffects{
@@ -69,6 +69,8 @@ public class ImageContainer
     private Image p1LoadoutBackground;
     private Image p2LoadoutBackground;
     private Image hudBackground;
+    private Image p1Turn;
+    private Image p2Turn;
     
     //stuff for stats
     private Image stats;
@@ -146,6 +148,10 @@ public class ImageContainer
                     return popupBackground == null ? popupBackground = ImageIO.read(new File(".//resources//menu//CombatPopup.png")) : popupBackground;
                 case HUD_BACKGROUND:
                     return hudBackground == null ? hudBackground = ImageIO.read(new File(".//resources//menu//backgrounds//hudBackground.png")): hudBackground;
+                case P1_TURN:
+                    return p1Turn == null ? p1Turn = ImageIO.read(new File(".//resources//menu//p1Turn.png")): p1Turn;
+                case P2_TURN:
+                    return p2Turn == null ? p2Turn = ImageIO.read(new File(".//resources//menu//p2Turn.png")): p2Turn;
             }
         } 
         catch (IOException ex) 
@@ -325,6 +331,11 @@ public class ImageContainer
             newGameSword = ImageIO.read(new File(".//resources//menu//NewGame.png"));
             optionsSword = ImageIO.read(new File(".//resources//menu//Options.png"));
             quitSword = ImageIO.read(new File(".//resources//menu//Quit.png"));
+            warriorText = ImageIO.read(new File(".//resources//menu//statusImages//WarriorText.png"));
+            archerText = ImageIO.read(new File(".//resources//menu//statusImages//ArcherText.png"));
+            rogueText = ImageIO.read(new File(".//resources//menu//statusImages//RogueText.png"));
+            healerText = ImageIO.read(new File(".//resources//menu//statusImages//HealerText.png"));
+            wizardText = ImageIO.read(new File(".//resources//menu//statusImages//MageText.png"));
         }
         catch(IOException ex)
         {

@@ -104,12 +104,9 @@ public class RangeChecker
                break;
            }
        }
-      
-       // really terrible fix for the broken display range code
-       // looks for coordinates in the finish deque and checks to see if there are ranges above zero
-       // if there are, make it display what we want
-       for(int i = 0; i < finish.size();i++){
-            CoordinatesHolder node = (CoordinatesHolder)finish.get(i);
+
+        for (Object finish1 : finish) {
+            CoordinatesHolder node = (CoordinatesHolder) finish1;
             if(node.getX() != xstart || node.getY() != ystart){
                                     
                 switch(rangeType)
