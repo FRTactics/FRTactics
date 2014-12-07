@@ -57,12 +57,7 @@ public class CharacterGlassPane extends JPanel
         createCharacterLabels(playerOneList,GameManager.getInstance().getP1Loadout());
         //Populate the list for player two
         createCharacterLabels(playerTwoList,GameManager.getInstance().getP2Loadout());
-        /*
-        JPanel bottomContainer = new JPanel();
-        bottomContainer.setLayout(new BoxLayout(bottomContainer, BoxLayout.Y_AXIS));
-        bottomContainer.setLayout(new BorderLayout());
-        bottomContainer.setOpaque(false);
-                */
+        
         //Create the holder panel for the new layout
         
         topFiller = new JPanel();
@@ -116,7 +111,7 @@ public class CharacterGlassPane extends JPanel
 
         holderPanel.add(playerOnePanel,"Player One Panel");
         holderPanel.add(playerTwoPanel,"Player Two Panel");
-        playerView.show(holderPanel,"Player Two Panel");
+        playerView.show(holderPanel,"Player One Panel");
         this.setVisible(true);
     }
     
