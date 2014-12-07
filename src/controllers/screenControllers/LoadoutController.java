@@ -97,35 +97,51 @@ public class LoadoutController extends EventHandler{ // since both P1 and P2 Loa
        @Override
        public void mousePressed(MouseEvent e){
            
-            for(int i = 0; i < loadoutMenu.getChoiceList().size();i++){
-               loadoutMenu.getChoiceList().get(i).setForeground(Color.WHITE);
-               loadoutMenu.getChoiceList().get(i).setBorder(null);
+            //for(int i = 0; i < loadoutMenu.getChoiceList().size();i++){
+            if(loadoutMenu.getLastSelectedLabel() !=  null){
+                loadoutMenu.getLastSelectedLabel().setForeground(Color.WHITE);
+                loadoutMenu.getLastSelectedLabel().setBorder(null);
             }
-            loadoutMenu.repaint();
+            
+            
+            //loadoutMenu.getLastSelectedLabel().setForeground(Color.WHITE);
+            //loadoutMenu.getLastSelectedLabel().setBorder(null);
+               //loadoutMenu.getChoiceList().get(i).setForeground(Color.WHITE);
+               //loadoutMenu.getChoiceList().get(i).setBorder(null);
+            //}
+            
             label.setForeground(Color.red);
             label.setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
             //loadoutMenu.getClassNameLabel().setText(label.getUnit().getClassName());
-            loadoutMenu.getClassNameLabel().setText("");
+            //loadoutMenu.getClassNameLabel().setText("");
+            //loadoutMenu.getClassNameLabel().setI
+            
             switch(label.getUnit().getClassName()){
                 case "Warrior":
-                    loadoutMenu.getClassNameLabel().setIcon(new ImageIcon(ImageContainer.getInstance().retrieveStatusLabelImages(ImageContainer.StatusLabelImage.WARRIOR_TEXT).getScaledInstance(80, 40, 0)));
+                    loadoutMenu.getClassNameLabel().setImage(ImageContainer.getInstance().retrieveStatusLabelImages(ImageContainer.StatusLabelImage.WARRIOR_TEXT));
+                    //loadoutMenu.getClassNameLabel().setIcon(new ImageIcon(ImageContainer.getInstance().retrieveStatusLabelImages(ImageContainer.StatusLabelImage.WARRIOR_TEXT).getScaledInstance(80, 40, 0)));
                     break;
                 case "Wizard":
-                    loadoutMenu.getClassNameLabel().setIcon(new ImageIcon(ImageContainer.getInstance().retrieveStatusLabelImages(ImageContainer.StatusLabelImage.WIZARD_TEXT).getScaledInstance(80, 40, 0)));
+                    loadoutMenu.getClassNameLabel().setImage(ImageContainer.getInstance().retrieveStatusLabelImages(ImageContainer.StatusLabelImage.WIZARD_TEXT));
+                    //loadoutMenu.getClassNameLabel().setIcon(new ImageIcon(ImageContainer.getInstance().retrieveStatusLabelImages(ImageContainer.StatusLabelImage.WIZARD_TEXT).getScaledInstance(80, 40, 0)));
                     break;
                 case "Rogue":
-                    loadoutMenu.getClassNameLabel().setIcon(new ImageIcon(ImageContainer.getInstance().retrieveStatusLabelImages(ImageContainer.StatusLabelImage.ROGUE_TEXT).getScaledInstance(80, 40, 0)));
+                    loadoutMenu.getClassNameLabel().setImage(ImageContainer.getInstance().retrieveStatusLabelImages(ImageContainer.StatusLabelImage.ROGUE_TEXT));
+                    //loadoutMenu.getClassNameLabel().setIcon(new ImageIcon(ImageContainer.getInstance().retrieveStatusLabelImages(ImageContainer.StatusLabelImage.ROGUE_TEXT).getScaledInstance(80, 40, 0)));
                     break;
                 case "Healer":
-                    loadoutMenu.getClassNameLabel().setIcon(new ImageIcon(ImageContainer.getInstance().retrieveStatusLabelImages(ImageContainer.StatusLabelImage.HEALER_TEXT).getScaledInstance(80, 40, 0)));
+                    loadoutMenu.getClassNameLabel().setImage(ImageContainer.getInstance().retrieveStatusLabelImages(ImageContainer.StatusLabelImage.HEALER_TEXT));
+                    //loadoutMenu.getClassNameLabel().setIcon(new ImageIcon(ImageContainer.getInstance().retrieveStatusLabelImages(ImageContainer.StatusLabelImage.HEALER_TEXT).getScaledInstance(80, 40, 0)));
                     break;
                 case "Archer":
-                    loadoutMenu.getClassNameLabel().setIcon(new ImageIcon(ImageContainer.getInstance().retrieveStatusLabelImages(ImageContainer.StatusLabelImage.ARCHER_TEXT).getScaledInstance(80, 40, 0)));
+                    loadoutMenu.getClassNameLabel().setImage(ImageContainer.getInstance().retrieveStatusLabelImages(ImageContainer.StatusLabelImage.ARCHER_TEXT));
+                    //loadoutMenu.getClassNameLabel().setIcon(new ImageIcon(ImageContainer.getInstance().retrieveStatusLabelImages(ImageContainer.StatusLabelImage.ARCHER_TEXT).getScaledInstance(80, 40, 0)));
                     break;
                 default:
                     return;
                     
             }
+                    
             
             loadoutMenu.getMeleeAttackRangeValueLabel().setText("" + (int)label.getUnit().getHealth());
             loadoutMenu.getMovementRangeValueLabel().setText("" + (int)label.getUnit().getMovementRange());
@@ -145,8 +161,9 @@ public class LoadoutController extends EventHandler{ // since both P1 and P2 Loa
             loadoutMenu.getDodgeChanceValueLabel().setText("" + (int)label.getUnit().getDodgeChance());
             loadoutMenu.getHealthRegenValueLabel().setText("" + (int)label.getUnit().getHealthRegen());
             loadoutMenu.getArmorValueLabel().setText("" + (int)label.getUnit().getArmor());
-            
-           label.updateUI();
+            loadoutMenu.setLastSelectedLabel(label);
+            loadoutMenu.repaint();
+            label.updateUI();
        }  
    }
     private class RemoveButtonListener extends MouseAdapter{

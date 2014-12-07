@@ -193,7 +193,12 @@ public class GamePlayManager
                     health = sourceCharacter.calcSpellDamage() - targetCharacter.getArmor();
                     targetCharacter.setHealth(health);    
                 }
+                
                 // do the rest of the attacking stuff
+                // currently just testing with base stats
+                targetCharacter.setHealth(targetCharacter.getHealth() - sourceCharacter.getAttackDamage());
+                isAttacking = false;
+                removeDisplayedRange(sourceCharacter);
                 return true;
             }
             else

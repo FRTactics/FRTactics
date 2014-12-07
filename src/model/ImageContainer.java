@@ -22,7 +22,7 @@ public class ImageContainer
         PAUSE_MENU_BACKGROUND,PAUSE_MENU_OPTIONS, PAUSE_MENU_RESUME, MENU_CONTINUE, MENU_BACK, MENU_REMOVE,
         PAUSE_MENU_QUIT,PAUSE_MENU_MAIN, MAIN_MENU_BACKGROUND, P1_LOADOUT_BACKGROUND,P2_LOADOUT_BACKGROUND,
         POPUP_BACKGROUND, HUD_BACKGROUND,SELECTION_ATTACK,SELECTION_MOVE,SELECTION_DEFEND,SELECTION_MAGIC, 
-        SELECTION_HEAL
+        SELECTION_HEAL, P1_TURN, P2_TURN
     };
     
     public enum TileEffects{
@@ -100,6 +100,8 @@ public class ImageContainer
     private Image wizardText;
     private Image healerText;
     private Image rogueText;
+    private Image p1Turn;
+    private Image p2Turn;
 
     private ImageContainer()
     {
@@ -152,6 +154,10 @@ public class ImageContainer
                     return popupBackground == null ? popupBackground = ImageIO.read(new File(".//resources//menu//SelectionPopUp.png")) : popupBackground;
                 case HUD_BACKGROUND:
                     return hudBackground == null ? hudBackground = ImageIO.read(new File(".//resources//menu//backgrounds//hudBackground.png")): hudBackground;
+                case P1_TURN:
+                    return p1Turn == null ? p1Turn = ImageIO.read(new File(".//resources//menu//p1Turn.png")): p1Turn;
+                case P2_TURN:
+                    return p2Turn == null ? p2Turn = ImageIO.read(new File(".//resources//menu//p2Turn.png")): p2Turn;
                 case SELECTION_ATTACK:
                     return attackButton == null ? attackButton  = ImageIO.read(new File(".//resources//menu//attackButton.png")) : attackButton ;
                 case SELECTION_MOVE:

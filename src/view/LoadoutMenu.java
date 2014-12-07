@@ -67,6 +67,7 @@ public class LoadoutMenu extends MenuPanel{             // still a work in progr
     private JScrollPane loadoutScroll;
     private JPanel topBuffer;    // just a buffer placed on the top screen to make it pretty
     private JPanel statsPanel; // panel to hold all of the stats for each unit
+    private CustomLabel lastSelectedLabel;
     
    // stuff for the stats
     private GroupLayout statsLayout;
@@ -81,7 +82,7 @@ public class LoadoutMenu extends MenuPanel{             // still a work in progr
     private StatLabel agilityLabel;
     // Column 2
     private JLabel column2TempLabel;
-    private JLabel classNameLabel;
+    private StatLabel classNameLabel;
     private JLabel hpValueLabel;
     private JLabel mpValueLabel;
     private JLabel strengthValueLabel;
@@ -322,8 +323,9 @@ public class LoadoutMenu extends MenuPanel{             // still a work in progr
         armorLabel = new StatLabel(ImageContainer.getInstance().retrieveStatusLabelImages(ImageContainer.StatusLabelImage.ARMOR));
         
         // labels that can be changed
-        classNameLabel = new JLabel("-------"); 
-        classNameLabel.setFont(font);
+        //classNameLabel = new JLabel("-------"); 
+        //classNameLabel.setFont(font);
+        classNameLabel = new StatLabel(null);
         movementRangeValueLabel = new JLabel("--");
         movementRangeValueLabel.setFont(font);
         mpValueLabel = new JLabel("--");
@@ -549,8 +551,8 @@ public class LoadoutMenu extends MenuPanel{             // still a work in progr
         bottomPanel.setPreferredSize(new Dimension(centerPanel.getWidth(), GameApp.frame.getHeight()/4));
         loadoutPanelMiddleFiller.setPreferredSize(new Dimension(10,GameApp.frame.getHeight()/20));
         loadoutPanelBottomFiller.setPreferredSize(new Dimension(10,GameApp.frame.getHeight()/20));
-        bottomPanelRightFiller.setPreferredSize(new Dimension(bottomPanel.getWidth()/10, bottomPanel.getHeight()));
-        bottomPanelLeftFiller.setPreferredSize(new Dimension(bottomPanel.getWidth()/10, bottomPanel.getHeight()));
+        bottomPanelRightFiller.setPreferredSize(new Dimension(bottomPanel.getWidth()/11, bottomPanel.getHeight()));
+        bottomPanelLeftFiller.setPreferredSize(new Dimension(bottomPanel.getWidth()/11, bottomPanel.getHeight()));
         removeButton.setPreferredSize(new Dimension(buttonPanel.getWidth(), GameApp.frame.getHeight()/10));
         backButton.setPreferredSize(new Dimension(buttonPanel.getWidth(), GameApp.frame.getHeight()/10));
         continueButton.setPreferredSize(new Dimension(buttonPanel.getWidth(), GameApp.frame.getHeight()/10));
@@ -657,7 +659,7 @@ public class LoadoutMenu extends MenuPanel{             // still a work in progr
     * 
     * @return the JLabel associated with the selected unit's class name
     */
-   public JLabel getClassNameLabel(){
+   public StatLabel getClassNameLabel(){
        return classNameLabel;
    }
    /**
@@ -772,10 +774,16 @@ public class LoadoutMenu extends MenuPanel{             // still a work in progr
    public JLabel getArmorValueLabel(){
        return armorValueLabel;
    }
+   public CustomLabel getLastSelectedLabel(){
+       return lastSelectedLabel;
+   }
    public class LoadoutMenuComponentListener extends ComponentAdapter{
         @Override
         public void componentResized(ComponentEvent e){
             updateScreen();
         }
     }
+   public void setLastSelectedLabel(CustomLabel selected){
+       lastSelectedLabel = selected;
+   }
 }
