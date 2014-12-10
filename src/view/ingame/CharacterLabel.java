@@ -1,6 +1,7 @@
 package view.ingame;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Point;
@@ -16,11 +17,9 @@ import java.awt.dnd.DragSourceDropEvent;
 import java.awt.dnd.DragSourceEvent;
 import java.awt.dnd.DragSourceListener;
 import java.io.IOException;
-import javax.swing.BorderFactory;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.TransferHandler;
-import javax.swing.border.BevelBorder;
 import model.CharacterFlavor;
 import model.classSystem.DefaultClass;
 
@@ -60,8 +59,36 @@ public class CharacterLabel extends JLabel implements Transferable, DragSourceLi
     public void paintComponent(Graphics g)
     {
         super.paintComponent(g);
+        int maxY = getIcon().getIconHeight();
+        
+        g.setFont(new Font("Arial",Font.PLAIN,10));
+        g.drawString(buildString(),0 ,maxY-2);
+        g.setColor(Color.GREEN);
+        g.drawLine(0,maxY,calculateHealth(),maxY);
+        g.drawLine(0,maxY+1,calculateHealth(),maxY+1);
         g.setColor(Color.RED);
-        g.drawLine(0,getHeight()/2,getWidth(),getHeight()/2);
+        g.drawLine(calculateHealth(),maxY,getWidth(),maxY);
+        g.drawLine(calculateHealth(),maxY+1,getWidth(),maxY+1);
+    }
+    
+    public String buildString()
+    {
+        StringBuilder string = new StringBuilder();
+        if(character.getHealth() > 0)
+            string.append((int)character.getHealth());
+        else
+            string.append("0");
+        string.append("/");
+        string.append((int)character.getBaseHealth());
+        return string.toString();
+    }
+    
+    public int calculateHealth()
+    {
+       double baseHealth = character.getBaseHealth();
+       double currentHealth = character.getHealth();
+       double percentage =  currentHealth / baseHealth;
+       return (int)(getWidth()*percentage);
     }
     
     @Override

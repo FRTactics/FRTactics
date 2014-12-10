@@ -144,13 +144,15 @@ public class GamePlayManager
         Tile destinationTile = DrawPanel.getGrid()[targetX][targetY];
         DefaultClass targetCharacter = (DefaultClass)destinationTile.retrieveCharacter()[0];
         DefaultClass sourceCharacter = (DefaultClass)DrawPanel.getGrid()[sourceX][sourceY].retrieveCharacter()[0];
-        if(destinationTile.isAttackRangeDisplayed()){
+        if(destinationTile.isAttackRangeDisplayed())
+        {
             removeDisplayedRange((DefaultClass)DrawPanel.getGrid()[sourceX][sourceY].retrieveCharacter()[0]);
-            if(targetCharacter != null){        // if the target is not null, proceed to attack
-                if(!targetCharacter.isDefending()){
+            if(targetCharacter != null)
+            {        // if the target is not null, proceed to attack
+                if(!targetCharacter.isDefending())
+                {
                     health = targetCharacter.getHealth() - (sourceCharacter.calcAttackDamage() - targetCharacter.getArmor() - 20);
                     targetCharacter.setHealth(health);
-                    System.out.println(targetCharacter.getHealth());
                 }
                 else{
                     health = sourceCharacter.calcAttackDamage() - targetCharacter.getArmor();
@@ -163,17 +165,18 @@ public class GamePlayManager
             else
                 return false;
         }
-        else{
+        else
+        {
             return false;
         }
         
     }
     
-    public void removeDiplsayedAttackRange(DefaultClass character){
+    public void removeDiplsayedAttackRange(DefaultClass character)
+    {
         RangeChecker checker = new RangeChecker();
         int range = (int)character.getAttackRange();
         checker.calculateRange(sourceX, sourceY, range, 2);
-        
     }
     
     public boolean magicUnit(int targetX, int targetY){        // we may need another field if we have to differentiate 

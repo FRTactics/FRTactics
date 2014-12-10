@@ -11,7 +11,7 @@ import view.GameApp;
 
 public class DrawPanel extends JPanel 
 {
-    public final static Dimension zoomModifier = new Dimension(200,100);
+    public final static Dimension zoomModifier = new Dimension(200,200);
     private static Tile grid[][];
     private final SpringLayout layout = new SpringLayout();
     private final int arraySize;
@@ -19,9 +19,9 @@ public class DrawPanel extends JPanel
     public DrawPanel(int arraySize)
     {
         this.setBackground(Color.BLACK);
-        this.setMinimumSize(GameApp.frame.getSize());
-        this.setPreferredSize(GameApp.frame.getSize());
-        this.setMaximumSize(new Dimension(GameApp.frame.getPreferredSize().width + 2000, GameApp.frame.getPreferredSize().height + 1600));
+        this.setMinimumSize(new Dimension(GameApp.frame.getSize().width + 50, GameApp.frame.getSize().height + 130));
+        this.setPreferredSize(new Dimension(GameApp.frame.getSize().width + 50, GameApp.frame.getSize().height + 130));
+        this.setMaximumSize(new Dimension(getPreferredSize().width + 2000, getPreferredSize().height + 2000));
         this.setVisible(true);
         this.setLayout(layout);
         grid = new Tile[arraySize][arraySize];
@@ -54,13 +54,13 @@ public class DrawPanel extends JPanel
                     if(!firstHexagonInRow)
                     {
                         layout.putConstraint(SpringLayout.WEST,grid[j][i],(hexaWidth / 2),SpringLayout.WEST,this);//X
-                        layout.putConstraint(SpringLayout.NORTH,grid[j][i],hexaHeight * i,SpringLayout.NORTH,this);//Y
+                        layout.putConstraint(SpringLayout.NORTH,grid[j][i],(hexaHeight * i)+25,SpringLayout.NORTH,this);//Y
                         firstHexagonInRow = true;
                     }
                     else
                     {
                         layout.putConstraint(SpringLayout.WEST,grid[j][i],hexaWidth,SpringLayout.WEST,grid[j-1][i]);//X
-                        layout.putConstraint(SpringLayout.NORTH,grid[j][i],hexaHeight * i,SpringLayout.NORTH,this);//Y
+                        layout.putConstraint(SpringLayout.NORTH,grid[j][i],(hexaHeight * i)+25,SpringLayout.NORTH,this);//Y
                     }
                  }
 
@@ -73,19 +73,19 @@ public class DrawPanel extends JPanel
                    if(!firstHexagonInRow)
                    {
                        layout.putConstraint(SpringLayout.WEST,grid[j][i],hexaWidth,SpringLayout.WEST,this);//X
-                       layout.putConstraint(SpringLayout.NORTH,grid[j][i],(hexaHeight * i),SpringLayout.NORTH,this);//Y
+                       layout.putConstraint(SpringLayout.NORTH,grid[j][i],(hexaHeight * i)+25,SpringLayout.NORTH,this);//Y
                        firstHexagonInRow = true;
                    }
                    else
                    {
                        layout.putConstraint(SpringLayout.WEST,grid[j][i],hexaWidth,SpringLayout.WEST,grid[j-1][i]);//X
-                       layout.putConstraint(SpringLayout.NORTH,grid[j][i],hexaHeight * i,SpringLayout.NORTH,this);//Y
+                       layout.putConstraint(SpringLayout.NORTH,grid[j][i],(hexaHeight * i)+25,SpringLayout.NORTH,this);//Y
                    }  
                 }
                 firstHexagonInRow = false;
             }
         } 
-        this.updateUI();
+        this.revalidate();
     }
     
     public boolean preformZoom(boolean increasingZoom)
@@ -154,14 +154,14 @@ public class DrawPanel extends JPanel
                     if(!firstHexagonInRow)
                     {
                         layout.putConstraint(SpringLayout.WEST,grid[j][i],hexaWidth/2,SpringLayout.WEST,this);//X
-                        layout.putConstraint(SpringLayout.NORTH,grid[j][i],hexaHeight * i,SpringLayout.NORTH,this);//Y
+                        layout.putConstraint(SpringLayout.NORTH,grid[j][i],(hexaHeight * i)+25,SpringLayout.NORTH,this);//Y
                         this.add(grid[j][i]);
                         firstHexagonInRow = true;
                     }
                     else
                     {
                         layout.putConstraint(SpringLayout.WEST,grid[j][i],hexaWidth,SpringLayout.WEST,grid[j-1][i]);//X
-                        layout.putConstraint(SpringLayout.NORTH,grid[j][i],hexaHeight * i,SpringLayout.NORTH,this);//Y
+                        layout.putConstraint(SpringLayout.NORTH,grid[j][i],(hexaHeight * i)+25,SpringLayout.NORTH,this);//Y
                         this.add(grid[j][i]);
                     }
                  }
@@ -175,14 +175,14 @@ public class DrawPanel extends JPanel
                    if(!firstHexagonInRow)
                    {
                        layout.putConstraint(SpringLayout.WEST,grid[j][i],hexaWidth,SpringLayout.WEST,this);//X
-                       layout.putConstraint(SpringLayout.NORTH,grid[j][i],(hexaHeight * i),SpringLayout.NORTH,this);//Y
+                       layout.putConstraint(SpringLayout.NORTH,grid[j][i],(hexaHeight * i)+25,SpringLayout.NORTH,this);//Y
                        this.add(grid[j][i]);
                        firstHexagonInRow = true;
                    }
                    else
                    {
                        layout.putConstraint(SpringLayout.WEST,grid[j][i],hexaWidth,SpringLayout.WEST,grid[j-1][i]);//X
-                       layout.putConstraint(SpringLayout.NORTH,grid[j][i],hexaHeight * i,SpringLayout.NORTH,this);//Y
+                       layout.putConstraint(SpringLayout.NORTH,grid[j][i],(hexaHeight * i)+25,SpringLayout.NORTH,this);//Y
                        this.add(grid[j][i]);
                    }  
                 }

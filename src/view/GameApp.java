@@ -87,8 +87,8 @@ public class GameApp{
         gm.initialize(view);            // immediately initialize it with the view, this also starts up the state machine
         // set of the frame to make it pretty
         frame.setTitle("FRTactics");
-        //frame.setExtendedState(Frame.MAXIMIZED_BOTH);
-        //frame.setUndecorated(true);
+        frame.setExtendedState(Frame.MAXIMIZED_BOTH);
+        frame.setUndecorated(true);
         frame.setLayout(new BorderLayout());
         frame.add(view, BorderLayout.CENTER);   // add the view to the frame
         frame.setMinimumSize(new Dimension(1200, 800));

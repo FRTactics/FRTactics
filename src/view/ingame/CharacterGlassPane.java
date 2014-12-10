@@ -7,12 +7,15 @@ package view.ingame;
 
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Image;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
@@ -46,7 +49,6 @@ public class CharacterGlassPane extends JPanel
     public CharacterGlassPane()
     {
         // Set up the glass pane
-        System.out.println(GameApp.frame.getWidth());
         setOpaque(false);
         //setLayout(new BorderLayout());
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
@@ -57,7 +59,13 @@ public class CharacterGlassPane extends JPanel
         createCharacterLabels(playerOneList,GameManager.getInstance().getP1Loadout());
         //Populate the list for player two
         createCharacterLabels(playerTwoList,GameManager.getInstance().getP2Loadout());
-        
+        addKeyListener(new KeyAdapter(){
+           @Override
+           public void keyPressed(KeyEvent e)
+           {
+               GameApp.frame.dispatchEvent(e);
+           }
+        });
         //Create the holder panel for the new layout
         
         topFiller = new JPanel();
@@ -129,27 +137,27 @@ public class CharacterGlassPane extends JPanel
             switch(((DefaultClass)(orginList.get(i))).className)
             {
                 case "Warrior":
-                    character.setIcon(new ImageIcon(ImageContainer.getInstance().retrieveCharacterTileImage(ImageContainer.CharacterImage.WARRIOR).getScaledInstance(125, 100, 0)));
+                    character.setIcon(new ImageIcon(ImageContainer.getInstance().retrieveCharacterTileImage(ImageContainer.CharacterImage.WARRIOR).getScaledInstance(100,75, 0)));
                     character.setCharacter(((DefaultClass)(orginList.get(i))),ImageContainer.getInstance().retrieveCharacterTileImage(ImageContainer.CharacterImage.WARRIOR));
                     character.setText("Warrior");
                     break;
                 case "Archer":
-                    character.setIcon(new ImageIcon(ImageContainer.getInstance().retrieveCharacterTileImage(ImageContainer.CharacterImage.ARCHER).getScaledInstance(125, 100, 0)));
+                    character.setIcon(new ImageIcon(ImageContainer.getInstance().retrieveCharacterTileImage(ImageContainer.CharacterImage.ARCHER).getScaledInstance(100,75, 0)));
                     character.setCharacter(((DefaultClass)(orginList.get(i))),ImageContainer.getInstance().retrieveCharacterTileImage(ImageContainer.CharacterImage.ARCHER));
                     character.setText("Archer");
                     break;
                 case "Wizard":
-                    character.setIcon(new ImageIcon(ImageContainer.getInstance().retrieveCharacterTileImage(ImageContainer.CharacterImage.WIZARD).getScaledInstance(125, 100, 0)));
+                    character.setIcon(new ImageIcon(ImageContainer.getInstance().retrieveCharacterTileImage(ImageContainer.CharacterImage.WIZARD).getScaledInstance(100,75, 0)));
                     character.setCharacter(((DefaultClass)(orginList.get(i))),ImageContainer.getInstance().retrieveCharacterTileImage(ImageContainer.CharacterImage.WIZARD));
                     character.setText("Wizard");
                     break;
                 case "Rogue":
-                    character.setIcon(new ImageIcon(ImageContainer.getInstance().retrieveCharacterTileImage(ImageContainer.CharacterImage.ROGUE).getScaledInstance(125, 100, 0)));
+                    character.setIcon(new ImageIcon(ImageContainer.getInstance().retrieveCharacterTileImage(ImageContainer.CharacterImage.ROGUE).getScaledInstance(100,75, 0)));
                     character.setCharacter(((DefaultClass)(orginList.get(i))),ImageContainer.getInstance().retrieveCharacterTileImage(ImageContainer.CharacterImage.ROGUE));
                     character.setText("Rogue");
                     break;
                 case "Healer":
-                    character.setIcon(new ImageIcon(ImageContainer.getInstance().retrieveCharacterTileImage(ImageContainer.CharacterImage.HEALER).getScaledInstance(125, 100, 0)));
+                    character.setIcon(new ImageIcon(ImageContainer.getInstance().retrieveCharacterTileImage(ImageContainer.CharacterImage.HEALER).getScaledInstance(100,75, 0)));
                     character.setCharacter(((DefaultClass)(orginList.get(i))),ImageContainer.getInstance().retrieveCharacterTileImage(ImageContainer.CharacterImage.HEALER));
                     character.setText("Healer");
                     break;
