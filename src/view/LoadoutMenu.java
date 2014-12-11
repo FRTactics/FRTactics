@@ -134,7 +134,7 @@ public class LoadoutMenu extends MenuPanel{             // still a work in progr
     private MenuButton backButton;
     private MenuButton removeButton;
     private DropTarget dropTarget;
-    private final Font font;
+    private Font font;
     
     /**
      * Constructor for the LoadoutMenu, takes in an identifier and a background image
@@ -159,9 +159,7 @@ public class LoadoutMenu extends MenuPanel{             // still a work in progr
         bottomPanel.setLayout(new BorderLayout());
         bottomPanelLeftFiller = new JPanel();
         bottomPanelRightFiller = new JPanel();
-        bottomPanelLeftFiller.setPreferredSize(new Dimension(50,50));
         bottomPanelLeftFiller.setOpaque(false);
-        bottomPanelRightFiller.setPreferredSize(new Dimension(50,50));
         bottomPanelRightFiller.setOpaque(false);
         bottomPanel.add(bottomPanelLeftFiller, BorderLayout.WEST);
         bottomPanel.add(statsPanel, BorderLayout.CENTER);
@@ -169,13 +167,11 @@ public class LoadoutMenu extends MenuPanel{             // still a work in progr
         centerPanel.add(bottomPanel);
         centerPanel.add(Box.createVerticalGlue());
         rightPanel = new JPanel();
-        rightPanel.setOpaque(false);
         rightPanel.setLayout(new BoxLayout(rightPanel, BoxLayout.X_AXIS));
         rightPanelLeftFiller = new JPanel();
         rightPanelRightFiller = new JPanel();
         rightPanelLeftFiller.setOpaque(false);
         rightPanelRightFiller.setOpaque(false);
-        rightPanel.setPreferredSize(new Dimension(100,400));
         rightPanel.add(rightPanelLeftFiller);
         rightPanel.add(buttonPanel);
         rightPanel.add(rightPanelRightFiller);
@@ -183,8 +179,8 @@ public class LoadoutMenu extends MenuPanel{             // still a work in progr
         topBuffer.setOpaque(false);
         loadoutPanel.setOpaque(false);
         centerPanel.setOpaque(false);
+        rightPanel.setOpaque(false);
         leftPanel.setOpaque(false);
-        //this.setVisible(true);
         buttonPanel.setOpaque(false);
         this.add(topBuffer, BorderLayout.NORTH);
         this.add(leftPanel, BorderLayout.WEST);
@@ -221,13 +217,10 @@ public class LoadoutMenu extends MenuPanel{             // still a work in progr
         leftPanel = new JPanel();
         leftPanel.setLayout(new BoxLayout(leftPanel, BoxLayout.X_AXIS));
         loadoutPanel.setLayout(new BoxLayout(loadoutPanel, BoxLayout.Y_AXIS));
-        //loadoutPanel.setLayout(new BoxLayout(loadoutPanel, BoxLayout.Y_AXIS));
         removeButton = new MenuButton(ImageContainer.getInstance().retrieveMenuImage(ImageContainer.MenuImage.MENU_REMOVE));
-        //loadoutPanel.setPreferredSize(new Dimension(400,600));
         LoadoutListModel model = new LoadoutListModel();
         loadoutList = new JList(model);
         loadoutList.setDragEnabled(false);
-        //loadoutList.setBackground(Color.DARK_GRAY);
         loadoutPanelMiddleFiller = new JPanel();
         loadoutPanelBottomFiller = new JPanel();
         loadoutList.setBackground(new Color(44,53,57, 200));
@@ -540,26 +533,60 @@ public class LoadoutMenu extends MenuPanel{             // still a work in progr
     }
     
     public void updateScreen(){
+        
+        System.out.println("Frame Width : " + GameApp.frame.getWidth());
+        System.out.println("frame height: " + GameApp.frame.getHeight());
         rightPanel.setPreferredSize(new Dimension(GameApp.frame.getWidth()/4, rightPanel.getHeight()));
-        rightPanelLeftFiller.setPreferredSize(new Dimension(rightPanel.getWidth()/10, rightPanel.getHeight()));
-        rightPanelRightFiller.setPreferredSize(new Dimension(rightPanel.getWidth()/10, rightPanel.getHeight()));
+        rightPanelLeftFiller.setPreferredSize(new Dimension(rightPanel.getPreferredSize().width/10, rightPanel.getPreferredSize().height));
+        rightPanelRightFiller.setPreferredSize(new Dimension(rightPanel.getPreferredSize().width/10, rightPanel.getPreferredSize().height));
         leftPanel.setPreferredSize(new Dimension((GameApp.frame.getWidth()/4), leftPanel.getHeight()));
-        leftPanelLeftFiller.setPreferredSize(new Dimension(leftPanel.getWidth()/10, leftPanel.getHeight()));
-        leftPanelRightFiller.setPreferredSize(new Dimension(leftPanel.getWidth()/10, leftPanel.getHeight()));
-        loadoutPanel.setPreferredSize(new Dimension((int)(leftPanel.getWidth()*.8), (int)(loadoutPanel.getHeight()*.7)));
+        leftPanelLeftFiller.setPreferredSize(new Dimension(leftPanel.getPreferredSize().width/10, leftPanel.getPreferredSize().height));
+        leftPanelRightFiller.setPreferredSize(new Dimension(leftPanel.getPreferredSize().width/10, leftPanel.getPreferredSize().height));
+        loadoutPanel.setPreferredSize(new Dimension((leftPanel.getPreferredSize().width*8)/10, (loadoutPanel.getPreferredSize().height*7)/10));
+        buttonPanel.setPreferredSize(new Dimension((leftPanel.getPreferredSize().width*8)/10, (loadoutPanel.getPreferredSize().height*7)/10));
         topBuffer.setPreferredSize(new Dimension(GameApp.frame.getWidth(), GameApp.frame.getHeight()/4));
         bottomPanel.setPreferredSize(new Dimension(centerPanel.getWidth(), GameApp.frame.getHeight()/4));
-        loadoutPanelMiddleFiller.setPreferredSize(new Dimension(10,GameApp.frame.getHeight()/20));
-        loadoutPanelBottomFiller.setPreferredSize(new Dimension(10,GameApp.frame.getHeight()/20));
-        bottomPanelRightFiller.setPreferredSize(new Dimension(bottomPanel.getWidth()/11, bottomPanel.getHeight()));
-        bottomPanelLeftFiller.setPreferredSize(new Dimension(bottomPanel.getWidth()/11, bottomPanel.getHeight()));
-        removeButton.setPreferredSize(new Dimension(buttonPanel.getWidth(), GameApp.frame.getHeight()/10));
-        backButton.setPreferredSize(new Dimension(buttonPanel.getWidth(), GameApp.frame.getHeight()/10));
-        continueButton.setPreferredSize(new Dimension(buttonPanel.getWidth(), GameApp.frame.getHeight()/10));
-        buttonPanelMiddleFiller.setPreferredSize(new Dimension(10, GameApp.frame.getHeight()/10));
-        buttonPanelBottomFiller.setPreferredSize(new Dimension(10, (int)(GameApp.frame.getHeight()/2)));
+        loadoutPanelMiddleFiller.setPreferredSize(new Dimension(loadoutPanel.getPreferredSize().width,GameApp.frame.getHeight()/20));
+        loadoutPanelBottomFiller.setPreferredSize(new Dimension(loadoutPanel.getPreferredSize().width,GameApp.frame.getHeight()/20));
+        bottomPanelRightFiller.setPreferredSize(new Dimension(bottomPanel.getPreferredSize().width/11, bottomPanel.getPreferredSize().height));
+        bottomPanelLeftFiller.setPreferredSize(new Dimension(bottomPanel.getPreferredSize().width/11, bottomPanel.getPreferredSize().height));
+        removeButton.setPreferredSize(new Dimension(loadoutPanel.getPreferredSize().width, GameApp.frame.getHeight()/10));
+        backButton.setPreferredSize(new Dimension(buttonPanel.getPreferredSize().width, GameApp.frame.getHeight()/10));
+        continueButton.setPreferredSize(new Dimension(buttonPanel.getPreferredSize().width, GameApp.frame.getHeight()/10));
+        buttonPanelMiddleFiller.setPreferredSize(new Dimension(buttonPanel.getPreferredSize().width, GameApp.frame.getHeight()/10));
+        buttonPanelBottomFiller.setPreferredSize(new Dimension(buttonPanel.getPreferredSize().width, GameApp.frame.getHeight()/2));
+        font = new Font("Comic Sans MS" , Font.PLAIN, GameApp.frame.getHeight()/50);
+        
+        mpValueLabel.setFont(font);
+        hpValueLabel.setFont(font);
+        strengthValueLabel.setFont(font);
+        agilityValueLabel.setFont(font);
+        meleeDamageValueLabel.setFont(font);
+        rangedDamageValueLabel.setFont(font);
+        spellDamageValueLabel.setFont(font);
+        meleeAttackRangeValueLabel.setFont(font);
+        rangedAttackRangeValueLabel.setFont(font);
+        movementRangeValueLabel.setFont(font);
+        dexterityValueLabel.setFont(font);
+        vitalityValueLabel.setFont(font);
+        intelligenceValueLabel.setFont(font);
+        dodgeChanceValueLabel.setFont(font);
+        healthRegenValueLabel.setFont(font);
+        armorValueLabel.setFont(font);
+        
+        leftPanel.revalidate();
+        centerPanel.revalidate();
+        bottomPanel.revalidate();
+        rightPanel.revalidate();
         this.revalidate();
         repaint();
+        System.out.println("Called");
+        
+        System.out.println("LeftPanel: " + leftPanel.getSize().width);
+        System.out.println("LeftPanelRightFiller: " + leftPanelRightFiller.getWidth());
+        System.out.println("LeftPanelLeftFiller: " + leftPanelLeftFiller.getWidth());
+        System.out.println("LoadoutPanel: " + loadoutPanel.getWidth());
+        System.out.println("RightPanel: " + rightPanel.getSize().width);
     }
    
    private HashMap<String, Image> createImageMap(){        // creates the image map
@@ -611,7 +638,7 @@ public class LoadoutMenu extends MenuPanel{             // still a work in progr
        label.addMouseListener(adapter);
    }
    /**
-    * sets the loadout list's cell renderer
+    * sets the loadoutList's cell renderer
     * @param cellRenderer
     */
    public void setLoadoutListCellRenderer(DefaultListCellRenderer cellRenderer){

@@ -12,6 +12,7 @@ package model.classSystem;
  */
 public abstract class DefaultClass {        // abstract class used for polymorphism
    // base stats
+   public String owner;
    public String className;
    protected boolean hasMoved;
    protected boolean hasAttacked;
@@ -43,6 +44,13 @@ public abstract class DefaultClass {        // abstract class used for polymorph
    public abstract double calcAttackRange();
    public abstract void calcHealth();
    public abstract double calcAttackDamage();
+   
+   public String getOwner(){
+       return owner;
+   }
+   public void setOwner(String owner){
+       this.owner = owner;
+   }
 
    /**getter method for the base health
     * 

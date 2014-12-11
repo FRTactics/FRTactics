@@ -25,6 +25,9 @@ public class GameManager
     protected static GameState gState;              // abstract game state
     protected View gameView;                        // game view, needed for switching screens
     private static GameManager instance;            // instance used to implement singleton design
+    
+    public final static String PLAYER_1 = "Player 1";
+    public final static String PLAYER_2 = "Player 2";
     // Strings that are associated with each of the screens
     public final static String MAIN_MENU = "Main Menu";
     public final static String P1_LOADOUT_MENU = "P1 Loadout Menu";
@@ -113,7 +116,7 @@ public class GameManager
         getView().getParent().setVisible(false);
         System.exit(0);
     }
-    public void populateLoadout(ArrayList<String> source, ArrayList <DefaultClass> target){
+    public void populateLoadout(ArrayList<String> source, ArrayList <DefaultClass> target, String owner){
         target.clear();         // clear the target before hand
         for(int i = 0; i < source.size(); i++){
             switch(source.get(i)){
@@ -135,6 +138,7 @@ public class GameManager
                 default:
                     break;
             }
+            target.get(i).setOwner(owner);
         }
     }
     public ArrayList<DefaultClass> getP1Loadout(){

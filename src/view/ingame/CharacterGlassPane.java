@@ -14,6 +14,8 @@ import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Image;
+import java.awt.dnd.DnDConstants;
+import java.awt.dnd.DropTarget;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
@@ -74,17 +76,20 @@ public class CharacterGlassPane extends JPanel
         middleFiller = new JPanel();
         middleFiller.addMouseListener(new MouseAdapter() {});
         middleFiller.setOpaque(false);
+        middleFiller.setDropTarget(new DropTarget(middleFiller, DnDConstants.ACTION_NONE, null, true));
         middleFiller.setPreferredSize(new Dimension(GameApp.frame.getWidth(), (GameApp.frame.getHeight()*12)/320));
         holderPanel = new JPanel();
         holderPanel.addMouseListener(new MouseAdapter() {});
         //holderPanel.setPreferredSize(new Dimension(GameApp.frame.getWidth(), (GameApp.frame.getHeight()*7)/80));
         holderPanel.setPreferredSize(new Dimension(GameApp.frame.getWidth(), (GameApp.frame.getHeight()*15)/160));
+        holderPanel.setDropTarget(new DropTarget(holderPanel, DnDConstants.ACTION_NONE, null, true));
         System.out.println((GameApp.frame.getHeight()*5)/160);
         bottomFiller = new JPanel();
         bottomFiller.addMouseListener(new MouseAdapter() {});
         bottomFiller.setOpaque(false);
         //bottomFiller
         bottomFiller.setPreferredSize(new Dimension(GameApp.frame.getWidth(), (GameApp.frame.getHeight()*9)/320));
+        bottomFiller.setDropTarget(new DropTarget(bottomFiller, DnDConstants.ACTION_NONE, null, true));
         holderPanel.setVisible(true);
         holderPanel.setOpaque(false);
        
@@ -99,21 +104,25 @@ public class CharacterGlassPane extends JPanel
         
         p1CenterPanel = new JPanel();
         p1CenterPanel.setOpaque(false);
+        //create the player panel for player two for the jlabels
+        playerOnePanel = new PlayerPanel(ImageContainer.getInstance().retrieveMenuImage(ImageContainer.MenuImage.P1_TURN), holderPanel, p1CenterPanel);
         //add the labels to player one panel
         for(Object label: playerOneList)
         {
             p1CenterPanel.add((CharacterLabel)label);
+            ((CharacterLabel)label).addMouseListener(new CharacterLabelListener(((CharacterLabel)label).getCharacter()));
         }
-        //create the player panel for player two for the jlabels
-        playerOnePanel = new PlayerPanel(ImageContainer.getInstance().retrieveMenuImage(ImageContainer.MenuImage.P1_TURN), holderPanel, p1CenterPanel);
+        
         p2CenterPanel = new JPanel();
         p2CenterPanel.setOpaque(false);
+        playerTwoPanel = new PlayerPanel(ImageContainer.getInstance().retrieveMenuImage(ImageContainer.MenuImage.P2_TURN), holderPanel, p2CenterPanel);
         //add the labels to player one panel
         for(Object label: playerTwoList)
         {
             p2CenterPanel.add((CharacterLabel)label);
+            ((CharacterLabel)label).addMouseListener(new CharacterLabelListener(((CharacterLabel)label).getCharacter()));
         }
-        playerTwoPanel = new PlayerPanel(ImageContainer.getInstance().retrieveMenuImage(ImageContainer.MenuImage.P2_TURN), holderPanel, p2CenterPanel);
+        
 
         //Add the panels to the card layout
 
@@ -137,27 +146,27 @@ public class CharacterGlassPane extends JPanel
             switch(((DefaultClass)(orginList.get(i))).className)
             {
                 case "Warrior":
-                    character.setIcon(new ImageIcon(ImageContainer.getInstance().retrieveCharacterTileImage(ImageContainer.CharacterImage.WARRIOR).getScaledInstance(100,75, 0)));
+                    character.setIcon(new ImageIcon(ImageContainer.getInstance().retrieveCharacterTileImage(ImageContainer.CharacterImage.WARRIOR).getScaledInstance(GameApp.frame.getWidth()/17,GameApp.frame.getHeight()/15, 0)));
                     character.setCharacter(((DefaultClass)(orginList.get(i))),ImageContainer.getInstance().retrieveCharacterTileImage(ImageContainer.CharacterImage.WARRIOR));
                     character.setText("Warrior");
                     break;
                 case "Archer":
-                    character.setIcon(new ImageIcon(ImageContainer.getInstance().retrieveCharacterTileImage(ImageContainer.CharacterImage.ARCHER).getScaledInstance(100,75, 0)));
+                    character.setIcon(new ImageIcon(ImageContainer.getInstance().retrieveCharacterTileImage(ImageContainer.CharacterImage.ARCHER).getScaledInstance(GameApp.frame.getWidth()/17,GameApp.frame.getHeight()/15, 0)));
                     character.setCharacter(((DefaultClass)(orginList.get(i))),ImageContainer.getInstance().retrieveCharacterTileImage(ImageContainer.CharacterImage.ARCHER));
                     character.setText("Archer");
                     break;
                 case "Wizard":
-                    character.setIcon(new ImageIcon(ImageContainer.getInstance().retrieveCharacterTileImage(ImageContainer.CharacterImage.WIZARD).getScaledInstance(100,75, 0)));
+                    character.setIcon(new ImageIcon(ImageContainer.getInstance().retrieveCharacterTileImage(ImageContainer.CharacterImage.WIZARD).getScaledInstance(GameApp.frame.getWidth()/17,GameApp.frame.getHeight()/15, 0)));
                     character.setCharacter(((DefaultClass)(orginList.get(i))),ImageContainer.getInstance().retrieveCharacterTileImage(ImageContainer.CharacterImage.WIZARD));
                     character.setText("Wizard");
                     break;
                 case "Rogue":
-                    character.setIcon(new ImageIcon(ImageContainer.getInstance().retrieveCharacterTileImage(ImageContainer.CharacterImage.ROGUE).getScaledInstance(100,75, 0)));
+                    character.setIcon(new ImageIcon(ImageContainer.getInstance().retrieveCharacterTileImage(ImageContainer.CharacterImage.ROGUE).getScaledInstance(GameApp.frame.getWidth()/17,GameApp.frame.getHeight()/15, 0)));
                     character.setCharacter(((DefaultClass)(orginList.get(i))),ImageContainer.getInstance().retrieveCharacterTileImage(ImageContainer.CharacterImage.ROGUE));
                     character.setText("Rogue");
                     break;
                 case "Healer":
-                    character.setIcon(new ImageIcon(ImageContainer.getInstance().retrieveCharacterTileImage(ImageContainer.CharacterImage.HEALER).getScaledInstance(100,75, 0)));
+                    character.setIcon(new ImageIcon(ImageContainer.getInstance().retrieveCharacterTileImage(ImageContainer.CharacterImage.HEALER).getScaledInstance(GameApp.frame.getWidth()/17,GameApp.frame.getHeight()/15, 0)));
                     character.setCharacter(((DefaultClass)(orginList.get(i))),ImageContainer.getInstance().retrieveCharacterTileImage(ImageContainer.CharacterImage.HEALER));
                     character.setText("Healer");
                     break;
@@ -189,6 +198,8 @@ public class CharacterGlassPane extends JPanel
         private JComponent parent;
         private JPanel centerPanel;
         private JPanel leftPanel;
+        private JPanel leftPanelRightFiller;
+        private JPanel buttonPanelTopFiller;
         private JPanel buttonPanelBottomFiller;
         private JPanel buttonPanel;
         private JPanel leftPanelLeftFiller;
@@ -223,7 +234,7 @@ public class CharacterGlassPane extends JPanel
 
         public PlayerPanel(Image identifierImage, JPanel parent, JPanel centerPanel){
             this.parent = parent;
-            font = new Font("Comic Sans MS" , Font.PLAIN, 20);
+            font = new Font("Comic Sans MS" , Font.PLAIN, GameApp.frame.getHeight()/50);
             // everything from the left panel
             leftPanel = new JPanel();
             leftPanel.setOpaque(false);
@@ -235,6 +246,9 @@ public class CharacterGlassPane extends JPanel
             leftPanelLeftFiller = new JPanel();
             leftPanelLeftFiller.setOpaque(false);
             leftPanelLeftFiller.setPreferredSize(new Dimension(GameApp.frame.getWidth()/40, parent.getPreferredSize().height));
+            leftPanelRightFiller = new JPanel();
+            leftPanelRightFiller.setOpaque(false);
+            leftPanelRightFiller.setPreferredSize(new Dimension(GameApp.frame.getWidth()/40, parent.getPreferredSize().height));
             identifier = new StatLabel(identifierImage);
             identifier.setPreferredSize(new Dimension(GameApp.frame.getWidth()/10, parent.getPreferredSize().height));
             identifier.setOpaque(false);
@@ -243,13 +257,18 @@ public class CharacterGlassPane extends JPanel
             endTurnButton.addMouseListener(new EndTurnButtonListener());
             buttonPanelBottomFiller = new JPanel();
             buttonPanelBottomFiller.setOpaque(false);
-            buttonPanelBottomFiller.setPreferredSize(new Dimension(GameApp.frame.getWidth()/4, parent.getPreferredSize().height/2));
+            buttonPanelBottomFiller.setPreferredSize(new Dimension(GameApp.frame.getWidth()/4, parent.getPreferredSize().height/3));
+            buttonPanelTopFiller = new JPanel();
+            buttonPanelTopFiller.setOpaque(false);
+            buttonPanelTopFiller.setPreferredSize(new Dimension(GameApp.frame.getWidth()/4, parent.getPreferredSize().height/3));
+            buttonPanel.add(buttonPanelTopFiller);
             buttonPanel.add(endTurnButton);
             buttonPanel.add(buttonPanelBottomFiller);
             buttonPanel.setOpaque(false);
             leftPanel.add(leftPanelLeftFiller);
             leftPanel.add(identifier);
             leftPanel.add(buttonPanel);
+            leftPanel.add(leftPanelRightFiller);
 
 
             // Everything for the Stats Panel
@@ -330,6 +349,19 @@ public class CharacterGlassPane extends JPanel
             this.setVisible(true);
             this.setOpaque(false);
         }
+        public JLabel getDodgeChanceValueLabel(){
+            return dodgeChanceValue;
+        }
+        public JLabel getArmorValueLabel(){
+            return armorValue;
+        }
+        public JLabel getHPValueLabel(){
+            return hpValue;
+        }
+        public JLabel getMPValueLabel(){
+            return mpValue;
+        }
+        
         private class EndTurnButtonListener extends MouseAdapter{
             @Override
             public void mouseClicked(MouseEvent e){
@@ -339,5 +371,25 @@ public class CharacterGlassPane extends JPanel
             }
         }
     }
-
+    public class CharacterLabelListener extends MouseAdapter{
+        private DefaultClass character;
+        private PlayerPanel playerPanel;
+        public CharacterLabelListener(DefaultClass character){
+            this.character = character;
+            if(character.getOwner() == GameManager.PLAYER_1){
+                playerPanel = playerOnePanel;
+            }
+            else if(character.getOwner() == GameManager.PLAYER_2){
+                playerPanel = playerTwoPanel;
+            }
+            
+        }
+        @Override
+        public void mouseClicked(MouseEvent e){
+            playerPanel.getArmorValueLabel().setText("" + character.getArmor());
+            playerPanel.getDodgeChanceValueLabel().setText("" + character.getDodgeChance()+ "%");
+            playerPanel.getHPValueLabel().setText("" + character.getHealth());
+            playerPanel.getMPValueLabel().setText("" + character.getMP());
+        }
+    }
 }

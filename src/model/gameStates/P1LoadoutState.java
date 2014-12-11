@@ -56,7 +56,7 @@ public class P1LoadoutState extends GameState{
     }
     private void setLoadout(){          // modify this later to convert the strings into actual units and place them in an array
         LoadoutMenu temp = ((LoadoutMenu)gm.getView().getFrontView());
-        gm.populateLoadout(temp.getLoadout(), gm.getP1Loadout()); 
+        gm.populateLoadout(temp.getLoadout(), gm.getP1Loadout(), GameManager.PLAYER_1); 
     }
 
 

@@ -54,6 +54,9 @@ public class CharacterLabel extends JLabel implements Transferable, DragSourceLi
         // Set the size of the label
         
     }
+    public DefaultClass getCharacter(){
+        return character;
+    }
     
     @Override
     public void paintComponent(Graphics g)
