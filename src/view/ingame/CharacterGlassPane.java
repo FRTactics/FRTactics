@@ -56,8 +56,8 @@ public class CharacterGlassPane extends JPanel
         //setLayout(new BorderLayout());
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         //Create vector to store labels into
-        ArrayList playerOneList = new ArrayList();
-        ArrayList playerTwoList = new ArrayList();
+        ArrayList<DefaultClass> playerOneList = new ArrayList();
+        ArrayList<DefaultClass> playerTwoList = new ArrayList();
         //Populate the list for player one
         createCharacterLabels(playerOneList,GameManager.getInstance().getP1Loadout());
         //Populate the list for player two
@@ -395,8 +395,18 @@ public class CharacterGlassPane extends JPanel
         public void mouseClicked(MouseEvent e){
             playerPanel.getArmorValueLabel().setText("" + character.getArmor());
             playerPanel.getDodgeChanceValueLabel().setText("" + character.getDodgeChance()+ "%");
-            playerPanel.getHPValueLabel().setText("" + character.getHealth());
-            playerPanel.getMPValueLabel().setText("" + character.getMP());
+            if(character.getHealth() < 0){
+                playerPanel.getHPValueLabel().setText("0");
+            }
+            else{
+                playerPanel.getHPValueLabel().setText("" + character.getHealth());
+            }
+            if(character.getMP() < 0){
+                playerPanel.getMPValueLabel().setText("0");
+            }
+            else{
+                playerPanel.getMPValueLabel().setText("" + character.getMP());
+            }
         }
     }
 }

@@ -93,9 +93,11 @@ public class GamePlayManager
     public boolean defendUnit()
     {
         DefaultClass sourceCharacter = (DefaultClass)DrawPanel.getGrid()[sourceX][sourceY].retrieveCharacter()[0];
+        
         if(!sourceCharacter.isDefending())
         {
             sourceCharacter.setDefending(true); 
+            sourceCharacter.attackPerformed(true);
             isDefending = false;
         }
         else
@@ -103,6 +105,7 @@ public class GamePlayManager
             isDefending = false;
             return false;
         }
+        
         return true;
     }
     
@@ -164,10 +167,12 @@ public class GamePlayManager
                     targetCharacter.setHealth(health);    
                 }
                 // do the rest of the attacking stuff
+                sourceCharacter.attackPerformed(true);
                 isAttacking = false;
                 return true;
             }
             else
+                isAttacking = false;
                 return false;
         }
         else
@@ -205,11 +210,13 @@ public class GamePlayManager
                 // do the rest of the attacking stuff
                 // currently just testing with base stats
                 targetCharacter.setHealth(targetCharacter.getHealth() - sourceCharacter.getAttackDamage());
+                targetCharacter.attackPerformed(true);
                 isAttacking = false;
                 removeDisplayedRange();
                 return true;
             }
             else
+                isAttacking = false;
                 return false;
         }
         else{
@@ -249,13 +256,20 @@ public class GamePlayManager
      
     public void switchTurns() 
     {
-        if(isP1Turn)
-        {
+        if(isP1Turn){
             setPlayerTurn(2);
+            for(DefaultClass unit : GameManager.getInstance().getP1Loadout()){
+                unit.movePerformed(false);
+                unit.attackPerformed(false);
+            }
         }
-        else
-        {
+        else{
             setPlayerTurn(1);
+            for(DefaultClass unit : GameManager.getInstance().getP2Loadout()){
+                unit.movePerformed(false);
+                unit.attackPerformed(false);
+            }
         }
     }
+    
 }

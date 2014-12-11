@@ -87,8 +87,6 @@ public class CustomLabel extends JLabel implements DragGestureListener, DragSour
         }
 
         int action = e.getDropAction(); 
-        if ((action & DnDConstants.ACTION_MOVE) != 0)
-            setText("");
   }
 
     @Override
