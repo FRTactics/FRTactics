@@ -27,11 +27,11 @@ public class RogueClass extends DefaultClass{
         attackDamage = 50;
         movementRange = 2;
         healthRegen = 0;  
-        strength = 25; 
-        agility = 30;
+        strength = 20; 
+        agility = 35;
         armor = 10;
         intelligence = 10;
-        dexterity = 25;
+        dexterity = 40;
         vitality = 10;
         attackPerformed = false;
         movePerformed = false;

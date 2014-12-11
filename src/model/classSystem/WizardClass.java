@@ -30,7 +30,7 @@ public class WizardClass extends DefaultClass {
         strength = 15;
         agility = 20;
         armor = 10;
-        intelligence = 30;
+        intelligence = 40;
         dexterity = 20;
         vitality = 15;
         attackPerformed = false;

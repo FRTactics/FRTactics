@@ -26,9 +26,9 @@ public class HealerClass extends DefaultClass{
         strength = 15;
         agility = 15;
         armor = 15; 
-        intelligence = 30;
-        dexterity = 20;
-        vitality = 20;
+        intelligence = 20;
+        dexterity = 10;
+        vitality = 10;
         attackPerformed = false;
         movePerformed = false;
         healAmount = 50;

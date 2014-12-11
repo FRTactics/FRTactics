@@ -24,11 +24,11 @@ public class ArcherClass extends DefaultClass{
         movementRange = 5;
         healthRegen = 0; 
         strength = 15;
-        agility = 25;
+        agility = 35;
         armor = 10;   
-        intelligence = 20; 
+        intelligence = 10; 
         dexterity = 30;
-        vitality = 15; 
+        vitality = 10; 
         attackPerformed = false;
         movePerformed = false;
         //calcStrength();
