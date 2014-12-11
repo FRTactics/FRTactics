@@ -26,6 +26,7 @@ import model.classSystem.DefaultClass;
 public class CharacterLabel extends JLabel implements Transferable, DragSourceListener, DragGestureListener
 {
     private static final DataFlavor[] flavors = {CharacterFlavor.instance};
+    private boolean draggable = true;
     private DefaultClass character;
     private Image characterImage;
     private TransferHandler transfer;
@@ -36,7 +37,6 @@ public class CharacterLabel extends JLabel implements Transferable, DragSourceLi
     {
         this.character = character;
         this.characterImage = characterImage;
-        
         //Create a new TransferHandler
         transfer = new TransferHandler()
         {
@@ -49,12 +49,14 @@ public class CharacterLabel extends JLabel implements Transferable, DragSourceLi
         //Set the hander to the jlabel
         setTransferHandler(transfer);
         //Create the drag source and default gesture
+        
         source = new DragSource();
         source.createDefaultDragGestureRecognizer(this, DnDConstants.ACTION_COPY, this);
         // Set the size of the label
         
     }
-    public DefaultClass getCharacter(){
+    public DefaultClass getCharacter()
+    {
         return character;
     }
     
@@ -112,12 +114,18 @@ public class CharacterLabel extends JLabel implements Transferable, DragSourceLi
 
     @Override
     public void dragDropEnd(DragSourceDropEvent dsde) 
-    {}
+    {
+        if(dsde.getDropSuccess())
+        {
+            draggable = false;
+        }
+    }
 
     @Override
     public void dragGestureRecognized(DragGestureEvent dge) 
     {
-        source.startDrag(dge,DragSource.DefaultCopyDrop,characterImage.getScaledInstance(100,100,0),new Point(0,0),this,this);   
+        if(draggable)
+            source.startDrag(dge,DragSource.DefaultMoveDrop,characterImage.getScaledInstance(100,100,0),new Point(0,0),this,this);   
     }
     
     @Override

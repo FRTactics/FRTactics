@@ -31,6 +31,7 @@ import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import model.GameManager;
+import model.GamePlayManager;
 import model.ImageContainer;
 import model.classSystem.DefaultClass;
 import view.GameApp;
@@ -362,24 +363,30 @@ public class CharacterGlassPane extends JPanel
             return mpValue;
         }
         
-        private class EndTurnButtonListener extends MouseAdapter{
+        private class EndTurnButtonListener extends MouseAdapter
+        {
             @Override
-            public void mouseClicked(MouseEvent e){
+            public void mouseClicked(MouseEvent e)
+            {
+                GamePlayManager.getInstance().switchTurns();
                 CardLayout layout = (CardLayout)parent.getLayout();
-                layout.next(parent);
-                
+                layout.next(parent);   
             }
         }
     }
-    public class CharacterLabelListener extends MouseAdapter{
+    public class CharacterLabelListener extends MouseAdapter
+    {
         private DefaultClass character;
         private PlayerPanel playerPanel;
-        public CharacterLabelListener(DefaultClass character){
+        public CharacterLabelListener(DefaultClass character)
+        {
             this.character = character;
-            if(character.getOwner() == GameManager.PLAYER_1){
+            if(character.getOwner() == GameManager.PLAYER_1)
+            {
                 playerPanel = playerOnePanel;
             }
-            else if(character.getOwner() == GameManager.PLAYER_2){
+            else if(character.getOwner() == GameManager.PLAYER_2)
+            {
                 playerPanel = playerTwoPanel;
             }
             

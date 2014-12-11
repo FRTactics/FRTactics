@@ -150,6 +150,7 @@ public class SelectionPopup extends JDialog
                         break;
                     case DEFEND:
                         manager.setUnit(xLocation, yLocation, GamePlayManager.Action.DEFEND);
+                        manager.defendUnit();
                         SelectionPopup.this.setVisible(false);
                         break;
                     case MOVE:

@@ -11,7 +11,7 @@ public class GamePlayManager
 {   
     public enum Action {MOVE, ATTACK, DEFEND, WAITING, MAGIC, HEAL};
     
-    private boolean isP1Turn = false;        
+    private boolean isP1Turn = true;        
     private boolean isP2Turn = false;
     private boolean isAttacking = false;
     private boolean isMoving = false;
@@ -71,8 +71,8 @@ public class GamePlayManager
     {
         for(DefaultClass unit : GameManager.getInstance().getP1Loadout())
         {
-            unit.setMoved(false);
-            unit.setAttacked(false);
+            unit.movePerformed(false);
+            unit.attackPerformed(false);
         }
     }
     
@@ -81,9 +81,9 @@ public class GamePlayManager
         return isAttacking ? Action.ATTACK : isMoving ? Action.MOVE : isDefending ? Action.DEFEND : isHealing ? Action.HEAL : isMagic ? Action.MAGIC : Action.WAITING;
     }
     
-    public void resetGameplayStatus(DefaultClass character)
+    public void resetGameplayStatus()
     {
-        removeDisplayedRange(character);
+        removeDisplayedRange();
         isAttacking = false;
         isMoving = false;
         isHealing = false;
@@ -99,7 +99,10 @@ public class GamePlayManager
             isDefending = false;
         }
         else
+        {
+            isDefending = false;
             return false;
+        }
         return true;
     }
     
@@ -116,10 +119,10 @@ public class GamePlayManager
         {
             if(!destinationTile.isCharacterOnTile())
             {   
-                removeDisplayedRange((DefaultClass)currentTile.retrieveCharacter()[0]);
+                removeDisplayedRange();
                 destinationTile.updateCharacter((DefaultClass)currentTile.retrieveCharacter()[0], (Image)currentTile.retrieveCharacter()[1]);
                 currentTile.removeCharacter();
-                ((DefaultClass)(destinationTile.retrieveCharacter()[0])).setMoved(true);
+                ((DefaultClass)(destinationTile.retrieveCharacter()[0])).movePerformed(true);
                 isMoving = false;
                 return true;
             }
@@ -130,23 +133,25 @@ public class GamePlayManager
            return false;
     }
     
-    public void removeDisplayedRange(DefaultClass character)
-    {      
+    public void removeDisplayedRange()
+    {   
+        DefaultClass character = (DefaultClass)DrawPanel.getGrid()[sourceX][sourceY].retrieveCharacter()[0];
         RangeChecker checker = new RangeChecker();
         int range = (int)character.getMovementRange();
         checker.calculateRange(sourceX, sourceY, range, 2);
     }
     
   
-    public boolean attackUnit(int targetX, int targetY){        // we may need another field if we have to differentiate 
-                                                                // between they type of attack the source character is using
+    public boolean attackUnit(int targetX, int targetY)
+    {        // we may need another field if we have to differentiate 
+             // between they type of attack the source character is using
         double health;
         Tile destinationTile = DrawPanel.getGrid()[targetX][targetY];
         DefaultClass targetCharacter = (DefaultClass)destinationTile.retrieveCharacter()[0];
         DefaultClass sourceCharacter = (DefaultClass)DrawPanel.getGrid()[sourceX][sourceY].retrieveCharacter()[0];
         if(destinationTile.isAttackRangeDisplayed())
         {
-            removeDisplayedRange((DefaultClass)DrawPanel.getGrid()[sourceX][sourceY].retrieveCharacter()[0]);
+            removeDisplayedRange();
             if(targetCharacter != null)
             {        // if the target is not null, proceed to attack
                 if(!targetCharacter.isDefending())
@@ -201,7 +206,7 @@ public class GamePlayManager
                 // currently just testing with base stats
                 targetCharacter.setHealth(targetCharacter.getHealth() - sourceCharacter.getAttackDamage());
                 isAttacking = false;
-                removeDisplayedRange(sourceCharacter);
+                removeDisplayedRange();
                 return true;
             }
             else
@@ -220,7 +225,7 @@ public class GamePlayManager
         pane.setVisible(true);
     }
 
-     public void setPlayerTurn(int player)
+    public void setPlayerTurn(int player)
     {
         if(player == 1)
         {
@@ -234,15 +239,23 @@ public class GamePlayManager
         }
     }
     
+    public String getPlayerTurn()
+    {
+        if(isP1Turn)
+            return GameManager.PLAYER_1;
+        else
+            return GameManager.PLAYER_2;
+    }
+     
     public void switchTurns() 
     {
         if(isP1Turn)
         {
-            setPlayerTurn(1);
+            setPlayerTurn(2);
         }
         else
         {
-            setPlayerTurn(2);
+            setPlayerTurn(1);
         }
     }
 }

@@ -4,6 +4,7 @@ import view.ingame.Tile;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import view.ingame.DrawPanel;
+import view.ingame.Tile.LandType;
 
 public class RangeChecker 
 {
@@ -107,18 +108,21 @@ public class RangeChecker
         for (Object finish1 : finish) 
         {
             CoordinatesHolder node = (CoordinatesHolder) finish1;
-            switch(rangeType)
+            if(grid[node.getX()][node.getY()].returnLandType() != LandType.WATER_TILE)
             {
-                case 0://move
-                    grid[node.getX()][node.getY()].displayMovementRange(true);
-                    break;
-                case 1://attack
-                    grid[node.getX()][node.getY()].displayAttackRange(true);
-                    break;
-                case 2://remove displayed range
-                    grid[node.getX()][node.getY()].displayAttackRange(false);
-                    grid[node.getX()][node.getY()].displayMovementRange(false);
-                    break;
+                switch(rangeType)
+                {
+                    case 0://move
+                        grid[node.getX()][node.getY()].displayMovementRange(true);
+                        break;
+                    case 1://attack
+                        grid[node.getX()][node.getY()].displayAttackRange(true);
+                        break;
+                    case 2://remove displayed range
+                        grid[node.getX()][node.getY()].displayAttackRange(false);
+                        grid[node.getX()][node.getY()].displayMovementRange(false);
+                        break;
+                }
             }
         }
     }

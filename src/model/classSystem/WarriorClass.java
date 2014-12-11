@@ -28,8 +28,8 @@ public class WarriorClass extends DefaultClass{
         intelligence = 20;
         dexterity = 20; 
         vitality = 20; 
-        hasAttacked = false;
-        hasMoved = false;
+        attackPerformed = false;
+        movePerformed = false;
         //calcStrength();
         calcHealth();
         calcMovement();

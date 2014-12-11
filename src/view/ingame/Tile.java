@@ -254,17 +254,20 @@ public class Tile extends JPanel
         @Override
         public void mouseClicked(MouseEvent e)
         {
-            if(e.getButton() == MouseEvent.BUTTON1)
+            if(e.getButton() == MouseEvent.BUTTON1) 
             {
                 try 
                 {
                     GamePlayManager manager = GamePlayManager.getInstance();
-                    if(characterOnTile && (manager.getGameplayStatus() == Action.WAITING))
-                    {
-                        SelectionPopup popup = SelectionPopup.getInstance();
-                        popup.updateCharacter(character, xLocation, yLocation);
-                        popup.setLocation(e.getXOnScreen() + 20,(int)(e.getYOnScreen()- (.5*popup.getHeight())));
-                        popup.setVisible(true);
+                    if(characterOnTile && (character.owner.matches(GamePlayManager.getInstance().getPlayerTurn())))
+                    {     
+                        if((manager.getGameplayStatus() == Action.WAITING))
+                        {
+                            SelectionPopup popup = SelectionPopup.getInstance();
+                            popup.updateCharacter(character, xLocation, yLocation);
+                            popup.setLocation(e.getXOnScreen() + 20,(int)(e.getYOnScreen()- (.5*popup.getHeight())));
+                            popup.setVisible(true);
+                        }
                     }
                     else
                     {
@@ -280,9 +283,10 @@ public class Tile extends JPanel
                             case ATTACK:
                                 manager.attackUnit(xLocation,yLocation);
                                 GameApp.frame.repaint();
-                                break;
+                                break;                       
                         }
                     }
+                    
                 } 
                 catch (InstanceNotCreatedException ex) 
                 {
@@ -290,12 +294,25 @@ public class Tile extends JPanel
                 }
             }
             else
-            {
+            {                
                 if(e.getButton() == MouseEvent.BUTTON3)
                 {
-                    GamePlayManager manager = GamePlayManager.getInstance();
-                    manager.resetGameplayStatus(character);
-                    GameApp.frame.repaint();
+                    try 
+                    {
+                        SelectionPopup popup = SelectionPopup.getInstance();
+                        popup.setVisible(false);
+                    } 
+                    catch (InstanceNotCreatedException ex) 
+                    {
+                        Logger.getLogger(Tile.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    if(GamePlayManager.getInstance().getGameplayStatus() != Action.WAITING)
+                    {
+                        GamePlayManager manager = GamePlayManager.getInstance();
+                        manager.resetGameplayStatus();
+                        GameApp.frame.repaint();
+                    }   
+                    
                 }
             }
         }
@@ -311,7 +328,6 @@ public class Tile extends JPanel
         @Override
         public void drop(DropTargetDropEvent dtde) 
         {
-
             if(dtde.isDataFlavorSupported(CharacterFlavor.instance))
             {
                 Transferable transferable = dtde.getTransferable();
@@ -325,7 +341,7 @@ public class Tile extends JPanel
                         DropTargetContext dtc = dtde.getDropTargetContext();
                         Component component = dtc.getComponent();
                         
-                        if(component instanceof Tile)
+                        if(component instanceof Tile && Tile.this.landType != LandType.WATER_TILE)
                         {
                             character = (DefaultClass)data[0];
                             characterImage = (Image)data[1];
@@ -353,6 +369,6 @@ public class Tile extends JPanel
                 }
             
             }
-        }   
+        }
    }
 }

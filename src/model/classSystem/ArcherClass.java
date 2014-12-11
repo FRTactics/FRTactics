@@ -29,8 +29,8 @@ public class ArcherClass extends DefaultClass{
         intelligence = 20; 
         dexterity = 30;
         vitality = 15; 
-        hasAttacked = false;
-        hasMoved = false;
+        attackPerformed = false;
+        movePerformed = false;
         //calcStrength();
         calcHealth();
         calcMovement();

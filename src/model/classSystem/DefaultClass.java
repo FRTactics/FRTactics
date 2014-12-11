@@ -14,8 +14,8 @@ public abstract class DefaultClass {        // abstract class used for polymorph
    // base stats
    public String owner;
    public String className;
-   protected boolean hasMoved;
-   protected boolean hasAttacked;
+   protected boolean movePerformed;
+   protected boolean attackPerformed;
    protected boolean defending;
    protected double baseHealth;
    protected double health;             
@@ -35,6 +35,8 @@ public abstract class DefaultClass {        // abstract class used for polymorph
    protected double intelligence;  
    protected double dexterity;             
    protected double vitality;        
+    private boolean magicPerformed;
+    private boolean healPerformed;
    
    public abstract void calcStrength();
    public abstract double calcChanceToDodge();
@@ -148,27 +150,41 @@ public abstract class DefaultClass {        // abstract class used for polymorph
     * 
     * @return The unit's base vitality
     */
-   public double getVitality(){             // return vitality
+   public double getVitality()
+   {             
        return vitality;
    }
-   public double getAttackRange(){
+   public double getAttackRange()
+   {
        return attackRange;
    }
    /**
     * 
     * @return whether the unit has moved or not
     */
-   public boolean hasMoved(){
-       return hasMoved;
+   public boolean hasMoved()
+   {
+       return movePerformed;
    }
    /**
     * 
     * @return whether the unit has attacked or not 
     */
-   public boolean hasAttacked(){
-       return hasAttacked;
+   public boolean hasAttacked()
+   {
+       return attackPerformed;
    }
-     
+   
+   public boolean hasHealed()
+   {
+       return healPerformed;
+   }
+   
+   public boolean hasUsedMagic()
+   {
+       return magicPerformed;
+   }
+   
    public boolean isDefending(){
        return defending;
    }
@@ -266,14 +282,28 @@ public abstract class DefaultClass {        // abstract class used for polymorph
        this.vitality = vitality;
    }
 
-   public void setMoved(boolean moved){
-       hasMoved = moved;
+   public void movePerformed(boolean performed)
+   {
+       movePerformed = performed;
    }
 
-   public void setAttacked(boolean attacked){
-       hasAttacked = attacked;
+   public void attackPerformed(boolean performed)
+   {
+       attackPerformed = performed;
    }
-   public void setDefending(boolean defending){
+   
+   public void magicPerformed(boolean performed)
+   {
+       magicPerformed = performed;
+   }
+   
+   public void healPerformed(boolean performed)
+   {
+       healPerformed = performed;
+   }
+   
+   public void setDefending(boolean defending)
+   {
        this.defending = defending;
    }
    
