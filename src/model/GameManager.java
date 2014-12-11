@@ -52,20 +52,6 @@ public class GameManager
     public static final int REMOVE_UNIT_SELECTED = 60;
     public static final int OPTIONS_SELECTED = 70;
     public static final int RETURN_TO_MAIN = 80;
-    // in game events
-    public static final int UNIT_SELECTED = 0;
-    public static final int MOVE_UNIT_SELECTED = 1;
-    public static final int ATTACK_UNIT_SELECTED = 2;
-    public static final int DEFEND_UNIT_SELECTED = 3;
-    public static final int WAIT_SELECTED = 4;
-    public static final int END_TURN_SELECTED = 5;
-    public static final int P1_DEFEATED_EVENT = 6;
-    public static final int P2_DEFEATED_EVENT = 7;
-    // boolean to check for to trigger change events
-    protected static boolean isP1Turn = false;        
-    protected static boolean isP2Turn = false;
-    protected static boolean isP1TeamDefeated = false;
-    protected static boolean isP2TeamDefeated = false;
     
     public void initialize(View view)       // initialize view and state,
     {                                       // needs to be called right after GM is created

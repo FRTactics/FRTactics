@@ -532,10 +532,9 @@ public class LoadoutMenu extends MenuPanel{             // still a work in progr
         g.drawImage(background, 0, 0, this.getWidth(), this.getHeight(), this);
     }
     
+    @Override
     public void updateScreen(){
-        
-        System.out.println("Frame Width : " + GameApp.frame.getWidth());
-        System.out.println("frame height: " + GameApp.frame.getHeight());
+
         rightPanel.setPreferredSize(new Dimension(GameApp.frame.getWidth()/4, rightPanel.getHeight()));
         rightPanelLeftFiller.setPreferredSize(new Dimension(rightPanel.getPreferredSize().width/10, rightPanel.getPreferredSize().height));
         rightPanelRightFiller.setPreferredSize(new Dimension(rightPanel.getPreferredSize().width/10, rightPanel.getPreferredSize().height));
@@ -580,13 +579,6 @@ public class LoadoutMenu extends MenuPanel{             // still a work in progr
         rightPanel.revalidate();
         this.revalidate();
         repaint();
-        System.out.println("Called");
-        
-        System.out.println("LeftPanel: " + leftPanel.getSize().width);
-        System.out.println("LeftPanelRightFiller: " + leftPanelRightFiller.getWidth());
-        System.out.println("LeftPanelLeftFiller: " + leftPanelLeftFiller.getWidth());
-        System.out.println("LoadoutPanel: " + loadoutPanel.getWidth());
-        System.out.println("RightPanel: " + rightPanel.getSize().width);
     }
    
    private HashMap<String, Image> createImageMap(){        // creates the image map

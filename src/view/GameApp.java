@@ -100,7 +100,7 @@ public class GameApp{
         frame.revalidate();
         frame.repaint();
     }
-    private static String getLookAndFeelClassName(String nameSnippet) {
+    private static String getLookAndFeelClassName(String nameSnippet){
         LookAndFeelInfo[] plafs = UIManager.getInstalledLookAndFeels();
         for (LookAndFeelInfo info : plafs) {
             if (info.getName().contains(nameSnippet)) {

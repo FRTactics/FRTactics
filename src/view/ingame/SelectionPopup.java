@@ -143,32 +143,42 @@ public class SelectionPopup extends JDialog
                 switch(type)
                 {
                     case ATTACK:
-                        manager.setUnit(xLocation, yLocation, GamePlayManager.Action.ATTACK);
-                        manager.displayRange(xLocation, yLocation, 1);
-                        SelectionPopup.this.setVisible(false);
+                        if(!character.hasAttacked()){
+                            manager.setUnit(xLocation, yLocation, GamePlayManager.Action.ATTACK);
+                            manager.displayRange(xLocation, yLocation, 1);
+                            SelectionPopup.this.setVisible(false);
+                        }  
                         GameApp.frame.repaint();
                         break;
                     case DEFEND:
-                        manager.setUnit(xLocation, yLocation, GamePlayManager.Action.DEFEND);
-                        manager.defendUnit();
-                        SelectionPopup.this.setVisible(false);
+                        if(!character.hasAttacked()){
+                            manager.setUnit(xLocation, yLocation, GamePlayManager.Action.DEFEND);
+                            manager.defendUnit();
+                            SelectionPopup.this.setVisible(false);
+                        }
                         break;
                     case MOVE:
-                        manager.setUnit(xLocation, yLocation, GamePlayManager.Action.MOVE);
-                        manager.displayRange(xLocation, yLocation, 0);
-                        SelectionPopup.this.setVisible(false);
+                        if(!character.hasMoved()){
+                            manager.setUnit(xLocation, yLocation, GamePlayManager.Action.MOVE);
+                            manager.displayRange(xLocation, yLocation, 0);
+                            SelectionPopup.this.setVisible(false);
+                        }
                         GameApp.frame.repaint();
                         break;
                     case HEAL:
-                        manager.setUnit(xLocation, yLocation, GamePlayManager.Action.HEAL);
-                        manager.displayRange(xLocation, yLocation, 1);
-                        SelectionPopup.this.setVisible(false);
+                        if(!character.hasAttacked() ){
+                            manager.setUnit(xLocation, yLocation, GamePlayManager.Action.HEAL);
+                            manager.displayRange(xLocation, yLocation, 1);
+                            SelectionPopup.this.setVisible(false);
+                        }
                         GameApp.frame.repaint();
                         break;
                     case MAGIC:
-                        manager.setUnit(xLocation, yLocation, GamePlayManager.Action.MAGIC);
-                        manager.displayRange(xLocation, yLocation, 1);
-                        SelectionPopup.this.setVisible(false);
+                        if(!character.hasAttacked()){
+                            manager.setUnit(xLocation, yLocation, GamePlayManager.Action.MAGIC);
+                            manager.displayRange(xLocation, yLocation, 1);
+                            SelectionPopup.this.setVisible(false);
+                        }
                         GameApp.frame.repaint();
                         break;
                 }
