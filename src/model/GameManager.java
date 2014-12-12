@@ -83,7 +83,7 @@ public class GameManager
             System.out.println(components[i].getName());
             if(components[i].getName().equals(GameManager.INGAME)){
                 gameView.remove(components[i]);
-                JPanel panel = new JPanel();
+                components[i] = null ;
                 GameApp.frame.removeKeyListener(GameApp.frame.getKeyListeners()[0]);
             }
         }
