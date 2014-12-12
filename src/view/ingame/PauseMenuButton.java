@@ -71,6 +71,7 @@ public class PauseMenuButton extends JPanel
                      parent.dispose();
                      Component glass = GameApp.frame.getGlassPane();
                      glass.setVisible(false);
+                     System.gc();
                      break;
              }
          }

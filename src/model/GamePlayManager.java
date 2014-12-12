@@ -176,7 +176,7 @@ public class GamePlayManager
     {   
         DefaultClass character = (DefaultClass)DrawPanel.getGrid()[sourceX][sourceY].retrieveCharacter()[0];
         RangeChecker checker = new RangeChecker();
-        int range = (int)character.getMovementRange();
+        int range = (int)(character.getMovementRange() + character.calcAttackRange());
         checker.calculateRange(sourceX, sourceY, range, 2);
     }
     
@@ -229,13 +229,13 @@ public class GamePlayManager
         checker.calculateRange(sourceX, sourceY, range, 2);
     }
     
-    public boolean magicUnit(int targetX, int targetY){        // we may need another field if we have to differentiate 
-                                                                // between they type of attack the source character is using
+    public boolean magicUnit(int targetX, int targetY)
+    {   
         double health;
         Tile destinationTile = DrawPanel.getGrid()[targetX][targetY];
         DefaultClass targetCharacter = (DefaultClass)destinationTile.retrieveCharacter()[0];
         DefaultClass sourceCharacter = (DefaultClass)DrawPanel.getGrid()[sourceX][sourceY].retrieveCharacter()[0];
-        if(destinationTile.isAttackRangeDisplayed())
+        if(destinationTile.isMagicRangeDisplayed())
         {
             if(targetCharacter != null)
             {

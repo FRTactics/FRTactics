@@ -381,7 +381,7 @@ public class Tile extends JPanel
                         DropTargetContext dtc = dtde.getDropTargetContext();
                         Component component = dtc.getComponent();
                         
-                        if(component instanceof Tile && Tile.this.landType != LandType.WATER_TILE)
+                        if(component instanceof Tile && Tile.this.landType != LandType.WATER_TILE && !characterOnTile)
                         {
                             character = (DefaultClass)data[0];
                             characterImage = (Image)data[1];
