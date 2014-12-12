@@ -143,17 +143,16 @@ public class LoadoutController extends EventHandler{ // since both P1 and P2 Loa
             }
                     
             
-            loadoutMenu.getMeleeAttackRangeValueLabel().setText("" + (int)label.getUnit().getHealth());
             loadoutMenu.getMovementRangeValueLabel().setText("" + (int)label.getUnit().getMovementRange());
             loadoutMenu.getMPValueLabel().setText("" +(int)label.getUnit().getMP());
             loadoutMenu.getHPValueLabel().setText("" + (int)label.getUnit().getHealth());
             loadoutMenu.getStrengthValueLabel().setText("" + (int)label.getUnit().getStrength());
             loadoutMenu.getAgilityValueLabel().setText("" + (int)label.getUnit().getAgility());
-            //loadoutMenu.getMeleeDamageValueLabel().setText("" + (int)label.getUnit().getMeleeDamage());
-            //loadoutMenu.getRangedDamageValueLabel().setText("" + (int)label.getUnit().getRangedDamage());
+            loadoutMenu.getMeleeDamageValueLabel().setText("" + (int)label.getUnit().calcAttackDamage());
+            loadoutMenu.getRangedDamageValueLabel().setText("" + (int)label.getUnit().calcAttackDamage());
             loadoutMenu.getSpellDamageValueLabel().setText("" + (int)label.getUnit().getSpellDamage());
-            //loadoutMenu.getMeleeAttackRangeValueLabel().setText("" + (int)label.getUnit().getMeleeAttackRange());
-            //loadoutMenu.getRangedAttackRangeValueLabel().setText("" + (int)label.getUnit().getRangedAttackRange());
+            loadoutMenu.getMeleeAttackRangeValueLabel().setText("" + (int)label.getUnit().calcAttackRange());
+            loadoutMenu.getRangedAttackRangeValueLabel().setText("" + (int)label.getUnit().calcAttackRange());
             loadoutMenu.getMovementRangeValueLabel().setText("" + label.getUnit().getMovementRange());
             loadoutMenu.getDexterityValueLabel().setText("" + (int)label.getUnit().getDexterity());
             loadoutMenu.getVitalityValueLabel().setText("" + (int)label.getUnit().getVitality());

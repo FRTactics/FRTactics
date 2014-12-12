@@ -15,7 +15,7 @@ public class ImageContainer
     public enum StatusLabelImage{
         STATS, CLASS, HP, MP, STRENGTH, AGILITY, MELEE_DAMAGE, RANGED_DAMAGE, SPELL_DAMAGE, ATTACK_RANGE, RANGED_ATTACK_RANGE,
         MOVEMENT_RANGE, DEXTERITY, VITALITY, INTELLIGENCE, DODGE_CHANCE, HEALTH_REGEN, ARMOR, WARRIOR_TEXT, ARCHER_TEXT,
-        ROGUE_TEXT, WIZARD_TEXT, HEALER_TEXT
+        ROGUE_TEXT, WIZARD_TEXT, HEALER_TEXT, HPBLACK, MPBLACK,ARMORBLACK,DODGECHANCE, ATTACKBLACK, STATSBLACK 
     }
     public enum MenuImage{
         MAIN_MENU, NEW_GAME_SWORD, OPTIONS_SWORD, QUIT_SWORD,
@@ -26,7 +26,7 @@ public class ImageContainer
     };
     
     public enum TileEffects{
-       MOVE_TILE, ATTACK_TILE, PLACE_UNIT
+       MOVE_TILE, ATTACK_TILE, HEAL_UNIT, MAGIC_UNIT
     };
     
     public enum TileImage{
@@ -57,7 +57,8 @@ public class ImageContainer
     private Image pauseMenuBackground;
     private Image move;
     private Image attack;
-    private Image placeUnit;
+    private Image heal;
+    private Image magic;
     private Image grass;
     private Image water;
     private Image hill;
@@ -75,7 +76,12 @@ public class ImageContainer
     private Image p1LoadoutBackground;
     private Image p2LoadoutBackground;
     private Image hudBackground;
-    
+    private Image hpBlack;
+    private Image mpBlack;
+    private Image damageBlack;
+    private Image statsBlack;
+    private Image dodgeBlack;
+    private Image armorBlack;
     //stuff for stats
     private Image stats;
     private Image classImage;
@@ -229,6 +235,18 @@ public class ImageContainer
                     return healerText == null ? healerText = ImageIO.read(new File(".//resources//menu//statusImages//HealerText.png")): healerText;
                 case WIZARD_TEXT:
                     return wizardText == null ? wizardText = ImageIO.read(new File(".//resources//menu//statusImages//MageText.png")): wizardText;
+                case HPBLACK:
+                    return hpBlack == null ? hpBlack = ImageIO.read(new File(".//resources//menu//statusImages//HPUI.png")) : hpBlack;
+                case MPBLACK:
+                    return mpBlack == null ? mpBlack = ImageIO.read(new File(".//resources//menu//statusImages//MPUI.png")) : mpBlack;
+                case ATTACKBLACK:
+                    return damageBlack == null ? damageBlack = ImageIO.read(new File(".//resources//menu//statusImages//DamageUI.png")) : damageBlack;
+                case DODGECHANCE:
+                    return dodgeBlack == null ? dodgeBlack = ImageIO.read(new File(".//resources//menu//statusImages//DodgeChanceUI.png")) : dodgeBlack;
+                case STATSBLACK:
+                    return statsBlack == null ? statsBlack = ImageIO.read(new File(".//resources//menu//statusImages//StatsUI.png")) : statsBlack;
+                case ARMORBLACK:
+                    return armorBlack == null ? armorBlack = ImageIO.read(new File(".//resources//menu//statusImages//ArmorUI.png")) : armorBlack;
             }
         }
         catch(Exception ex)
@@ -249,8 +267,10 @@ public class ImageContainer
                         return attack == null ? attack = ImageIO.read(new File(".//resources//tile//effectsImages//attackTile.png")): attack;
                 case MOVE_TILE:
                         return move == null ? move = ImageIO.read(new File(".//resources//tile//effectsImages//moveTile.png")): move;
-                case PLACE_UNIT:
-                        return placeUnit == null ? placeUnit = ImageIO.read(new File(".//resources//tile//effectsImages//placeUnit.png")) : placeUnit;
+                case HEAL_UNIT:
+                        return heal == null ? heal = ImageIO.read(new File(".//resources//tile//effectsImages//healTile.png")) : heal;
+                case MAGIC_UNIT:
+                        return magic == null ? magic = ImageIO.read(new File(".//resources//tile//effectsImages//magicTile.png")) : magic;
             }
         }
         catch(IOException ex)

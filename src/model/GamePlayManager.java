@@ -2,6 +2,7 @@ package model;
 
 import java.awt.Image;
 import model.classSystem.DefaultClass;
+import model.classSystem.HealerClass;
 import view.GameApp;
 import view.ingame.CharacterGlassPane;
 import view.ingame.DrawPanel;
@@ -34,7 +35,20 @@ public class GamePlayManager
         DefaultClass character = (DefaultClass)currentTile.retrieveCharacter()[0];
         
         RangeChecker checker = new RangeChecker();
-        int range = (int)character.getMovementRange();
+        int range;
+        
+        switch(rangeType)
+        {
+            case 0:
+                range = (int)character.getMovementRange();
+                break;
+            case 2:
+                range = (int)(character.getMovementRange() + character.calcAttackRange());
+                break;
+            default:
+                range = (int)character.calcAttackRange();
+                break;
+        }
         
         checker.calculateRange(x, y, range, rangeType);
     }
@@ -88,6 +102,28 @@ public class GamePlayManager
         isMoving = false;
         isHealing = false;
         isMagic = false;
+    }
+    
+    public boolean healUnit(int targetX, int targetY)
+    {
+        Tile destinationTile = DrawPanel.getGrid()[targetX][targetY];
+        Tile currentTile = DrawPanel.getGrid()[sourceX][sourceY];
+        if(destinationTile.isHealRangeDisplayed())
+        {
+            if(destinationTile.isCharacterOnTile())
+            {
+                removeDisplayedRange();
+                DefaultClass targetCharacter = (DefaultClass)destinationTile.retrieveCharacter()[0];
+                HealerClass sourceCharacter = (HealerClass)currentTile.retrieveCharacter()[0];
+                targetCharacter.setHealth(targetCharacter.getHealth() + sourceCharacter.calcHeal());
+                sourceCharacter.attackPerformed(true);
+                isHealing = false;
+                return true;
+            }
+            else
+                return false;
+        }
+        return false;
     }
     
     public boolean defendUnit()
@@ -146,39 +182,43 @@ public class GamePlayManager
     
   
     public boolean attackUnit(int targetX, int targetY)
-    {        // we may need another field if we have to differentiate 
-             // between they type of attack the source character is using
+    {
         double health;
         Tile destinationTile = DrawPanel.getGrid()[targetX][targetY];
         DefaultClass targetCharacter = (DefaultClass)destinationTile.retrieveCharacter()[0];
         DefaultClass sourceCharacter = (DefaultClass)DrawPanel.getGrid()[sourceX][sourceY].retrieveCharacter()[0];
         if(destinationTile.isAttackRangeDisplayed())
         {
-            removeDisplayedRange();
             if(targetCharacter != null)
-            {        // if the target is not null, proceed to attack
+            {  
+                removeDisplayedRange();
                 if(!targetCharacter.isDefending())
                 {
                     health = targetCharacter.getHealth() - (sourceCharacter.calcAttackDamage() - targetCharacter.getArmor() - 20);
                     targetCharacter.setHealth(health);
                 }
-                else{
-                    health = sourceCharacter.calcAttackDamage() - targetCharacter.getArmor();
+                else
+                {
+                    health = targetCharacter.getHealth() -(sourceCharacter.calcAttackDamage() - targetCharacter.getArmor());
                     targetCharacter.setHealth(health);    
                 }
                 // do the rest of the attacking stuff
                 sourceCharacter.attackPerformed(true);
+                
+                // check to see if the unit died              
+                if(targetCharacter.getHealth() < 0)
+                {
+                    destinationTile.removeCharacter();
+                }
+                
                 isAttacking = false;
                 return true;
             }
             else
-                isAttacking = false;
                 return false;
         }
         else
-        {
             return false;
-        }
         
     }
     
@@ -195,33 +235,37 @@ public class GamePlayManager
         Tile destinationTile = DrawPanel.getGrid()[targetX][targetY];
         DefaultClass targetCharacter = (DefaultClass)destinationTile.retrieveCharacter()[0];
         DefaultClass sourceCharacter = (DefaultClass)DrawPanel.getGrid()[sourceX][sourceY].retrieveCharacter()[0];
-        if(destinationTile.isAttackRangeDisplayed()){
-            if(targetCharacter != null){        // if the target is not null, proceed to attack
-                if(!targetCharacter.isDefending()){
-                    health = sourceCharacter.calcSpellDamage() - targetCharacter.getArmor() - 20;
-                    targetCharacter.setHealth(health);    
-                }
-                
-                else{
-                    health = sourceCharacter.calcSpellDamage() - targetCharacter.getArmor();
-                    targetCharacter.setHealth(health);    
-                }
-                
-                // do the rest of the attacking stuff
-                // currently just testing with base stats
-                targetCharacter.setHealth(targetCharacter.getHealth() - sourceCharacter.getAttackDamage());
-                targetCharacter.attackPerformed(true);
-                isAttacking = false;
+        if(destinationTile.isAttackRangeDisplayed())
+        {
+            if(targetCharacter != null)
+            {
                 removeDisplayedRange();
+                if(!targetCharacter.isDefending())
+                {
+                    health = targetCharacter.getHealth() - (sourceCharacter.calcSpellDamage() - targetCharacter.getArmor() - 20);
+                    targetCharacter.setHealth(health);    
+                }
+                else
+                {
+                    health = targetCharacter.getHealth() - (sourceCharacter.calcSpellDamage() - targetCharacter.getArmor());
+                    targetCharacter.setHealth(health);    
+                }
+                sourceCharacter.attackPerformed(true);
+                
+                // check to see if the unit died              
+                if(targetCharacter.getHealth() < 0)
+                {
+                    destinationTile.removeCharacter();
+                }
+                
+                isMagic = false;
                 return true;
             }
             else
-                isAttacking = false;
                 return false;
         }
-        else{
+        else
             return false;
-        }
         
     }
     

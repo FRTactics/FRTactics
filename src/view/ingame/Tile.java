@@ -40,16 +40,19 @@ public class Tile extends JPanel
     private Polygon polygon;
     private Image tileImage;
     private Image attackRangeImage;
+    private Image magicRangeImage;
     private Image moveRangeImage;
-    private Image placeUnitImage;
+    private Image healRangeImage;
     private Image characterImage;
     private final int xLocation;
     private final int yLocation;
     private DefaultClass character;
     private boolean characterOnTile = false;
+    private boolean displayMagicRange;
     private boolean displayMovementRange = false;
     private boolean displayAttackRange = false;
-    private boolean displayPlaceUnit = false;
+    private boolean displayHealRange = false;
+    
     /**The constructor is used to define the type of tile that the 
     *hexagon will become.
     * @param landType The enum value that will assign the land type to the tile
@@ -133,11 +136,28 @@ public class Tile extends JPanel
         return displayMovementRange;
     }
     
-    public void displayUnitPlacement(boolean enable)
+    public void displayHealRange(boolean enable)
     {
-        if(placeUnitImage == null)
-            placeUnitImage = ImageContainer.getInstance().retrieveTileEffects(ImageContainer.TileEffects.PLACE_UNIT);
-        this.displayPlaceUnit = enable;    
+        if(healRangeImage == null)
+            healRangeImage = ImageContainer.getInstance().retrieveTileEffects(ImageContainer.TileEffects.HEAL_UNIT);
+        this.displayHealRange = enable;    
+    }
+    
+    public boolean isHealRangeDisplayed()
+    {
+        return displayHealRange;
+    }
+    
+     public void displayMagicRange(boolean enable)
+    {
+        if(magicRangeImage == null)
+            magicRangeImage = ImageContainer.getInstance().retrieveTileEffects(ImageContainer.TileEffects.MAGIC_UNIT);
+        this.displayMagicRange = enable;    
+    }
+    
+    public boolean isMagicRangeDisplayed()
+    {
+        return displayMagicRange;
     }
     
     public int getXLocation()
@@ -240,10 +260,16 @@ public class Tile extends JPanel
             g.drawImage(attackRangeImage,0,0,hexaWidth,hexaHeight, this);
         }
         
-        if(displayPlaceUnit && !characterOnTile)
+        if(displayHealRange)
         {
             g2d.setClip(polygon);
-            g.drawImage(placeUnitImage,0,0,hexaWidth,hexaHeight, this);
+            g.drawImage(healRangeImage,0,0,hexaWidth,hexaHeight, this);
+        }
+        
+        if(displayMagicRange)
+        {
+            g2d.setClip(polygon);
+            g.drawImage(magicRangeImage,0,0,hexaWidth,hexaHeight, this);
         }
    }
    
@@ -268,23 +294,14 @@ public class Tile extends JPanel
                             popup.setLocation(e.getXOnScreen() + 20,(int)(e.getYOnScreen()- (.5*popup.getHeight())));
                             popup.setVisible(true);
                         }
+                        else
+                            performAction(manager);
                     }
                     else
                     {
                         SelectionPopup popup = SelectionPopup.getInstance();
                         popup.setVisible(false);
-
-                        switch(manager.getGameplayStatus())
-                        {
-                            case MOVE:
-                                manager.moveUnit(xLocation, yLocation);
-                                GameApp.frame.repaint();
-                                break;
-                            case ATTACK:
-                                manager.attackUnit(xLocation,yLocation);
-                                GameApp.frame.repaint();
-                                break;                       
-                        }
+                        performAction(manager);
                     }
                     
                 } 
@@ -315,6 +332,29 @@ public class Tile extends JPanel
                     
                 }
             }
+        }
+        
+        public void performAction(GamePlayManager manager)
+        {
+            switch(manager.getGameplayStatus())
+                        {
+                            case MOVE:
+                                manager.moveUnit(xLocation, yLocation);
+                                GameApp.frame.repaint();
+                                break;
+                            case ATTACK:
+                                manager.attackUnit(xLocation,yLocation);
+                                GameApp.frame.repaint();
+                                break;
+                            case HEAL:
+                                manager.healUnit(xLocation, yLocation);
+                                GameApp.frame.repaint();
+                                break;
+                            case MAGIC:
+                                manager.magicUnit(xLocation, yLocation);
+                                GameApp.frame.repaint();
+                                break;
+                        }
         }
     }
 

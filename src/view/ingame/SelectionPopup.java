@@ -168,7 +168,7 @@ public class SelectionPopup extends JDialog
                     case HEAL:
                         if(!character.hasAttacked() ){
                             manager.setUnit(xLocation, yLocation, GamePlayManager.Action.HEAL);
-                            manager.displayRange(xLocation, yLocation, 1);
+                            manager.displayRange(xLocation, yLocation, 3);
                             SelectionPopup.this.setVisible(false);
                         }
                         GameApp.frame.repaint();
@@ -176,7 +176,7 @@ public class SelectionPopup extends JDialog
                     case MAGIC:
                         if(!character.hasAttacked()){
                             manager.setUnit(xLocation, yLocation, GamePlayManager.Action.MAGIC);
-                            manager.displayRange(xLocation, yLocation, 1);
+                            manager.displayRange(xLocation, yLocation, 4);
                             SelectionPopup.this.setVisible(false);
                         }
                         GameApp.frame.repaint();

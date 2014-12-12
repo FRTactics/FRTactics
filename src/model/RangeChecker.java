@@ -121,6 +121,14 @@ public class RangeChecker
                     case 2://remove displayed range
                         grid[node.getX()][node.getY()].displayAttackRange(false);
                         grid[node.getX()][node.getY()].displayMovementRange(false);
+                        grid[node.getX()][node.getY()].displayHealRange(false);
+                        grid[node.getX()][node.getY()].displayMagicRange(false);
+                        break;
+                    case 3:
+                        grid[node.getX()][node.getY()].displayHealRange(true);
+                        break;
+                    case 4:
+                        grid[node.getX()][node.getY()].displayMagicRange(true);
                         break;
                 }
             }

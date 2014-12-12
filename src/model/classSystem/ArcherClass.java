@@ -56,7 +56,7 @@ public class ArcherClass extends DefaultClass{
     @Override
     public double calcSpellDamage() {
  
-       return spellDamage = (intelligence * .3 + spellDamage);    //calculating you spell damage
+       return (intelligence * .3 + spellDamage);    //calculating you spell damage
     }
 
 //    @Override
@@ -69,7 +69,7 @@ public class ArcherClass extends DefaultClass{
     @Override
     public double calcAttackDamage() {
         
-        return attackDamage = ((attackDamage * .2) + dexterity + attackDamage);    //increase melee damage based on strength
+        return ((attackDamage * .2) + dexterity + attackDamage);    //increase melee damage based on strength
     }
 
     @Override

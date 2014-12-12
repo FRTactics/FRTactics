@@ -221,11 +221,11 @@ public class CharacterGlassPane extends JPanel
         private JLabel mpValue;
 
         // Column 3
-        private JLabel column3Label;
+        private StatLabel attackLabel;
         private StatLabel dodgeChanceLabel;
         private StatLabel armorLabel;
         // Column 4
-        private JLabel column4Label;
+        private JLabel attackValue;
         private JLabel dodgeChanceValue;
         private JLabel armorValue;
 
@@ -277,23 +277,25 @@ public class CharacterGlassPane extends JPanel
             statsPanel.setOpaque(false);
             GroupLayout p1StatsLayout = new GroupLayout(statsPanel);
             statsPanel.setLayout(p1StatsLayout);
-            statsLabel = new StatLabel(ImageContainer.getInstance().retrieveStatusLabelImages(ImageContainer.StatusLabelImage.STATS));
-            hpLabel = new StatLabel(ImageContainer.getInstance().retrieveStatusLabelImages(ImageContainer.StatusLabelImage.HP));
-            mpLabel = new StatLabel(ImageContainer.getInstance().retrieveStatusLabelImages(ImageContainer.StatusLabelImage.MP));
-            armorLabel = new StatLabel(ImageContainer.getInstance().retrieveStatusLabelImages(ImageContainer.StatusLabelImage.ARMOR));
-            dodgeChanceLabel = new StatLabel(ImageContainer.getInstance().retrieveStatusLabelImages(ImageContainer.StatusLabelImage.DODGE_CHANCE));
-            hpValue = new JLabel("--");
+            statsLabel = new StatLabel(ImageContainer.getInstance().retrieveStatusLabelImages(ImageContainer.StatusLabelImage.STATSBLACK));
+            hpLabel = new StatLabel(ImageContainer.getInstance().retrieveStatusLabelImages(ImageContainer.StatusLabelImage.HPBLACK));
+            mpLabel = new StatLabel(ImageContainer.getInstance().retrieveStatusLabelImages(ImageContainer.StatusLabelImage.MPBLACK));
+            armorLabel = new StatLabel(ImageContainer.getInstance().retrieveStatusLabelImages(ImageContainer.StatusLabelImage.ARMORBLACK));
+            dodgeChanceLabel = new StatLabel(ImageContainer.getInstance().retrieveStatusLabelImages(ImageContainer.StatusLabelImage.DODGECHANCE));
+            attackLabel = new StatLabel(ImageContainer.getInstance().retrieveStatusLabelImages(ImageContainer.StatusLabelImage.ATTACKBLACK));
+            hpValue = new JLabel("------");
             hpValue.setFont(font);
-            mpValue = new JLabel("--");
+            mpValue = new JLabel("------");
             mpValue.setFont(font);
-            armorValue = new JLabel("--");
+            armorValue = new JLabel("------");
             armorValue.setFont(font);
-            dodgeChanceValue = new JLabel("--");
+            dodgeChanceValue = new JLabel("------");
             dodgeChanceValue.setFont(font);
             column2Label = new JLabel(" ");
             column2Label.setFont(font);
-            column3Label = new JLabel(" ");
-            column4Label = new JLabel(" ");
+            
+            attackValue = new JLabel("------");
+            attackValue.setFont(font);
             p1StatsLayout.setHorizontalGroup(p1StatsLayout.createSequentialGroup()
                     .addGroup(p1StatsLayout.createParallelGroup(GroupLayout.Alignment.CENTER)
                             .addComponent(statsLabel)
@@ -304,19 +306,19 @@ public class CharacterGlassPane extends JPanel
                             .addComponent(hpValue)
                             .addComponent(mpValue))
                     .addGroup(p1StatsLayout.createParallelGroup(GroupLayout.Alignment.CENTER)
-                            .addComponent(column3Label)
+                            .addComponent(attackLabel)
                             .addComponent(dodgeChanceLabel)
                             .addComponent(armorLabel))
                     .addGroup(p1StatsLayout.createParallelGroup(GroupLayout.Alignment.CENTER)
-                            .addComponent(column4Label)
+                            .addComponent(attackValue)
                             .addComponent(dodgeChanceValue)
                             .addComponent(armorValue)));
             p1StatsLayout.setVerticalGroup(p1StatsLayout.createSequentialGroup()
                     .addGroup(p1StatsLayout.createParallelGroup(GroupLayout.Alignment.CENTER)
                             .addComponent(statsLabel)
                             .addComponent(column2Label)
-                            .addComponent(column3Label)
-                            .addComponent(column4Label))
+                            .addComponent(attackLabel)
+                            .addComponent(attackValue))
                     .addGroup(p1StatsLayout.createParallelGroup(GroupLayout.Alignment.CENTER)    
                             .addComponent(hpLabel)
                             .addComponent(hpValue)
@@ -362,6 +364,9 @@ public class CharacterGlassPane extends JPanel
         public JLabel getMPValueLabel(){
             return mpValue;
         }
+        public JLabel getAttackValueLabel(){
+            return attackValue;
+        }
         
         private class EndTurnButtonListener extends MouseAdapter
         {
@@ -395,6 +400,7 @@ public class CharacterGlassPane extends JPanel
         public void mouseClicked(MouseEvent e){
             playerPanel.getArmorValueLabel().setText("" + character.getArmor());
             playerPanel.getDodgeChanceValueLabel().setText("" + character.getDodgeChance()+ "%");
+            playerPanel.getAttackValueLabel().setText(""+ character.getAttackDamage());
             if(character.getHealth() < 0){
                 playerPanel.getHPValueLabel().setText("0");
             }

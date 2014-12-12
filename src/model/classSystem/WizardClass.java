@@ -103,7 +103,7 @@ public class WizardClass extends DefaultClass {
     public double calcMovement() {
         
         
-        return movementRange = ((int)(agility/5)) - ((int)(armor/10)) + movementRange; //you get moremovementbased on agility but less depending on armor
+        return ((int)(agility/5)) - ((int)(armor/10)) + movementRange; //you get moremovementbased on agility but less depending on armor
                 
     }
 
