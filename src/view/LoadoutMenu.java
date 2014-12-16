@@ -621,6 +621,9 @@ public class LoadoutMenu extends MenuPanel{             // still a work in progr
    public void addRemoveButtonController(MouseAdapter adapter){
        removeButton.addMouseListener(adapter);
    }
+   public void addLoadoutListController(MouseAdapter adapter){
+       loadoutList.addMouseListener(adapter);
+   }
    /**
     * adds a mouse adapter to the custom label
     * @param label
@@ -656,6 +659,9 @@ public class LoadoutMenu extends MenuPanel{             // still a work in progr
     */
    public JList getLoadoutJList(){
        return loadoutList;
+   }
+   public JPanel getLoadoutPanel(){
+       return loadoutPanel;
    }
    /**
     * instantiates a drop target and associates it with the loadout list along with a custom drop handler
@@ -805,4 +811,5 @@ public class LoadoutMenu extends MenuPanel{             // still a work in progr
    public void setLastSelectedLabel(CustomLabel selected){
        lastSelectedLabel = selected;
    }
+   
 }

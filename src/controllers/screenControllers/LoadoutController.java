@@ -51,6 +51,7 @@ public class LoadoutController extends EventHandler{ // since both P1 and P2 Loa
         loadoutMenu.addContinueButtonListener(new ContinueButtonListener());
         loadoutMenu.setLoadoutListCellRenderer(new LoadoutListCellRenderer());
         loadoutMenu.addLoadoutListDropHandler(new DropHandler());
+        loadoutMenu.addLoadoutListController(new LoadoutListMouseListener());
         addLabelListeners();
         
     }
@@ -82,6 +83,20 @@ public class LoadoutController extends EventHandler{ // since both P1 and P2 Loa
         @Override
         public void mousePressed(MouseEvent e){
             handleEvent(GameManager.BACK_SELECTED);
+        }
+    }
+    private class LoadoutListMouseListener extends MouseAdapter{
+        @Override
+        public void mouseClicked(MouseEvent e){
+            loadoutMenu.repaint();
+        }
+        @Override
+        public void mousePressed(MouseEvent e){
+            loadoutMenu.repaint();
+        }
+        @Override
+        public void mouseReleased(MouseEvent e){
+            loadoutMenu.repaint();
         }
     }
     private class LabelMouseListener extends MouseAdapter{
@@ -182,14 +197,15 @@ public class LoadoutController extends EventHandler{ // since both P1 and P2 Loa
            label.setFont(loadoutMenu.getLabelFont());
            label.setIcon(new ImageIcon(imageMap.get((String)value).getScaledInstance(100, 100, 0)));
            Color c = label.getBackground();
-           
+           label.setBackground(new Color(0,0,0,0));
+          
            if(isSelected){
-               loadoutMenu.repaint();
-               label.setBackground(new Color(0,0,0,0));
+               label.repaint();
                label.setForeground(Color.RED);
                label.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
            }
            else{
+               label.repaint();
                label.setForeground(Color.WHITE);
                label.setBorder(null);
            }
