@@ -1,6 +1,7 @@
 package view.ingame;
 
 import exceptions.InstanceNotCreatedException;
+import java.awt.Color;
 import java.awt.Component;
 import model.ImageContainer;
 import java.awt.Dimension;
@@ -252,6 +253,13 @@ public class Tile extends JPanel
         {
             g2d.setClip(polygon);
             g.drawImage(moveRangeImage,0,0,hexaWidth,hexaHeight, this);
+        }
+        
+        if(character != null && character.owner.matches(GamePlayManager.getInstance().getPlayerTurn()))
+        {
+            g2d.setClip(polygon);
+            g.setColor(new Color(0,0,0,.5f));
+            g.fillPolygon(polygon);
         }
         
         if(displayAttackRange)

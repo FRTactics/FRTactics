@@ -7,6 +7,9 @@
 package model.gameStates;
 
 import java.awt.CardLayout;
+import java.awt.Component;
+import javax.swing.JDialog;
+import javax.swing.JOptionPane;
 import model.GameManager;
 import model.GamePlayManager;
 import view.GameApp;
@@ -29,7 +32,7 @@ public class InGameState extends GameState
     public GameState processEvent(int eventID) {
         CardLayout layout = (CardLayout)gm.getView().getLayout();
         if(eventID == GameManager.RETURN_TO_MAIN){
-            layout.show(gm.getView(), GameManager.INGAME);
+            layout.show(gm.getView(), GameManager.MAIN_MENU);
             return nextState(GameState.mmState);
         }
         else{
@@ -46,7 +49,14 @@ public class InGameState extends GameState
     }
 
     @Override
-    protected void exit() {
+    protected void exit() 
+    {
+        Component glass = GameApp.frame.getGlassPane();
+        glass.setVisible(false);
+        
+        JOptionPane pane = new JOptionPane(new Object[]{"Congrats player, you have won"},JOptionPane.PLAIN_MESSAGE,JOptionPane.DEFAULT_OPTION);
+        JDialog dialog = pane.createDialog(GameApp.frame, "Winner");
+        dialog.setVisible(true);
     }
     
 

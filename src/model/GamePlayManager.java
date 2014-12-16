@@ -1,6 +1,8 @@
 package model;
 
+import java.awt.Component;
 import java.awt.Image;
+import javax.swing.JOptionPane;
 import model.classSystem.DefaultClass;
 import model.classSystem.HealerClass;
 import view.GameApp;
@@ -41,9 +43,6 @@ public class GamePlayManager
         {
             case 0:
                 range = (int)character.getMovementRange();
-                break;
-            case 2:
-                range = (int)(character.getMovementRange() + character.calcAttackRange());
                 break;
             default:
                 range = (int)character.calcAttackRange();
@@ -87,6 +86,14 @@ public class GamePlayManager
         {
             unit.movePerformed(false);
             unit.attackPerformed(false);
+            unit.setDefending(false);
+        }
+        
+         for(DefaultClass unit : GameManager.getInstance().getP2Loadout())
+        {
+            unit.movePerformed(false);
+            unit.attackPerformed(false);
+            unit.setDefending(false);
         }
     }
     
@@ -209,6 +216,23 @@ public class GamePlayManager
                 if(targetCharacter.getHealth() < 0)
                 {
                     destinationTile.removeCharacter();
+                    for(DefaultClass unit: GameManager.getInstance().getP1Loadout())
+                    {
+                        if(unit.equals(targetCharacter))
+                        {
+                            GameManager.getInstance().getP1Loadout().remove(targetCharacter);
+                            break;
+                        }
+                    }
+                    for(DefaultClass unit: GameManager.getInstance().getP2Loadout())
+                    {
+                        if(unit.equals(targetCharacter))
+                        {
+                            GameManager.getInstance().getP2Loadout().remove(targetCharacter);
+                            break;
+                        }
+                    }
+                    checkWinCondition();
                 }
                 
                 isAttacking = false;
@@ -256,6 +280,23 @@ public class GamePlayManager
                 if(targetCharacter.getHealth() < 0)
                 {
                     destinationTile.removeCharacter();
+                    for(DefaultClass unit: GameManager.getInstance().getP1Loadout())
+                    {
+                        if(unit.equals(targetCharacter))
+                        {
+                            GameManager.getInstance().getP1Loadout().remove(targetCharacter);
+                            break;
+                        }
+                    }
+                    for(DefaultClass unit: GameManager.getInstance().getP2Loadout())
+                    {
+                        if(unit.equals(targetCharacter))
+                        {
+                            GameManager.getInstance().getP2Loadout().remove(targetCharacter);
+                            break;
+                        }
+                    }
+                    checkWinCondition();
                 }
                 
                 isMagic = false;
@@ -290,6 +331,18 @@ public class GamePlayManager
         }
     }
     
+    public void checkWinCondition()
+    {
+        if(GameManager.getInstance().getP1Loadout().isEmpty())
+        {
+            GameManager.getInstance().processEvent(GameManager.RETURN_TO_MAIN);
+        }
+        if(GameManager.getInstance().getP2Loadout().isEmpty())
+        {
+            GameManager.getInstance().processEvent(GameManager.RETURN_TO_MAIN);
+        }
+    }
+    
     public String getPlayerTurn()
     {
         if(isP1Turn)
@@ -300,20 +353,27 @@ public class GamePlayManager
      
     public void switchTurns() 
     {
-        if(isP1Turn){
+        if(isP1Turn)
+        {
             setPlayerTurn(2);
-            for(DefaultClass unit : GameManager.getInstance().getP1Loadout()){
+            for(DefaultClass unit : GameManager.getInstance().getP2Loadout())
+            {
                 unit.movePerformed(false);
                 unit.attackPerformed(false);
+                unit.setDefending(false);
             }
         }
-        else{
+        else
+        {
             setPlayerTurn(1);
-            for(DefaultClass unit : GameManager.getInstance().getP2Loadout()){
+            for(DefaultClass unit : GameManager.getInstance().getP1Loadout())
+            {
                 unit.movePerformed(false);
                 unit.attackPerformed(false);
+                unit.setDefending(false);
             }
         }
+        GameApp.frame.repaint();
     }
     
 }
