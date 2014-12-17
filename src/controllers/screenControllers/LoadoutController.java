@@ -185,6 +185,7 @@ public class LoadoutController extends EventHandler{ // since both P1 and P2 Loa
             if(loadoutMenu.getLoadoutJList().getSelectedIndex() != -1 && loadoutMenu.getLoadoutJList().getModel().getSize() != 0){
                 ((LoadoutListModel)(loadoutMenu.getLoadoutJList().getModel())).removeElementAt(loadoutMenu.getLoadoutJList().getSelectedIndex());
                 loadoutMenu.getLoadoutJList().updateUI();
+                loadoutMenu.getLoadoutPanel().repaint();
             }
         }
    }
